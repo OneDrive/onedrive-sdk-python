@@ -1,2 +1,4 @@
 include LICENSE
 include DESCRIPTION.rst
+recursive-include src\python2 *
+recursive-include src\python3 *
