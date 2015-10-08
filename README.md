@@ -19,7 +19,8 @@ Authentication
 
 To interact with the OneDrive API, you must authenticate. You can use the following code sample to do so.
 
-<pre><code>import onedrivesdk
+```python
+import onedrivesdk
 from onedrivesdk.helpers import GetAuthCodeServer
 
 redirect_uri = "http://localhost:8080/"
@@ -36,7 +37,7 @@ auth_url = client.auth_provider.get_auth_url(redirect_uri)
 code = GetAuthCodeServer.get_auth_code(auth_url, redirect_uri)
 
 client.auth_provider.authenticate(code, redirect_uri, client_secret)
-</code></pre>
+```
 
 Once you are authenticated, you should have access to the OneDrive API, and
 can begin making calls using the SDK!
@@ -50,32 +51,37 @@ NOTE: All examples assume that the
 Upload an Item
 --------------
 
-<pre><code>returned_item = client.item(drive="me", id="root").children["newfile.txt"].upload("./path_to_file.txt")</code></pre>
+```python
+returned_item = client.item(drive="me", id="root").children["newfile.txt"].upload("./path_to_file.txt")
+```
 
 Download an Item
 ----------------
 
-<pre><code>root_folder = client.item(drive="me", id="root").children.get()
+```python
+root_folder = client.item(drive="me", id="root").children.get()
 id_of_file = root_folder[0].id
 
 client.item(drive="me", id=id_of_file).download("./path_to_download_to.txt")
-</code></pre>
+```
 
 Add a Folder
 ------------
 
-<pre><code>f = onedrivesdk.Folder()
+```python
+f = onedrivesdk.Folder()
 i = onedrivesdk.Item()
 i.name = "New Folder"
 i.folder = f
 
 returned_item = client.item(drive="me", id="root").children.add(i)
-</code></pre>
+```
 
 Copying an Item
 ---------------
 
-<pre><code>from onedrivesdk.item_reference import ItemReference
+```python
+from onedrivesdk.item_reference import ItemReference
 
 ref = ItemReference()
 ref.id = "yourparent!id" #path also supported
@@ -87,22 +93,24 @@ copy_operation = client.item(drive="me", id="youritemtocopy!id").copy(name="new 
 #and copy_operation.item is no longer None
 copy_operation.poll_until_complete()
 
-</code></pre>
+```
 
 Renaming an Item
 ----------------
 
-<pre><code>renamed_item = onedrivesdk.Item()
+```python
+renamed_item = onedrivesdk.Item()
 renamed_item.name = "NewItemName"
 renamed_item.id = "youritemtorename!id"
 
 new_item = client.item(drive="me", id=renamed_item.id).update(renamed_item)
-</code></pre>
+```
 
 Paging through a Collection
 ---------------------------
 
-<pre><code>#get the top 3 elements of root, leaving the next page for more elements
+```python
+#get the top 3 elements of root, leaving the next page for more elements
 collection = client.item(drive="me", id="root").children.request(top=3).get()
 
 #get the first item in the collection
@@ -110,7 +118,7 @@ item = collection[0]
 
 #get next page of 3 elements, if none exist, returns None
 collection2 = collection.next_page_request.get()
-</code></pre>
+```
 
 Async operations
 ----------------
@@ -120,7 +128,8 @@ For async operations, you create an asyncio.coroutine which
 implements asyncio.ascompleted, and execute it with
 loop.run\_until\_complete.
 
-<pre><code>import asyncio
+```python
+import asyncio
 
 @asyncio.coroutine
 def run_gets(client):
@@ -131,4 +140,4 @@ def run_gets(client):
 
 loop = asyncio.get_event_loop()
 loop.run_until_complete(run_gets(client))   
-</code></pre>
+```
