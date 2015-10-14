@@ -1,23 +1,21 @@
-**Getting Started with the OneDrive Python SDK**
+# Getting started with the OneDrive SDK for Python
 
 ------------------------------------------------------------------------
 [![Build status](https://ci.appveyor.com/api/projects/status/x1cjahp817w6r455?svg=true)](https://ci.appveyor.com/project/OneDrive/vroom-client-python)
 
-Installation
-============
+## Installation
 
-To install the OneDrive Python SDK, open a command prompt and type:
+Once you've downloaded the OneDrive SDK for Python, open a command prompt and type the following to install it:
 
-<pre><code>pip install onedrivesdk
-</code></pre>
-Next, include the SDK in your python project by adding
+<pre><code>pip install onedrivesdk</code></pre>
+
+Next, include the SDK in your Python project by adding:
 
 <pre><code>import onedrivesdk</code></pre>
 
-Authentication
-==============
+## Authentication
 
-To interact with the OneDrive API, you must authenticate. You can use the following code sample to do so.
+To interact with the OneDrive API, your app must authenticate. You can use the following code sample to do so.
 
 ```python
 import onedrivesdk
@@ -39,24 +37,21 @@ code = GetAuthCodeServer.get_auth_code(auth_url, redirect_uri)
 client.auth_provider.authenticate(code, redirect_uri, client_secret)
 ```
 
-Once you are authenticated, you should have access to the OneDrive API, and
-can begin making calls using the SDK!
+Once your app is authenticated, you should have access to the OneDrive API, and
+can begin making calls using the SDK.
 
-Examples
-========
+## Examples
 
-NOTE: All examples assume that the
-[Authentication](#authentication) has already occured.
+**Note:** All examples assume that your app has already been
+[Authenticated](#authentication).
 
-Upload an Item
---------------
+### Upload an Item
 
 ```python
 returned_item = client.item(drive="me", id="root").children["newfile.txt"].upload("./path_to_file.txt")
 ```
 
-Download an Item
-----------------
+### Download an Item
 
 ```python
 root_folder = client.item(drive="me", id="root").children.get()
@@ -65,8 +60,7 @@ id_of_file = root_folder[0].id
 client.item(drive="me", id=id_of_file).download("./path_to_download_to.txt")
 ```
 
-Add a Folder
-------------
+### Add a folder
 
 ```python
 f = onedrivesdk.Folder()
@@ -77,8 +71,7 @@ i.folder = f
 returned_item = client.item(drive="me", id="root").children.add(i)
 ```
 
-Copying an Item
----------------
+### Copy an Item
 
 ```python
 from onedrivesdk.item_reference import ItemReference
@@ -95,8 +88,7 @@ copy_operation.poll_until_complete()
 
 ```
 
-Renaming an Item
-----------------
+### Rename an Item
 
 ```python
 renamed_item = onedrivesdk.Item()
@@ -106,27 +98,24 @@ renamed_item.id = "youritemtorename!id"
 new_item = client.item(drive="me", id=renamed_item.id).update(renamed_item)
 ```
 
-Paging through a Collection
----------------------------
+### Paging through a collection
 
 ```python
-#get the top 3 elements of root, leaving the next page for more elements
+#get the top three elements of root, leaving the next page for more elements
 collection = client.item(drive="me", id="root").children.request(top=3).get()
 
 #get the first item in the collection
 item = collection[0]
 
-#get next page of 3 elements, if none exist, returns None
+#get the next page of three elements, if none exist, returns None
 collection2 = collection.next_page_request.get()
 ```
 
-Async operations
-----------------
+### Async operations
 
-<p>
-For async operations, you create an asyncio.coroutine which
-implements asyncio.ascompleted, and execute it with
-loop.run\_until\_complete.
+For async operations, you create an `asyncio.coroutine` which
+implements `asyncio.ascompleted`, and execute it with
+`loop.run\_until\_complete`.
 
 ```python
 import asyncio
