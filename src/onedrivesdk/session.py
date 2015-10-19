@@ -81,6 +81,7 @@ class Session(SessionBase):
             # pickle.HIGHEST_PROTOCOL is binary format. Good perf.
             pickle.dump(self, session_file, pickle.HIGHEST_PROTOCOL)
 
+    @staticmethod
     def load_session(**load_session_kwargs):
         """Save the current session.
         IMPORTANT: This implementation should only be used for debugging.
