@@ -72,11 +72,16 @@ class Session(SessionBase):
         Remember, the access_token should be treated the same as a password.
         
         Args:
-            save_session_kwargs (dicr): Arguments to be passed 
-                to Session.save_session(). Not used in this implementation,
-                but can be used by subclasses.
+            save_session_kwargs (dicr): To be used by implementation
+            of save_session, however save_session wants to use them. The
+            default implementation (this one) takes a relative or absolute
+            file path for pickle save location, under the name "path"
         """
-        with open("session.pickle", "wb") as session_file:
+        path = "session.pickle"
+        if "path" in save_session_kwargs:
+            path = save_session_kwargs["path"]
+        
+        with open(path, "wb") as session_file:
             import pickle
             # pickle.HIGHEST_PROTOCOL is binary format. Good perf.
             pickle.dump(self, session_file, pickle.HIGHEST_PROTOCOL)
@@ -91,13 +96,18 @@ class Session(SessionBase):
         Remember, the access_token should be treated the same as a password.
         
         Args:
-            load_session_kwargs (dict): Arguments to be passed to 
-                Session.load_session(). Not used in this implementation, 
-                but can be used in subclasses.
+            load_session_kwargs (dict): To be used by implementation
+            of load_session, however load_session wants to use them. The
+            default implementation (this one) takes a relative or absolute
+            file path for pickle save location, under the name "path"
 
         Returns:
             :class:`Session`: The loaded session
         """
-        with open("session.pickle", "rb") as session_file:
+        path = "session.pickle"
+        if "path" in load_session_kwargs:
+            path = load_session_kwargs["path"]
+        
+        with open(path, "rb") as session_file:
             import pickle
             return pickle.load(session_file)
