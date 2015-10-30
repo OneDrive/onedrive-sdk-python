@@ -1,12 +1,12 @@
 # CommandLineFileExplorer sample 
 
 The CommanLineFileExplorer sample is a sample app written in Python and uses the OneDrive SDK for Python. 
-The sample shows you how to work with a user's files and folders on OneDrive. In this sample, you will learn how to upload or download a file, get a sharing link, explore files and folder, and more. Note that the sample does not work for OneDrive for Business.
+The sample shows you how to work with a user's files and folders on OneDrive. In this sample, you will learn how to upload or download a file, get a sharing link, explore files and folder, and more. 
 
 ## Set up
 
 1. If you don't have Python installed, go to [Python.org](http://python.org) and scroll over **Downloads** to choose the install for your platform. For example, choose **Download for Windows** | **Python 3.5.0** to download Python for Windows. Follow the instructions in [Using the Python Interpreter](https://docs.python.org/3/tutorial/interpreter.html) to complete your Python set up.
-2. Download the [OneDrive SDK for Python](https://github.com/OneDrive/onedrive-sdk-python/).
+2. Download the [OneDrive SDK for Python](https://github.com/OneDrive/onedrive-sdk-python/) to get the sample.
 3. Open a command prompt and type `pip install requests` to install [Requests](http://docs.python-requests.org/en/latest/).
 4. In the command prompt, type `pip install pillow` to install [Pillow](https://pypi.python.org/pypi/Pillow/3.0.0).
 5. Next, type `pip install onedrivesdk` to install the OneDrive SDK for Python. 
@@ -97,7 +97,7 @@ def get_sharing_link(client, item_id):
 
 ### List changes for an item
 
-OneDrive keeps track of changes for an item. In this example, the `delta` method is called on an item to list all changes for that item. The token represents TBD
+OneDrive keeps track of changes for an item. In this example, the `delta` method is called on an item to list all changes for that item. The token represents the last sync token you got from the call to 'delta'.
 
 ```python
 def list_changes(client, item_id, token):
