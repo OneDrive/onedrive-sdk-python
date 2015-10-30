@@ -16,7 +16,7 @@ The sample shows you how to work with a user's files and folders on OneDrive. In
 1. Open a command prompt and type `py -3` to make sure that you are running Python 3.5.
 2. Press **CTRL**+**D** and **Enter** to exit _interactive mode_.
 3. Navigate to where you downloaded the CommandLineFileExplorer.py sample. If you installed a .zip of the OneDrive SDK for Python, the file should be located in ../onedrive-sdk-python/examples/.
-4. Type `py CommandLineFileExplorer.py` to run the sample.
+4. Type `python CommandLineFileExplorer.py` to run the sample.
 5. The app needs permissions to access your OneDrive. Click **Accept** in the browser to grant permissions access to your OneDrive.
 
 ## API features
