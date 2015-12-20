@@ -33,7 +33,12 @@ from ..request.item_all_photos import ItemAllPhotosRequestBuilder
 from ..request.item_delta import ItemDeltaRequestBuilder
 from ..request.item_search import ItemSearchRequestBuilder
 from ..request.item_content_request import ItemContentRequestBuilder
+from ..request.item_upload_fragment import ItemUploadFragmentBuilder
+from ..error import OneDriveError
 import asyncio
+import math
+import os
+import time
 
 
 class ItemRequestBuilder(RequestBuilderBase):
@@ -132,7 +137,33 @@ class ItemRequestBuilder(RequestBuilderBase):
         Returns: 
             The created entity.
         """
-        return self.content.request().upload(local_path)
+        file_size = os.stat(local_path).st_size
+        if file_size <= 100 * 1024 * 1024:
+            return self.content.request().upload(local_path)
+        else:
+            # resumable upload needed for larger files
+            session = self.create_session().post()
+            __PART_SIZE = 10 * 1024 * 1024 # recommended file size. Should be multiple of 320 * 1024
+
+            with ItemUploadFragmentBuilder(session.upload_url, self._client, local_path) as upload_builder:
+                for i in range(math.ceil(file_size / __PART_SIZE)):
+                    length = min(__PART_SIZE, file_size - i  * __PART_SIZE)
+                    tries = 0
+                    while True:
+                        try:
+                            tries += 1
+                            resp = upload_builder.post(i * __PART_SIZE, length)
+                        except OneDriveError as exc:
+                            if exc.status_code in (500, 502, 503, 504) and tries < 5:
+                                time.sleep(5)
+                                continue
+                            elif exc.status_code == 401:
+                                self._client.auth_provider.refresh_token()
+                                continue
+                            else:
+                                raise exc
+                        break
+            return resp
 
     @asyncio.coroutine
     def upload_async(self, local_path):
