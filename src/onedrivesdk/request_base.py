@@ -113,7 +113,7 @@ class RequestBase(object):
         elif isinstance(option, QueryOption):
             self._query_options[option.key] = option.value
 
-    def send(self, content=None, path=None):
+    def send(self, content=None, path=None, data=None):
         """Send the request using the client specified
         at request initialization
 
@@ -122,6 +122,8 @@ class RequestBase(object):
                 that will be sent
             path (str): Defaults to None, the local path of the file which
                 will be sent
+            data (file object): Defaults to none, the file object of the
+                file which will be sent
 
         Returns:
             :class:`HttpResponse<onedrivesdk.http_response.HttpResponse>`:
@@ -141,6 +143,12 @@ class RequestBase(object):
                 self._headers,
                 self.request_url,
                 path=path)
+        elif data:
+            response = self._client.http_provider.send(
+                self.method,
+                self._headers,
+                self.request_url,
+                data=data)
         else:
             content_dict = None
 
