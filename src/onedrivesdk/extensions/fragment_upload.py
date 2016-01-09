@@ -25,6 +25,7 @@
 
 from ..error import OneDriveError
 from ..model.upload_session import UploadSession
+from ..model.item import Item
 from ..options import HeaderOption
 from ..request.item_request_builder import ItemRequestBuilder
 from ..request_builder_base import RequestBuilderBase
@@ -128,11 +129,14 @@ class ItemUploadFragmentBuilder(RequestBuilderBase):
         return entity
 
 
-def fragment_upload(self, local_path, upload_status=None):
+def fragment_upload(self, local_path, conflict_behavior=None, upload_status=None):
     """Uploads file using PUT using multipart upload if needed.
 
     Args:
         local_path (str): The path to the local file to upload.
+        conflict_behavior (str): conflict behavior if the file is already
+            uploaded. Use None value if file should be replaced or "rename", if
+            the new file should get a new name
         upload_status (func): function(current_part, total_parts) to be called
             with upload status for each 10MB part
 
@@ -145,7 +149,12 @@ def fragment_upload(self, local_path, upload_status=None):
         return self.content.request().upload(local_path)
     else:
         # multipart upload needed for larger files
-        session = self.create_session().post()
+        if conflict_behavior:
+            item = Item({'@name.conflictBehavior': conflict_behavior})
+        else:
+            item = Item({})
+
+        session = self.create_session(item).post()
 
         with ItemUploadFragmentBuilder(session.upload_url, self._client, local_path) as upload_builder:
             total_parts = math.ceil(file_size / __PART_SIZE)
