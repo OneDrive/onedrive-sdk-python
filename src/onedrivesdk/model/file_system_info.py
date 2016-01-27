@@ -24,7 +24,7 @@
 '''
 
 from __future__ import unicode_literals
-from datetime import datetime
+from ..extensions.datetime_helper import datetime_from_string
 from ..one_drive_object_base import OneDriveObjectBase
 
 
@@ -42,7 +42,7 @@ class FileSystemInfo(OneDriveObjectBase):
                 The createdDateTime
         """
         if "createdDateTime" in self._prop_dict:
-            return datetime.strptime(self._prop_dict["createdDateTime"].replace("Z", ""), "%Y-%m-%dT%H:%M:%S.%f")
+            return datetime_from_string(self._prop_dict["createdDateTime"])
         else:
             return None
 
@@ -59,7 +59,7 @@ class FileSystemInfo(OneDriveObjectBase):
                 The lastModifiedDateTime
         """
         if "lastModifiedDateTime" in self._prop_dict:
-            return datetime.strptime(self._prop_dict["lastModifiedDateTime"].replace("Z", ""), "%Y-%m-%dT%H:%M:%S.%f")
+            return datetime_from_string(self._prop_dict["lastModifiedDateTime"])
         else:
             return None
 

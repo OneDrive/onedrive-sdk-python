@@ -40,7 +40,7 @@ from ..model.special_folder import SpecialFolder
 from ..model.video import Video
 from ..model.permission import Permission
 from ..model.thumbnail_set import ThumbnailSet
-from datetime import datetime
+from ..extensions.datetime_helper import datetime_from_string
 from ..one_drive_object_base import OneDriveObjectBase
 
 
@@ -81,7 +81,7 @@ class Item(OneDriveObjectBase):
                 The createdDateTime
         """
         if "createdDateTime" in self._prop_dict:
-            return datetime.strptime(self._prop_dict["createdDateTime"].replace("Z", ""), "%Y-%m-%dT%H:%M:%S.%f")
+            return datetime_from_string(self._prop_dict["createdDateTime"])
         else:
             return None
 
@@ -193,7 +193,7 @@ class Item(OneDriveObjectBase):
                 The lastModifiedDateTime
         """
         if "lastModifiedDateTime" in self._prop_dict:
-            return datetime.strptime(self._prop_dict["lastModifiedDateTime"].replace("Z", ""), "%Y-%m-%dT%H:%M:%S.%f")
+            return datetime_from_string(self._prop_dict["lastModifiedDateTime"])
         else:
             return None
 

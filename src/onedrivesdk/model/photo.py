@@ -24,7 +24,7 @@
 '''
 
 from __future__ import unicode_literals
-from datetime import datetime
+from ..extensions.datetime_helper import datetime_from_string
 from ..one_drive_object_base import OneDriveObjectBase
 
 
@@ -144,7 +144,7 @@ class Photo(OneDriveObjectBase):
                 The takenDateTime
         """
         if "takenDateTime" in self._prop_dict:
-            return datetime.strptime(self._prop_dict["takenDateTime"].replace("Z", ""), "%Y-%m-%dT%H:%M:%S.%f")
+            return datetime_from_string(self._prop_dict["takenDateTime"])
         else:
             return None
 
