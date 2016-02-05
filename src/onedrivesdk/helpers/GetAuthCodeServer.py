@@ -48,7 +48,8 @@ def get_auth_code(auth_url, redirect_uri):
     Returns: 
         str: A string representing the auth code, sent back by the server
     """
-    HOST, PORT = "localhost", 8080
+    HOST, PORT = urlparse(redirect_uri).netloc.split(':')
+    PORT = int(PORT)
     # Set up HTTP server and thread
     code_acquired = threading.Event()
     s = GetAuthCodeServer((HOST, PORT), code_acquired, GetAuthCodeRequestHandler)    
