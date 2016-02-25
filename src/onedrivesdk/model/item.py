@@ -89,7 +89,7 @@ class Item(OneDriveObjectBase):
 
     @created_date_time.setter
     def created_date_time(self, val):
-        time_format = "%Y-%m-%dT%H:%M:%S.%f"
+        time_format = "%Y-%m-%dT%H:%M:%S.%fZ"
         self._prop_dict["createdDateTime"] = val.strftime(time_format)
 
     @property
@@ -203,7 +203,7 @@ class Item(OneDriveObjectBase):
 
     @last_modified_date_time.setter
     def last_modified_date_time(self, val):
-        time_format = "%Y-%m-%dT%H:%M:%S.%f"
+        time_format = "%Y-%m-%dT%H:%M:%S.%fZ"
         self._prop_dict["lastModifiedDateTime"] = val.strftime(time_format)
 
     @property
