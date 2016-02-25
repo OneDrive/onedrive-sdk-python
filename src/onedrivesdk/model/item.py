@@ -83,7 +83,7 @@ class Item(OneDriveObjectBase):
         """
         if "createdDateTime" in self._prop_dict:
             time_format = "%Y-%m-%dT%H:%M:%S.%f"
-            return datetime.strptime(self._prop_dict["createdDateTime"], time_format)
+            return datetime.strptime(self._prop_dict["createdDateTime"].replace("Z",""), time_format)
         else:
             return None
 
@@ -197,7 +197,7 @@ class Item(OneDriveObjectBase):
         """
         if "lastModifiedDateTime" in self._prop_dict:
             time_format = "%Y-%m-%dT%H:%M:%S.%f"
-            return datetime.strptime(self._prop_dict["lastModifiedDateTime"], time_format)
+            return datetime.strptime(self._prop_dict["lastModifiedDateTime"].replace("Z",""), time_format)
         else:
             return None
 
