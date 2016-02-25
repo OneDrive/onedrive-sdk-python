@@ -82,16 +82,15 @@ class Item(OneDriveObjectBase):
                 The createdDateTime
         """
         if "createdDateTime" in self._prop_dict:
-            time_string = "%Y-%m-%dT%H:%M:%S"
-            if (self._prop_dict["createdDateTime"].microsecond != 0):
-                time_string += ".%f"
-            return datetime.strptime(self._prop_dict["createdDateTime"].replace("Z", ""), time_string)
+            time_format = "%Y-%m-%dT%H:%M:%S.%f"
+            return datetime.strptime(self._prop_dict["createdDateTime"], time_format)
         else:
             return None
 
     @created_date_time.setter
     def created_date_time(self, val):
-        self._prop_dict["createdDateTime"] = val.isoformat()+"Z"
+        time_format = "%Y-%m-%dT%H:%M:%S.%f"
+        self._prop_dict["createdDateTime"] = val.strftime(time_format)
 
     @property
     def c_tag(self):
@@ -197,16 +196,15 @@ class Item(OneDriveObjectBase):
                 The lastModifiedDateTime
         """
         if "lastModifiedDateTime" in self._prop_dict:
-            time_string = "%Y-%m-%dT%H:%M:%S"
-            if (self._prop_dict["lastModifiedDateTime"].microsecond != 0):
-                time_string += ".%f"
-            return datetime.strptime(self._prop_dict["lastModifiedDateTime"].replace("Z", ""), time_string)
+            time_format = "%Y-%m-%dT%H:%M:%S.%f"
+            return datetime.strptime(self._prop_dict["lastModifiedDateTime"], time_format)
         else:
             return None
 
     @last_modified_date_time.setter
     def last_modified_date_time(self, val):
-        self._prop_dict["lastModifiedDateTime"] = val.isoformat()+"Z"
+        time_format = "%Y-%m-%dT%H:%M:%S.%f"
+        self._prop_dict["lastModifiedDateTime"] = val.strftime(time_format)
 
     @property
     def name(self):
