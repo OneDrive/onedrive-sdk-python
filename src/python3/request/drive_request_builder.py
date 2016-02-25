@@ -3,22 +3,22 @@
 # Copyright (c) 2015 Microsoft Corporation
 # 
 # Permission is hereby granted, free of charge, to any person obtaining a copy
-#  of this software and associated documentation files (the "Software"), to deal
-#  in the Software without restriction, including without limitation the rights
-#  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-#  copies of the Software, and to permit persons to whom the Software is
-#  furnished to do so, subject to the following conditions:
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
 # 
 # The above copyright notice and this permission notice shall be included in
-#  all copies or substantial portions of the Software.
+# all copies or substantial portions of the Software.
 # 
 # THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-#  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-#  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-#  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-#  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-#  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-#  THE SOFTWARE.
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+# THE SOFTWARE.
 # 
 #  This file was generated and any changes will be overwritten.
 '''
@@ -26,9 +26,6 @@
 from __future__ import unicode_literals
 from .drive_request import DriveRequest
 from ..request_builder_base import RequestBuilderBase
-from ..request.drive_all_photos import DriveAllPhotosRequestBuilder
-from ..request.drive_recent import DriveRecentRequestBuilder
-from ..request.drive_shared_with_me import DriveSharedWithMeRequestBuilder
 import asyncio
 
 
@@ -148,36 +145,6 @@ class DriveRequestBuilder(RequestBuilderBase):
                 A request builder created from the DriveRequestBuilder
         """
         return SpecialCollectionRequestBuilder(self.append_to_request_url("special"), self._client)
-    def all_photos(self):
-        """Executes the allPhotos method
-
-
-        Returns:
-            :class:`DriveAllPhotosRequestBuilder<onedrivesdk.request.drive_all_photos.DriveAllPhotosRequestBuilder>`:
-                A DriveAllPhotosRequestBuilder for the method
-        """
-        return DriveAllPhotosRequestBuilder(self.append_to_request_url("view.allPhotos"), self._client)
-
-    def recent(self):
-        """Executes the recent method
-
-
-        Returns:
-            :class:`DriveRecentRequestBuilder<onedrivesdk.request.drive_recent.DriveRecentRequestBuilder>`:
-                A DriveRecentRequestBuilder for the method
-        """
-        return DriveRecentRequestBuilder(self.append_to_request_url("view.recent"), self._client)
-
-    def shared_with_me(self):
-        """Executes the sharedWithMe method
-
-
-        Returns:
-            :class:`DriveSharedWithMeRequestBuilder<onedrivesdk.request.drive_shared_with_me.DriveSharedWithMeRequestBuilder>`:
-                A DriveSharedWithMeRequestBuilder for the method
-        """
-        return DriveSharedWithMeRequestBuilder(self.append_to_request_url("view.sharedWithMe"), self._client)
-
 from ..request.items_collection import ItemsCollectionRequestBuilder
 from ..request.shared_collection import SharedCollectionRequestBuilder
 from ..request.special_collection import SpecialCollectionRequestBuilder

@@ -3,22 +3,22 @@
 # Copyright (c) 2015 Microsoft Corporation
 # 
 # Permission is hereby granted, free of charge, to any person obtaining a copy
-#  of this software and associated documentation files (the "Software"), to deal
-#  in the Software without restriction, including without limitation the rights
-#  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-#  copies of the Software, and to permit persons to whom the Software is
-#  furnished to do so, subject to the following conditions:
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
 # 
 # The above copyright notice and this permission notice shall be included in
-#  all copies or substantial portions of the Software.
+# all copies or substantial portions of the Software.
 # 
 # THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-#  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-#  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-#  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-#  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-#  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-#  THE SOFTWARE.
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+# THE SOFTWARE.
 # 
 #  This file was generated and any changes will be overwritten.
 '''
@@ -29,7 +29,6 @@ from ..request_builder_base import RequestBuilderBase
 from ..request.item_create_session import ItemCreateSessionRequestBuilder
 from ..request.item_copy import ItemCopyRequestBuilder
 from ..request.item_create_link import ItemCreateLinkRequestBuilder
-from ..request.item_all_photos import ItemAllPhotosRequestBuilder
 from ..request.item_delta import ItemDeltaRequestBuilder
 from ..request.item_search import ItemSearchRequestBuilder
 from ..request.item_content_request import ItemContentRequestBuilder
@@ -132,7 +131,7 @@ class ItemRequestBuilder(RequestBuilderBase):
         Returns: 
             The created entity.
         """
-        return self.content.request().upload(local_path)
+        return self.content.request().put(local_path)
 
     @asyncio.coroutine
     def upload_async(self, local_path):
@@ -165,6 +164,17 @@ class ItemRequestBuilder(RequestBuilderBase):
         """
         entity = yield from self.content.request().download_async(local_path)
         return entity
+
+    @property
+    def remote_item(self):
+        """The remote_item for the ItemRequestBuilder
+
+        Returns: 
+            :class:`RemoteItemRequestBuilder<onedrivesdk.request.remote_item_request.RemoteItemRequestBuilder>`:
+                A request builder created from the ItemRequestBuilder
+        """
+        return RemoteItemRequestBuilder(self.append_to_request_url("remoteItem"), self._client)
+
 
     @property
     def permissions(self):
@@ -255,16 +265,6 @@ class ItemRequestBuilder(RequestBuilderBase):
                 A ItemCreateLinkRequestBuilder for the method
         """
         return ItemCreateLinkRequestBuilder(self.append_to_request_url("action.createLink"), self._client, type)
-
-    def all_photos(self):
-        """Executes the allPhotos method
-
-
-        Returns:
-            :class:`ItemAllPhotosRequestBuilder<onedrivesdk.request.item_all_photos.ItemAllPhotosRequestBuilder>`:
-                A ItemAllPhotosRequestBuilder for the method
-        """
-        return ItemAllPhotosRequestBuilder(self.append_to_request_url("view.allPhotos"), self._client)
 
     def delta(self, token=None):
         """Executes the delta method
