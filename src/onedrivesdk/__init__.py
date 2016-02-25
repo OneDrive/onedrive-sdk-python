@@ -3,22 +3,22 @@
 # Copyright (c) 2015 Microsoft Corporation
 # 
 # Permission is hereby granted, free of charge, to any person obtaining a copy
-#  of this software and associated documentation files (the "Software"), to deal
-#  in the Software without restriction, including without limitation the rights
-#  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-#  copies of the Software, and to permit persons to whom the Software is
-#  furnished to do so, subject to the following conditions:
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
 # 
 # The above copyright notice and this permission notice shall be included in
-#  all copies or substantial portions of the Software.
+# all copies or substantial portions of the Software.
 # 
 # THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-#  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-#  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-#  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-#  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-#  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-#  THE SOFTWARE.
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+# THE SOFTWARE.
 '''
 
 from .model.item_reference import ItemReference
@@ -38,6 +38,7 @@ from .model.photo import Photo
 from .model.quota import Quota
 from .model.search_result import SearchResult
 from .model.sharing_invitation import SharingInvitation
+from .model.shared import Shared
 from .model.sharing_link import SharingLink
 from .model.special_folder import SpecialFolder
 from .model.video import Video
@@ -72,13 +73,9 @@ from .request.children_collection import ChildrenCollectionRequest, ChildrenColl
 from .request.thumbnails_collection import ThumbnailsCollectionRequest, ThumbnailsCollectionRequestBuilder, ThumbnailsCollectionPage, ThumbnailsCollectionResponse
 from .request.drives_collection import DrivesCollectionRequest, DrivesCollectionRequestBuilder, DrivesCollectionPage, DrivesCollectionResponse
 from .request.shares_collection import SharesCollectionRequest, SharesCollectionRequestBuilder, SharesCollectionPage, SharesCollectionResponse
-from .request.drive_all_photos import DriveAllPhotosRequest
-from .request.drive_recent import DriveRecentRequest
-from .request.drive_shared_with_me import DriveSharedWithMeRequest
 from .request.item_create_session import ItemCreateSessionRequest
 from .request.item_copy import ItemCopyRequest
 from .request.item_create_link import ItemCreateLinkRequest
-from .request.item_all_photos import ItemAllPhotosRequest
 from .request.item_delta import ItemDeltaRequest
 from .request.item_search import ItemSearchRequest
 from .request.item_delta_collection import ItemDeltaCollectionPage, ItemDeltaCollectionResponse
