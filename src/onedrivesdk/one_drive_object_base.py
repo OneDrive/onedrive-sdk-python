@@ -21,10 +21,13 @@
  THE SOFTWARE.
 ------------------------------------------------------------------------------
 '''
-
+from datetime import datetime
 
 class OneDriveObjectBase(object):
 
+    DATETIME_FORMAT = "%Y-%m-%dT%H:%M:%S.%fZ"
+    DATETIME_FORMAT_NO_MILLISECONDS = "%Y-%m-%dT%H:%M:%SZ"
+    
     def to_dict(self):
         """Returns the serialized form of the :class:`OneDriveObjectBase`
         as a dict. All sub-objects that are based off of :class:`OneDriveObjectBase`
@@ -42,3 +45,20 @@ class OneDriveObjectBase(object):
                 serialized[prop] = self._prop_dict[prop]
 
         return serialized
+        
+    @staticmethod
+    def get_datetime_from_string(s):
+        try:
+            dt = datetime.strptime(
+                s,
+                OneDriveObjectBase.DATETIME_FORMAT)
+        except ValueError as ve:
+            # Try again with other format
+            dt = datetime.strptime(
+                s,
+                OneDriveObjectBase.DATETIME_FORMAT_NO_MILLISECONDS)
+        return dt
+        
+    @staticmethod
+    def get_string_from_datetime(dt):
+        return dt.strftime(OneDriveObjectBase.DATETIME_FORMAT)
