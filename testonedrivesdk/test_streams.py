@@ -55,3 +55,6 @@ class TestStreams(unittest.TestCase):
 
         assert client.http_provider.download.call_args[0][2] == path
         assert client.http_provider.download.call_args[0][1] == "onedriveurl/drives/me/items/root/children/newFile.txt/content"
+
+if __name__ == '__main__':
+    unittest.main()
