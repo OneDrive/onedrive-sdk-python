@@ -102,7 +102,7 @@ class ItemRequestBuilder(RequestBuilderBase):
         Returns: 
             The created entity.
         """
-        return self.content.request().put(local_path)
+        return self.content.request().upload(local_path)
 
 
     def download(self, local_path):
