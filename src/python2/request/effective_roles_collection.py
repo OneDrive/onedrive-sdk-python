@@ -26,65 +26,51 @@
 from __future__ import unicode_literals
 from ..collection_base import CollectionRequestBase, CollectionResponseBase, CollectionPageBase
 from ..request_builder_base import RequestBuilderBase
-from ..model.item import Item
 import json
-import asyncio
 
-class VersionsCollectionRequest(CollectionRequestBase):
+class EffectiveRolesCollectionRequest(CollectionRequestBase):
 
     def __init__(self, request_url, client, options):
-        """Initialize the VersionsCollectionRequest
+        """Initialize the EffectiveRolesCollectionRequest
         
         Args:
-            request_url (str): The url to perform the VersionsCollectionRequest
+            request_url (str): The url to perform the EffectiveRolesCollectionRequest
                 on
             client (:class:`OneDriveClient<onedrivesdk.request.one_drive_client.OneDriveClient>`):
                 The client which will be used for the request
             options (list of :class:`Option<onedrivesdk.options.Option>`):
                 A list of options to pass into the request
         """
-        super(VersionsCollectionRequest, self).__init__(request_url, client, options)
+        super(EffectiveRolesCollectionRequest, self).__init__(request_url, client, options)
 
     def get(self):
-        """Gets the VersionsCollectionPage
+        """Gets the EffectiveRolesCollectionPage
 
         Returns: 
-            :class:`VersionsCollectionPage<onedrivesdk.request.versions_collection.VersionsCollectionPage>`:
-                The VersionsCollectionPage
+            :class:`EffectiveRolesCollectionPage<onedrivesdk.request.effective_roles_collection.EffectiveRolesCollectionPage>`:
+                The EffectiveRolesCollectionPage
         """
         self.method = "GET"
-        collection_response = VersionsCollectionResponse(json.loads(self.send().content))
+        collection_response = EffectiveRolesCollectionResponse(json.loads(self.send().content))
         return self._page_from_response(collection_response)
 
-    @asyncio.coroutine
-    def get_async(self):
-        """Gets the VersionsCollectionPage in async
 
-        Yields: 
-            :class:`VersionsCollectionPage<onedrivesdk.request.versions_collection.VersionsCollectionPage>`:
-                The VersionsCollectionPage
-        """
-        future = self._client._loop.run_in_executor(None,
-                                                    self.get)
-        collection_page = yield from future
-        return collection_page
-
-class VersionsCollectionRequestBuilder(RequestBuilderBase):
+class EffectiveRolesCollectionRequestBuilder(RequestBuilderBase):
 
     def __getitem__(self, key):
-        """Get the ItemRequestBuilder with the specified key
+        """Get the strRequestBuilder with the specified key
         
         Args:
-            key (str): The key to get a ItemRequestBuilder for
+            key (str): The key to get a strRequestBuilder for
         
         Returns: 
-            :class:`ItemRequestBuilder<onedrivesdk.request.item_request_builder.ItemRequestBuilder>`:
-                A ItemRequestBuilder for that key
+            :class:`strRequestBuilder<onedrivesdk.request.str_request_builder.strRequestBuilder>`:
+                A strRequestBuilder for that key
         """
-        return ItemRequestBuilder(self.append_to_request_url(str(key)), self._client)
+        return strRequestBuilder(self.append_to_request_url(str(key)), self._client)
 
     def request(self, expand=None, select=None, top=None, order_by=None, options=None):
-        """Builds the VersionsCollectionRequest
+        """Builds the EffectiveRolesCollectionRequest
         
         Args:
             expand (str): Default None, comma-seperated list of relationships
@@ -98,78 +84,68 @@ class VersionsCollectionRequestBuilder(RequestBuilderBase):
                 A list of options to pass into the request. Defaults to None.
 
         Returns:
-            :class:`VersionsCollectionRequest<onedrivesdk.request.versions_collection.VersionsCollectionRequest>`:
-                The VersionsCollectionRequest
+            :class:`EffectiveRolesCollectionRequest<onedrivesdk.request.effective_roles_collection.EffectiveRolesCollectionRequest>`:
+                The EffectiveRolesCollectionRequest
         """
-        req = VersionsCollectionRequest(self._request_url, self._client, options)
+        req = EffectiveRolesCollectionRequest(self._request_url, self._client, options)
         req._set_query_options(expand=expand, select=select, top=top, order_by=order_by)
         return req
 
     def get(self):
-        """Gets the VersionsCollectionPage
+        """Gets the EffectiveRolesCollectionPage
 
         Returns: 
-            :class:`VersionsCollectionPage<onedrivesdk.request.versions_collection.VersionsCollectionPage>`:
-                The VersionsCollectionPage
+            :class:`EffectiveRolesCollectionPage<onedrivesdk.request.effective_roles_collection.EffectiveRolesCollectionPage>`:
+                The EffectiveRolesCollectionPage
         """
         return self.request().get()
 
-    @asyncio.coroutine
-    def get_async(self):
-        """Gets the VersionsCollectionPage in async
-
-        Yields: 
-            :class:`VersionsCollectionPage<onedrivesdk.request.versions_collection.VersionsCollectionPage>`:
-                The VersionsCollectionPage
-        """
-        collection_page = yield from self.request().get_async()
-        return collection_page
 
 
-class VersionsCollectionResponse(CollectionResponseBase):
+class EffectiveRolesCollectionResponse(CollectionResponseBase):
 
     @property
     def collection_page(self):
         """The collection page stored in the response JSON
         
         Returns:
-            :class:`VersionsCollectionPage<onedrivesdk.request.versions_collection.VersionsCollectionPage>`:
+            :class:`EffectiveRolesCollectionPage<onedrivesdk.request.effective_roles_collection.EffectiveRolesCollectionPage>`:
                 The collection page
         """
         if self._collection_page:
             self._collection_page._prop_list = self._prop_dict["value"]
         else:
-            self._collection_page = VersionsCollectionPage(self._prop_dict["value"])
+            self._collection_page = EffectiveRolesCollectionPage(self._prop_dict["value"])
 
         return self._collection_page
 
 
-class VersionsCollectionPage(CollectionPageBase):
+class EffectiveRolesCollectionPage(CollectionPageBase):
 
     def __getitem__(self, index):
-        """Get the Item at the index specified
+        """Get the str at the index specified
         
         Args:
-            index (int): The index of the item to get from the VersionsCollectionPage
+            index (int): The index of the item to get from the EffectiveRolesCollectionPage
 
         Returns:
-            :class:`Item<onedrivesdk.model.item.Item>`:
-                The Item at the index
+            :class:`str<onedrivesdk.model.str.str>`:
+                The str at the index
         """
-        return Item(self._prop_list[index])
+        return str(self._prop_list[index])
 
-    def versions(self):
-        """Get a generator of Item within the VersionsCollectionPage
+    def effective_roles(self):
+        """Get a generator of str within the EffectiveRolesCollectionPage
         
         Yields:
-            :class:`Item<onedrivesdk.model.item.Item>`:
-                The next Item in the collection
+            :class:`str<onedrivesdk.model.str.str>`:
+                The next str in the collection
         """
         for item in self._prop_list:
-            yield Item(item)
+            yield str(item)
 
     def _init_next_page_request(self, next_page_link, client, options):
-        """Initialize the next page request for the VersionsCollectionPage
+        """Initialize the next page request for the EffectiveRolesCollectionPage
         
         Args:
             next_page_link (str): The URL for the next page request
@@ -179,7 +155,7 @@ class VersionsCollectionPage(CollectionPageBase):
             options (list of :class:`Option<onedrivesdk.options.Option>`:
                 A list of options
         """
-        self._next_page_request = VersionsCollectionRequest(next_page_link, client, options)
+        self._next_page_request = EffectiveRolesCollectionRequest(next_page_link, client, options)
 
 
-from ..request.item_request_builder import ItemRequestBuilder
+from ..request.str_request_builder import strRequestBuilder

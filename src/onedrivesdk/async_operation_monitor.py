@@ -62,7 +62,7 @@ class AsyncOperationMonitor(RequestBase):
 
     def _stop_poll_on_thread(self):
         """Stops polling on a seperate thread"""
-        self.completed = True
+        self._completed = True
 
     def _polling_loop(self):
         """This method to run within a new thread (as to not block).

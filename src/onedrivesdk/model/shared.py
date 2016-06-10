@@ -24,54 +24,67 @@
 '''
 
 from __future__ import unicode_literals
-from ..model.open_with_app import OpenWithApp
+from ..model.identity_set import IdentitySet
 from ..one_drive_object_base import OneDriveObjectBase
 
 
-class OpenWithSet(OneDriveObjectBase):
+class Shared(OneDriveObjectBase):
 
     def __init__(self, prop_dict={}):
         self._prop_dict = prop_dict
 
     @property
-    def web(self):
-        """
-        Gets and sets the web
+    def effective_roles(self):
+        """Gets and sets the effectiveRoles
         
         Returns: 
-            :class:`OpenWithApp<onedrivesdk.model.open_with_app.OpenWithApp>`:
-                The web
+            str:
+                The effectiveRoles
         """
-        if "web" in self._prop_dict:
-            if isinstance(self._prop_dict["web"], OneDriveObjectBase):
-                return self._prop_dict["web"]
-            else :
-                self._prop_dict["web"] = OpenWithApp(self._prop_dict["web"])
-                return self._prop_dict["web"]
+        if "effectiveRoles" in self._prop_dict:
+            return self._prop_dict["effectiveRoles"]
+        else:
+            return None
 
-        return None
+    @effective_roles.setter
+    def effective_roles(self, val):
+        self._prop_dict["effectiveRoles"] = val
 
-    @web.setter
-    def web(self, val):
-        self._prop_dict["web"] = val
     @property
-    def web_embed(self):
+    def owner(self):
         """
-        Gets and sets the webEmbed
+        Gets and sets the owner
         
         Returns: 
-            :class:`OpenWithApp<onedrivesdk.model.open_with_app.OpenWithApp>`:
-                The webEmbed
+            :class:`IdentitySet<onedrivesdk.model.identity_set.IdentitySet>`:
+                The owner
         """
-        if "webEmbed" in self._prop_dict:
-            if isinstance(self._prop_dict["webEmbed"], OneDriveObjectBase):
-                return self._prop_dict["webEmbed"]
+        if "owner" in self._prop_dict:
+            if isinstance(self._prop_dict["owner"], OneDriveObjectBase):
+                return self._prop_dict["owner"]
             else :
-                self._prop_dict["webEmbed"] = OpenWithApp(self._prop_dict["webEmbed"])
-                return self._prop_dict["webEmbed"]
+                self._prop_dict["owner"] = IdentitySet(self._prop_dict["owner"])
+                return self._prop_dict["owner"]
 
         return None
 
-    @web_embed.setter
-    def web_embed(self, val):
-        self._prop_dict["webEmbed"] = val
+    @owner.setter
+    def owner(self, val):
+        self._prop_dict["owner"] = val
+    @property
+    def scope(self):
+        """Gets and sets the scope
+        
+        Returns: 
+            str:
+                The scope
+        """
+        if "scope" in self._prop_dict:
+            return self._prop_dict["scope"]
+        else:
+            return None
+
+    @scope.setter
+    def scope(self, val):
+        self._prop_dict["scope"] = val
+

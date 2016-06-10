@@ -3,22 +3,22 @@
 # Copyright (c) 2015 Microsoft Corporation
 # 
 # Permission is hereby granted, free of charge, to any person obtaining a copy
-#  of this software and associated documentation files (the "Software"), to deal
-#  in the Software without restriction, including without limitation the rights
-#  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-#  copies of the Software, and to permit persons to whom the Software is
-#  furnished to do so, subject to the following conditions:
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
 # 
 # The above copyright notice and this permission notice shall be included in
-#  all copies or substantial portions of the Software.
+# all copies or substantial portions of the Software.
 # 
 # THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-#  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-#  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-#  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-#  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-#  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-#  THE SOFTWARE.
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+# THE SOFTWARE.
 # 
 #  This file was generated and any changes will be overwritten.
 '''
@@ -36,6 +36,7 @@ from ..model.location import Location
 from ..model.open_with_set import OpenWithSet
 from ..model.photo import Photo
 from ..model.search_result import SearchResult
+from ..model.shared import Shared
 from ..model.special_folder import SpecialFolder
 from ..model.video import Video
 from ..model.permission import Permission
@@ -81,13 +82,13 @@ class Item(OneDriveObjectBase):
                 The createdDateTime
         """
         if "createdDateTime" in self._prop_dict:
-            return datetime.strptime(self._prop_dict["createdDateTime"].replace("Z", ""), "%Y-%m-%dT%H:%M:%S.%f")
+            return self.get_datetime_from_string(self._prop_dict["createdDateTime"])
         else:
             return None
 
     @created_date_time.setter
     def created_date_time(self, val):
-        self._prop_dict["createdDateTime"] = val.isoformat()+"Z"
+        self._prop_dict["createdDateTime"] = self.get_string_from_datetime(val)
 
     @property
     def c_tag(self):
@@ -193,13 +194,13 @@ class Item(OneDriveObjectBase):
                 The lastModifiedDateTime
         """
         if "lastModifiedDateTime" in self._prop_dict:
-            return datetime.strptime(self._prop_dict["lastModifiedDateTime"].replace("Z", ""), "%Y-%m-%dT%H:%M:%S.%f")
+            return self.get_datetime_from_string(self._prop_dict["lastModifiedDateTime"])
         else:
             return None
 
     @last_modified_date_time.setter
     def last_modified_date_time(self, val):
-        self._prop_dict["lastModifiedDateTime"] = val.isoformat()+"Z"
+        self._prop_dict["lastModifiedDateTime"] = self.get_string_from_datetime(val)
 
     @property
     def name(self):
@@ -476,6 +477,28 @@ class Item(OneDriveObjectBase):
         self._prop_dict["photo"] = val
 
     @property
+    def remote_item(self):
+        """
+        Gets and sets the remoteItem
+        
+        Returns: 
+            :class:`Item<onedrivesdk.model.item.Item>`:
+                The remoteItem
+        """
+        if "remoteItem" in self._prop_dict:
+            if isinstance(self._prop_dict["remoteItem"], OneDriveObjectBase):
+                return self._prop_dict["remoteItem"]
+            else :
+                self._prop_dict["remoteItem"] = Item(self._prop_dict["remoteItem"])
+                return self._prop_dict["remoteItem"]
+
+        return None
+
+    @remote_item.setter
+    def remote_item(self, val):
+        self._prop_dict["remoteItem"] = val
+
+    @property
     def search_result(self):
         """
         Gets and sets the searchResult
@@ -496,6 +519,28 @@ class Item(OneDriveObjectBase):
     @search_result.setter
     def search_result(self, val):
         self._prop_dict["searchResult"] = val
+
+    @property
+    def shared(self):
+        """
+        Gets and sets the shared
+        
+        Returns: 
+            :class:`Shared<onedrivesdk.model.shared.Shared>`:
+                The shared
+        """
+        if "shared" in self._prop_dict:
+            if isinstance(self._prop_dict["shared"], OneDriveObjectBase):
+                return self._prop_dict["shared"]
+            else :
+                self._prop_dict["shared"] = Shared(self._prop_dict["shared"])
+                return self._prop_dict["shared"]
+
+        return None
+
+    @shared.setter
+    def shared(self, val):
+        self._prop_dict["shared"] = val
 
     @property
     def special_folder(self):

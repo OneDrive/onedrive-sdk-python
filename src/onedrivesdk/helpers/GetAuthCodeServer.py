@@ -41,17 +41,23 @@ def get_auth_code(auth_url, redirect_uri):
     and stuff. Does block main thread.
 
     Args:
-        auth_url (str): URL of auth server
+        auth_url (str): URL of auth server.
         redirect_uri (str): Redirect URI, as set for the app. Should be 
             something like "http://localhost:8080" for this to work.
 
     Returns: 
         str: A string representing the auth code, sent back by the server
     """
-    HOST, PORT = "localhost", 8080
+    url_netloc = urlparse(redirect_uri).netloc
+    if ':' not in url_netloc:
+        host_address = url_netloc
+        port = 80 # default port
+    else:
+        host_address, port = url_netloc.split(':')
+        port = int(port)
     # Set up HTTP server and thread
     code_acquired = threading.Event()
-    s = GetAuthCodeServer((HOST, PORT), code_acquired, GetAuthCodeRequestHandler)    
+    s = GetAuthCodeServer((host_address, port), code_acquired, GetAuthCodeRequestHandler)    
     th = threading.Thread(target=s.serve_forever)
     th.start()
     webbrowser.open(auth_url)
