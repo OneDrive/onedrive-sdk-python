@@ -129,7 +129,7 @@ class ItemUploadFragmentBuilder(RequestBuilderBase):
         return entity
 
 
-def fragment_upload(self, local_path, conflict_behavior=None, upload_status=None):
+def fragment_upload_async(self, local_path, conflict_behavior=None, upload_status=None):
     """Uploads file using PUT using multipart upload if needed.
 
     Args:
@@ -146,7 +146,7 @@ def fragment_upload(self, local_path, conflict_behavior=None, upload_status=None
     file_size = os.stat(local_path).st_size
     if file_size <= __MAX_SINGLE_FILE_UPLOAD:
         # fallback to single shot upload if file is small enough
-        return self.content.request().upload(local_path)
+        return self.content.request().upload_async(local_path)
     else:
         # multipart upload needed for larger files
         if conflict_behavior:
@@ -183,4 +183,5 @@ def fragment_upload(self, local_path, conflict_behavior=None, upload_status=None
         # return last response
         return resp
 
-ItemRequestBuilder.fragment_upload = fragment_upload
+# Overwrite the standard upload operation to use this one
+ItemRequestBuilder.upload_async = fragment_upload_async
