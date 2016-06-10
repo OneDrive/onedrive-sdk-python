@@ -63,7 +63,7 @@ class AuthProviderBase(object):
         pass
 
     @abc.abstractmethod
-    def authenticate(self, code, auth_server_url, redirect_uri, client_secret):
+    def authenticate(self, code, auth_server_url, redirect_uri, client_secret, resource):
         pass
 
     @abc.abstractmethod
