@@ -54,10 +54,21 @@ class ItemContentRequest(RequestBase):
             :class:`Item<onedrivesdk.model.item.Item>`:
                 The created Item.
         """
-        self.method = "PUT"
-        entity_response = self.send(path=content_local_path)
-        entity = Item(json.loads(entity_response.content))
-        return entity
+        file_size = os.stat(content_local_path).st_size
+        if file_size <= 100 * 1024 * 1024:
+            self.method = "PUT"
+            entity_response = self.send(path=content_local_path)
+            entity = Item(json.loads(entity_response.content))
+            return entity
+        else:
+            # resumable upload needed for larger files
+            session = ItemRequestBuilder(self._request, self._client).create_session()
+            __PART_SIZE = 60 * 1024 * 1024
+
+            with ItemUploadFragmentBuilder(session.uploadUrl, self._client, content_local_path) as upload_builder:
+                for i in range(math.ceil(file_size / __PART_SIZE)):
+                    resp = upload_builder.post(i * __PART_SIZE, __PART_SIZE)
+            return resp
 
     def download(self, content_local_path):
         """Downloads the specified Item.
