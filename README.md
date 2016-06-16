@@ -130,3 +130,20 @@ def run_gets(client):
 loop = asyncio.get_event_loop()
 loop.run_until_complete(run_gets(client))   
 ```
+
+## Using a Proxy
+If you need to proxy your requests, you can use the helper class `HttpProviderWithProxy`.
+```python
+import onedrivesdk
+from onedrivesdk.helpers import http_provider_with_proxy
+
+proxy = {
+    'http': 'http://localhost:8888',
+    'https': 'https://localhost:8888'
+}
+http = http_provider_with_proxy.HttpProviderWithProxy(proxy, verify_ssl=True)
+auth = onedrivesdk.AuthProvider(http, my_client_id, ['onedrive.readwrite'])
+client = onedrivesdk.OneDriveClient(my_base_url, auth, http)
+```
+
+All requests using that client will be proxied.
