@@ -139,7 +139,7 @@ from onedrivesdk.helpers import http_provider_with_proxy
 
 proxy = {
     'http': 'http://localhost:8888',
-	'https': 'https://localhost:8888'
+    'https': 'https://localhost:8888'
 }
 http = http_provider_with_proxy.HttpProviderWithProxy(proxy, verify_ssl=True)
 auth = onedrivesdk.AuthProvider(http, my_client_id, ['onedrive.readwrite'])
