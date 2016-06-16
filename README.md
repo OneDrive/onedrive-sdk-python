@@ -134,6 +134,7 @@ loop.run_until_complete(run_gets(client))
 ## Using a Proxy
 If you need to proxy your requests, you can use the helper class `HttpProviderWithProxy`.
 ```python
+import onedrivesdk
 from onedrivesdk.helpers import http_provider_with_proxy
 
 proxy = {
