@@ -134,7 +134,7 @@ class AuthProvider(AuthProviderBase):
             }
         return "{}?{}".format(self.AUTH_SERVER_URL, urlencode(params))
 
-    def authenticate(self, code, redirect_uri, client_secret=None):
+    def authenticate(self, code, redirect_uri, client_secret=None, resource=None):
         """Takes in a code string, gets the access token,
         and creates session property bag
 
@@ -145,17 +145,23 @@ class AuthProvider(AuthProviderBase):
                 to
             client_secret (str): Defaults to None, the client
                 secret of your app
+            resource (str): Defaults to None,The resource  
+                you want to access
         """
 
         params = {
             "code": code,
             "client_id": self.client_id,
             "redirect_uri": redirect_uri,
-            "grant_type": "authorization_code"
+            "grant_type": "authorization_code",
+            "resource": resource,
         }
 
         if client_secret is not None:
             params["client_secret"] = client_secret
+        if resource is not None:
+            params["resource"] = resource
+
         headers = {"Content-Type": "application/x-www-form-urlencoded"}
         response = self._http_provider.send(method="POST",
                                             headers=headers,
