@@ -19,15 +19,40 @@ To interact with the OneDrive API, your app must authenticate. You can use the f
 
 ```python
 import onedrivesdk
+
+redirect_uri = 'http://localhost:8080/'
+client_secret = 'your_client_secret'
+client_id='your_client_id'
+api_base_url='https://api.onedrive.com/v1.0/'
+scopes=['wl.signin', 'wl.offline_access', 'onedrive.readwrite']
+
+http_provider = onedrivesdk.HttpProvider()
+auth_provider = onedrivesdk.AuthProvider(
+    http_provider=http_provider,
+    client_id=client_id,
+    scopes=scopes)
+
+client = onedrivesdk.OneDriveClient(api_base_url, auth_provider, http_provider)
+auth_url = client.auth_provider.get_auth_url(redirect_uri)
+# Ask for the code
+print('Paste this URL into your browser, approve the app\'s access.')
+print('Copy everything in the address bar after "code=", and paste it below.')
+print(auth_url)
+code = input('Paste code here: ')
+
+client.auth_provider.authenticate(code, redirect_uri, client_secret)
+```
+
+
+```python
+import onedrivesdk
 from onedrivesdk.helpers import GetAuthCodeServer
 
-redirect_uri = "http://localhost:8080/"
-client_secret = "your_app_secret"
+redirect_uri = 'http://localhost:8080/'
+client_secret = 'your_app_secret'
 
-client = onedrivesdk.get_default_client(client_id='your_client_id',
-                                       	scopes=['wl.signin',
-                                               	'wl.offline_access',
-                                               	'onedrive.readwrite'])
+client = onedrivesdk.get_default_client(
+    client_id='your_client_id',
 
 auth_url = client.auth_provider.get_auth_url(redirect_uri)
 
@@ -48,16 +73,16 @@ can begin making calls using the SDK.
 ### Upload an Item
 
 ```python
-returned_item = client.item(drive="me", id="root").children["newfile.txt"].upload("./path_to_file.txt")
+returned_item = client.item(drive='me', id='root').children['newfile.txt'].upload('./path_to_file.txt')
 ```
 
 ### Download an Item
 
 ```python
-root_folder = client.item(drive="me", id="root").children.get()
+root_folder = client.item(drive='me', id='root').children.get()
 id_of_file = root_folder[0].id
 
-client.item(drive="me", id=id_of_file).download("./path_to_download_to.txt")
+client.item(drive='me', id=id_of_file).download('./path_to_download_to.txt')
 ```
 
 ### Add a folder
@@ -65,10 +90,10 @@ client.item(drive="me", id=id_of_file).download("./path_to_download_to.txt")
 ```python
 f = onedrivesdk.Folder()
 i = onedrivesdk.Item()
-i.name = "New Folder"
+i.name = 'New Folder'
 i.folder = f
 
-returned_item = client.item(drive="me", id="root").children.add(i)
+returned_item = client.item(drive='me', id='root').children.add(i)
 ```
 
 ### Copy an Item
@@ -77,9 +102,9 @@ returned_item = client.item(drive="me", id="root").children.add(i)
 from onedrivesdk.item_reference import ItemReference
 
 ref = ItemReference()
-ref.id = "yourparent!id" #path also supported
+ref.id = 'yourparent!id' #path also supported
 
-copy_operation = client.item(drive="me", id="youritemtocopy!id").copy(name="new copied name", parent_reference=ref).post()
+copy_operation = client.item(drive='me', id='youritemtocopy!id').copy(name='new copied name', parent_reference=ref).post()
 
 #copy_operation.item will return None until the copy has completed.
 #If you would like to block until the operation has been completed
@@ -92,17 +117,17 @@ copy_operation.poll_until_complete()
 
 ```python
 renamed_item = onedrivesdk.Item()
-renamed_item.name = "NewItemName"
-renamed_item.id = "youritemtorename!id"
+renamed_item.name = 'NewItemName'
+renamed_item.id = 'youritemtorename!id'
 
-new_item = client.item(drive="me", id=renamed_item.id).update(renamed_item)
+new_item = client.item(drive='me', id=renamed_item.id).update(renamed_item)
 ```
 
 ### Paging through a collection
 
 ```python
 #get the top three elements of root, leaving the next page for more elements
-collection = client.item(drive="me", id="root").children.request(top=3).get()
+collection = client.item(drive='me', id='root').children.request(top=3).get()
 
 #get the first item in the collection
 item = collection[0]
@@ -122,7 +147,7 @@ import asyncio
 
 @asyncio.coroutine
 def run_gets(client):
-    coroutines = [client.drive("me").request().get_async() for i in range(3)]
+    coroutines = [client.drive('me').request().get_async() for i in range(3)]
     for future in asyncio.as_completed(coroutines):
         drive = yield from future
         print(drive.id)
