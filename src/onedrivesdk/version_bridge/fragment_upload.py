@@ -146,7 +146,7 @@ def fragment_upload_async(self, local_path, conflict_behavior=None, upload_statu
     file_size = os.stat(local_path).st_size
     if file_size <= __MAX_SINGLE_FILE_UPLOAD:
         # fallback to single shot upload if file is small enough
-        return self.content.request().upload_async(local_path)
+        return self.content.request().upload(local_path)
     else:
         # multipart upload needed for larger files
         if conflict_behavior:
