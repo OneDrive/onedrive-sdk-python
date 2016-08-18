@@ -22,10 +22,8 @@
 ------------------------------------------------------------------------------
 '''
 from __future__ import unicode_literals
-import json
-from .auth_provider_base import AuthProviderBase
-from .options import *
-from .session import Session
+from ..auth_provider_base import AuthProviderBase
+from ..session import Session
 import sys
 
 try:
@@ -65,7 +63,7 @@ class NtlmAuthProvider(AuthProviderBase):
                 asyncio.get_event_loop() will be called. If using Python
                 3.3 or below this does not need to be specified
         """
-        if not isinstance(http_provider, NtlmHttpProvider):
+        if not http_provider == NtlmHttpProvider:
             raise RuntimeError('HttpProvider must be an NtlmHttpProvider')
         self._http_provider = http_provider
         self._client_id = client_id
@@ -144,14 +142,16 @@ class NtlmAuthProvider(AuthProviderBase):
         self._password = password
 
 
-    def authenticate_request(self):
+    def authenticate_request(self, request):
         """Special function for creating NTLM auth method on HttpProvider.
+
+        Request is required by the interface but not used
         """
         if not (hasattr(self, '_username') and hasattr(self, '_password')):
             raise RuntimeError('Username and password must be acquired before authentication.')
 
         if not hasattr(self._http_provider, '_ntlm_auth_method'):
-            self._http_provider._ntlm_auth_method = lambda session: HttpNtlmAuth(self._username, self._password, session)
+            self._http_provider._ntlm_auth_method = lambda http_provider, session: HttpNtlmAuth(self._username, self._password, session)
 
     def refresh_token(self):
         """Refresh the token currently used by the session"""
