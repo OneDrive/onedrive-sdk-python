@@ -163,45 +163,61 @@ class AuthProvider(AuthProviderBase):
 
         params = {
             "client_id": self.client_id,
-            "scope": " ".join(self.scopes),
             "response_type": "code",
             "redirect_uri": redirect_uri
             }
+        if self.scopes is not None:
+            params["scope"] = " ".join(self.scopes)
+
         return "{}?{}".format(self._auth_server_url, urlencode(params))
 
-    def authenticate(self, code, redirect_uri, client_secret=None, resource=None):
-        """Takes in a code string, gets the access token,
-        and creates session property bag
+    def authenticate(self, redirect_uri, code=None, client_secret=None, resource=None):
+        """Takes in a gets the access token and creates a session.
 
         Args:
             code (str):
-                The code provided by the oauth provider
+                The code provided by the oauth provider.
+                If provided, defaults to 'code flow' authorization.
+                If not provided or None, then defaults to 'token flow'
+                authorization.
             redirect_uri (str): The URI to redirect the callback
                 to
-            client_secret (str): Defaults to None, the client
-                secret of your app
+            client_secret (str): The client secret of your app. Only needed
+                if code is not None
             resource (str): Defaults to None,The resource  
                 you want to access
         """
-
+        # First, default setup of common parameters
         params = {
-            "code": code,
             "client_id": self.client_id,
-            "redirect_uri": redirect_uri,
-            "grant_type": "authorization_code",
-            "resource": resource,
+            "redirect_uri": redirect_uri
         }
 
-        if client_secret is not None:
-            params["client_secret"] = client_secret
         if resource is not None:
             params["resource"] = resource
 
-        headers = {"Content-Type": "application/x-www-form-urlencoded"}
-        response = self._http_provider.send(method="POST",
-                                            headers=headers,
-                                            url=self._auth_token_url,
-                                            data=params)
+        response = None
+
+        # Fork based on whether a code was provided. If provided, then redeem the code.
+        if code is not None:
+            if client_secret is not None:
+                params["client_secret"] = client_secret
+            else:
+                raise RuntimeError("client_secret must be provided for 'code flow' authorization.")
+            params["code"] = code
+            params["response_type"] = "code"
+            auth_url = self._auth_token_url
+            headers = {"Content-Type": "application/x-www-form-urlencoded"}
+            response = self._http_provider.send(method="POST",
+                                                headers=headers,
+                                                url=auth_url,
+                                                data=params)
+        else:
+            params["response_type"] = "token"
+            auth_url = self._auth_server_url
+            response = self._http_provider.send(method="GET",
+                                                url=auth_url,
+                                                data=params)
 
         rcont = json.loads(response.content)
         self._session = self._session_type(rcont["token_type"],
@@ -209,7 +225,7 @@ class AuthProvider(AuthProviderBase):
                                 rcont["scope"],
                                 rcont["access_token"],
                                 self.client_id,
-                                self._auth_token_url,
+                                self._auth_token_url if code is not None else self._auth_server_url,
                                 redirect_uri,
                                 rcont["refresh_token"] if "refresh_token" in rcont else None,
                                 client_secret)
