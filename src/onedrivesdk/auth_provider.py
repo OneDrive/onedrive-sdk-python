@@ -152,18 +152,21 @@ class AuthProvider(AuthProviderBase):
     def auth_token_url(self, value):
         self._auth_token_url = value
 
-    def get_auth_url(self, redirect_uri):
+    def get_auth_url(self, redirect_uri, response_type=None):
         """Build the auth url using the params provided
         and the auth_provider
 
         Args:
             redirect_uri (str): The URI to redirect the response
                 to
+            response_type (str): Response type query param value.
+                If not provided, defaults to 'code'. Should be either
+                'code' or 'token'.
         """
 
         params = {
             "client_id": self.client_id,
-            "response_type": "code",
+            "response_type": "code" if response_type is None else response_type,
             "redirect_uri": redirect_uri
             }
         if self.scopes is not None:

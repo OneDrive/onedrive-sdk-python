@@ -37,7 +37,7 @@ import threading
 import webbrowser
 
 
-def get_access_token(auth_url, redirect_uri):
+def get_auth_token(auth_url, redirect_uri):
     """Easy way to get the auth token. Wraps up all the threading
     and stuff. Does block main thread.
 
