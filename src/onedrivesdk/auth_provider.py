@@ -51,8 +51,7 @@ class AuthProvider(AuthProviderBase):
                 application
             scopes (list of str): Defaults to None, the scopes 
                 that are required for your application
-            access_token (str): Defaults to None, the access token
-                for your application
+            access_token (str): Defaults to None. Not used in this implementation.
             session_type (:class:`SessionBase<onedrivesdk.session_base.SessionBase>`):
                 Defaults to :class:`Session<onedrivesdk.session.Session>`,
                 the implementation of SessionBase that stores your
@@ -72,7 +71,6 @@ class AuthProvider(AuthProviderBase):
         self._http_provider = http_provider
         self._client_id = client_id
         self._scopes = scopes
-        self._access_token = access_token
         self._session_type = Session if session_type is None else session_type
         self._session = None
         self._auth_server_url = self.AUTH_SERVER_URL if auth_server_url is None else auth_server_url
@@ -116,13 +114,11 @@ class AuthProvider(AuthProviderBase):
         AuthProvider
 
         Returns:
-            str: The access token
+            str: The access token. Looks at the session
         """
-        return self._access_token
-
-    @access_token.setter
-    def access_token(self, value):
-        self._access_token = value
+        if self._session is not None:
+            return self._session.access_token
+        return None
 
     @property
     def auth_server_url(self):
@@ -192,7 +188,8 @@ class AuthProvider(AuthProviderBase):
             "redirect_uri": redirect_uri,
             "client_secret": client_secret,
             "code": code,
-            "response_type": "code"
+            "response_type": "code",
+            "grant_type": "authorization_code"
         }
 
         if resource is not None:
