@@ -114,7 +114,8 @@ class AuthProvider(AuthProviderBase):
         AuthProvider
 
         Returns:
-            str: The access token. Looks at the session
+            str: The access token. Looks at the session to figure out what the access token is, since this
+                class does not directly store the access token.
         """
         if self._session is not None:
             return self._session.access_token
@@ -178,8 +179,7 @@ class AuthProvider(AuthProviderBase):
                 The code provided by the oauth provider.
             redirect_uri (str): The URI to redirect the callback
                 to
-            client_secret (str): The client secret of your app. Only needed
-                if code is not None
+            client_secret (str): The client secret of your app.
             resource (str): Defaults to None,The resource  
                 you want to access
         """
@@ -208,7 +208,7 @@ class AuthProvider(AuthProviderBase):
                                 rcont["scope"],
                                 rcont["access_token"],
                                 self.client_id,
-                                self._auth_token_url if code is not None else self._auth_server_url,
+                                self._auth_token_url,
                                 redirect_uri,
                                 rcont["refresh_token"] if "refresh_token" in rcont else None,
                                 client_secret)

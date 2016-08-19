@@ -1,4 +1,4 @@
-**#** Getting started with the OneDrive SDK for Python
+# Getting started with the OneDrive SDK for Python
 
 ------------------------------------------------------------------------
 [![Build status](https://ci.appveyor.com/api/projects/status/x1cjahp817w6r455?svg=true)](https://ci.appveyor.com/project/OneDrive/vroom-client-python)
@@ -77,6 +77,10 @@ app must first use the Resource Discovery helper to find out which service you c
 Then, you can build a client to access those resources.
 
 ```python
+import onedrivesdk
+from onedrivesdk.helpers import GetAuthCodeServer
+from onedrivesdk.helpers.resource_discovery import ResourceDiscoveryRequest
+
 redirect_uri = 'http://localhost:8080'
 client_id = your_client_id
 client_secret = your_client_secret
