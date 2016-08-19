@@ -1,4 +1,4 @@
-# Getting started with the OneDrive SDK for Python
+**#** Getting started with the OneDrive SDK for Python
 
 ------------------------------------------------------------------------
 [![Build status](https://ci.appveyor.com/api/projects/status/x1cjahp817w6r455?svg=true)](https://ci.appveyor.com/project/OneDrive/vroom-client-python)
@@ -14,6 +14,8 @@ Next, include the SDK in your Python project by adding:
 <pre><code>import onedrivesdk</code></pre>
 
 ## Authentication
+
+### OneDrive
 
 To interact with the OneDrive API, your app must authenticate. You can use the following code sample to do so.
 
@@ -43,6 +45,9 @@ code = input('Paste code here: ')
 client.auth_provider.authenticate(code, redirect_uri, client_secret)
 ```
 
+The above code requires copy-pasting into your browser and back into your console. If you want to remove some of
+that manual work, you can use the helper class `GetAuthCodeServer`. That helper class spins up a webserver, so
+this method cannot be used on all environments.
 
 ```python
 import onedrivesdk
@@ -64,6 +69,35 @@ client.auth_provider.authenticate(code, redirect_uri, client_secret)
 
 Once your app is authenticated, you should have access to the OneDrive API, and
 can begin making calls using the SDK.
+
+### OneDrive for Business
+
+To interact with the OneDrive API, your app must authenticate for a specific resource. Your
+app must first use the Resource Discovery helper to find out which service you can access.
+Then, you can build a client to access those resources.
+
+```python
+redirect_uri = 'http://localhost:8080'
+client_id = your_client_id
+client_secret = your_client_secret
+discovery_uri = 'https://api.office.com/discovery/'
+auth_server_url='https://login.microsoftonline.com/common/oauth2/authorize',
+auth_token_url='https://login.microsoftonline.com/common/oauth2/token'
+
+http = onedrivesdk.HttpProvider()
+auth = onedrivesdk.AuthProvider(http,
+                                client_id,
+                                auth_server_url=auth_server_url,
+                                auth_token_url=auth_token_url)
+auth_url = auth.get_auth_url(redirect_uri)
+code = GetAuthCodeServer.get_auth_code(auth_url, redirect_uri)
+auth.authenticate(code, redirect_uri, client_secret, resource=resource)
+# If you have access to more than one service, you'll need to decide
+# which ServiceInfo to use instead of just using the first one, as below.
+service_info = ResourceDiscoveryRequest().get_service_info(auth.access_token)[0]
+auth.redeem_refresh_token(service_info.service_resource_id)
+client = onedrivesdk.OneDriveClient(service_info.service_resource_id + '/_api/v2.0/', auth, http)
+```
 
 ## Examples
 
