@@ -36,8 +36,8 @@ except ImportError:
 
 class AuthProvider(AuthProviderBase):
 
-    AUTH_SERVER_URL = "https://login.live.com/oauth20_authorize.srf"
-    AUTH_TOKEN_URL = "https://login.live.com/oauth20_token.srf"
+    MSA_AUTH_SERVER_URL = "https://login.live.com/oauth20_authorize.srf"
+    MSA_AUTH_TOKEN_URL = "https://login.live.com/oauth20_token.srf"
 
     def __init__(self, http_provider, client_id=None, scopes=None, access_token=None, session_type=None, loop=None,
                  auth_server_url=None, auth_token_url=None):
@@ -73,8 +73,8 @@ class AuthProvider(AuthProviderBase):
         self._scopes = scopes
         self._session_type = Session if session_type is None else session_type
         self._session = None
-        self._auth_server_url = self.AUTH_SERVER_URL if auth_server_url is None else auth_server_url
-        self._auth_token_url = self.AUTH_TOKEN_URL if auth_token_url is None else auth_token_url
+        self._auth_server_url = self.MSA_AUTH_SERVER_URL if auth_server_url is None else auth_server_url
+        self._auth_token_url = self.MSA_AUTH_TOKEN_URL if auth_token_url is None else auth_token_url
 
         if sys.version_info >= (3, 4, 0):
             import asyncio
@@ -262,6 +262,41 @@ class AuthProvider(AuthProviderBase):
         rcont = json.loads(response.content)
         self._session.refresh_session(rcont["expires_in"],
                                       rcont["scope"],
+                                      rcont["access_token"],
+                                      rcont["refresh_token"])
+
+    def redeem_refresh_token(self, resource):
+        """Redeem a refresh token against a new resource. Used
+        only by OneDrive for Business apps.
+
+        Args:
+            resource (str): URL to resource to be accessed.
+                Can be a 'serviceResourceId' value obtained from
+                Discovery Service."""
+        if self._session is None:
+            raise RuntimeError("""Session must be authenticated
+                before refreshing token.""")
+
+        if self._session.refresh_token is None:
+            raise RuntimeError("""Refresh token not present.""")
+
+        params = {
+            "client_id": self._session.client_id,
+            "redirect_uri": self._session.redirect_uri,
+            "client_secret": self._session.client_secret,
+            "refresh_token": self._session.refresh_token,
+            "grant_type": "refresh_token",
+            "resource": resource
+        }
+
+        headers = {"Content-Type": "application/x-www-form-urlencoded"}
+        response = self._http_provider.send(method="POST",
+                                            headers=headers,
+                                            url=self.auth_token_url,
+                                            data=params)
+        rcont = json.loads(response.content)
+        self._session.refresh_session(rcont["expires_in"],
+                                      "",
                                       rcont["access_token"],
                                       rcont["refresh_token"])
 

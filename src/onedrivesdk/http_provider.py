@@ -66,7 +66,6 @@ class HttpProvider(HttpProviderBase):
                                        data=data,
                                        json=content)
             prepped = request.prepare()
-            print(prepped.body, prepped.url, prepped.method)
             response = session.send(prepped)
 
         custom_response = HttpResponse(response.status_code, response.headers, response.text)

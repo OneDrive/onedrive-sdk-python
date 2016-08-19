@@ -21,9 +21,8 @@ class ResourceDiscoveryRequest(object):
                 do not provide access to OneDrive for Business will be excluded (i.e. must have
                 capability = 'MyFiles' and service_api_version = 'v2.0'
         """
-        headers = {'Authorization': 'bearer ' + access_token}
+        headers = {'Authorization': 'Bearer ' + access_token}
         response = json.loads(requests.get(self._discovery_service_url, headers=headers).text)
-        print(response)
         service_info_list = [ServiceInfo(x) for x in response['value']]
         trimmed_service_info_list = [si for si in service_info_list
                                      if si.capability == 'MyFiles' and si.service_api_version == 'v2.0']
