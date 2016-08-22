@@ -30,6 +30,11 @@ class ResourceDiscoveryRequest(object):
 
 
 class ServiceInfo(object):
+    """
+    Objects representing ServiceInfo returned by the Discovery Service.
+        More info can be found here:
+        https://msdn.microsoft.com/en-us/office/office365/api/discovery-service-rest-operations
+    """
     def __init__(self, prop_dict={}):
         self._prop_dict = prop_dict
 
@@ -48,6 +53,12 @@ class ServiceInfo(object):
 
     @property
     def capability(self):
+        """
+
+        Returns:
+            str: The Capability of the service
+
+        """
         return self._prop_dict_get('capability')
 
     @capability.setter
@@ -56,6 +67,12 @@ class ServiceInfo(object):
 
     @property
     def service_id(self):
+        """
+
+        Returns:
+            str: The ServiceId
+
+        """
         return self._prop_dict_get('serviceId')
 
     @service_id.setter
@@ -64,6 +81,12 @@ class ServiceInfo(object):
 
     @property
     def service_name(self):
+        """
+
+        Returns:
+            str: The name of the service
+
+        """
         return self._prop_dict_get('serviceName')
 
     @service_name.setter
@@ -72,6 +95,13 @@ class ServiceInfo(object):
 
     @property
     def service_endpoint_uri(self):
+        """
+
+        Returns:
+            str: The serviceEndpointUri
+                Ex: https://contoso-my.sharepoint.com/personal/alexd_contoso_com
+
+        """
         return self._prop_dict_get('serviceEndpointUri')
 
     @service_endpoint_uri.setter
@@ -80,6 +110,13 @@ class ServiceInfo(object):
 
     @property
     def service_resource_id(self):
+        """
+
+        Returns:
+            str: the serviceResourceId
+                Ex: https://contoso-my.sharepoint.com/
+
+        """
         return self._prop_dict_get('serviceResourceId')
 
     @service_resource_id.setter
@@ -88,6 +125,12 @@ class ServiceInfo(object):
 
     @property
     def service_api_version(self):
+        """
+
+        Returns:
+            str: the serviceApiVersion
+
+        """
         return self._prop_dict_get('serviceApiVersion')
 
     @service_api_version.setter

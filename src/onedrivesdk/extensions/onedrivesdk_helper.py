@@ -50,7 +50,7 @@ def get_business_client(client_id, scopes, base_url):
         scopes (list of str): The scopes required for your
             application
         base_url (str): Base URL of OneDrive for Business tenant.
-        For example, "https://my-sharepoint.contoso.com/v1.0/"
+            For example, "https://my-sharepoint.contoso.com/v1.0/"
 
     Returns:
         :class:`OneDriveClient<onedrivesdk.requests.one_drive_client.OneDriveClient>`:

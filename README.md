@@ -74,7 +74,9 @@ can begin making calls using the SDK.
 
 To interact with the OneDrive API, your app must authenticate for a specific resource. Your
 app must first use the Resource Discovery helper to find out which service you can access.
-Then, you can build a client to access those resources.
+Then, you can build a client to access those resources. This uses a slightly different
+auth flow than the standard code flow - note the use of `redeem_refresh_token` with
+the `service_resource_id` of the service you want to access.
 
 ```python
 import onedrivesdk

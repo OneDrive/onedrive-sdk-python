@@ -75,7 +75,7 @@ def get_auth_token(auth_url, redirect_uri):
 class GetAccessTokenServer(HTTPServer, object):
 
     def __init__(self, server_address, stop_event, RequestHandlerClass):
-        HTTPServer.__init__(self, server_address, RequestHandlerClass)
+        super(HTTPServer, self).init(server_address, RequestHandlerClass)
         self._stop_event = stop_event
         self._access_token = None
         self._authentication_token = None

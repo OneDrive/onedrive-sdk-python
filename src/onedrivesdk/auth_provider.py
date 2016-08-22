@@ -111,7 +111,7 @@ class AuthProvider(AuthProviderBase):
     @property
     def access_token(self):
         """Gets and sets the access_token for the
-        AuthProvider
+            :class:`AuthProvider`
 
         Returns:
             str: The access token. Looks at the session to figure out what the access token is, since this
@@ -124,7 +124,7 @@ class AuthProvider(AuthProviderBase):
     @property
     def auth_server_url(self):
         """Gets and sets the authorization server url for the
-        AuthProvider
+            :class:`AuthProvider`
 
         Returns:
             str: Auth server url
