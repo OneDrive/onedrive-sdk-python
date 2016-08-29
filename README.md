@@ -196,6 +196,39 @@ loop = asyncio.get_event_loop()
 loop.run_until_complete(run_gets(client))   
 ```
 
+## Saving and Loading a Session
+
+You can save your OAuth session details so that you don't have to go through the full
+OAuth flow every time you start your app. To do so, follow these steps:
+
+```python
+auth_provider = onedrivesdk.AuthProvider(http_provider,
+                                         client_id,
+                                         scopes)
+auth_provider.authenticate(code, redirect_uri, client_secret)
+
+# Save the session for later
+auth_provider.save_session()
+
+#### Next time you start the app ####
+auth_provider = onedrivesdk.AuthProvider(http_provider,
+                                         client_id,
+                                         scopes)
+auth_provider.load_session()
+auth_provider.refresh_token()
+client = onedrivesdk.OneDriveClient(base_url, auth_provider, http_provider)
+```
+
+After the call to `refresh_token()` your `AuthProvider` will be ready to authenticate calls
+to the OneDrive API. This implementation is not complete, though.
+
+1. The default implementation of [Session](\src\onedrivesdk\session.py) saves the session
+information in a Pickle file. Session data should be treated with equal protection as a
+password, so this is not safe for deployment to real users. You should re-implement
+`Session` to fit your app's needs.
+2. Calling `.load_session()` may throw an exception, depending on your implementation
+of `Session`. You will need to account for that here.
+
 ## Using a Proxy
 If you need to proxy your requests, you can use the helper class `HttpProviderWithProxy`.
 ```python
