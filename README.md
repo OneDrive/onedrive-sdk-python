@@ -227,7 +227,9 @@ information in a Pickle file. Session data should be treated with equal protecti
 password, so this is not safe for deployment to real users. You should re-implement
 `Session` to fit your app's needs.
 2. Calling `.load_session()` may throw an exception, depending on your implementation
-of `Session`. You will need to account for that here.
+of `Session`. For example, the default implementation tries to open the file `session.pickle`,
+ which may not exist and will raise `FileNotFoundError`. You will need to account for that here
+ (or, even better, in your implementation of `Session`).
 
 ## Using a Proxy
 If you need to proxy your requests, you can use the helper class `HttpProviderWithProxy`.
