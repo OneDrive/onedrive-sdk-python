@@ -102,7 +102,7 @@ class ItemUploadFragmentBuilder(RequestBuilderBase):
         self.content_type = "application/octet-stream"
 
         opts.append(HeaderOption("Content-Range", "bytes %d-%d/%d" % (begin, begin + length - 1, self._total_length)))
-        opts.append(HeaderOption("Content-Length", length))
+        opts.append(HeaderOption("Content-Length", str(length)))
 
         file_slice = FileSlice(self._file_handle, begin, length=length)
         req = ItemUploadFragment(self._request_url, self._client, opts, file_slice)
