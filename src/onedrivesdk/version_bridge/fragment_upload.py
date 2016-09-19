@@ -177,6 +177,12 @@ def fragment_upload_async(self, local_path, conflict_behavior=None, upload_statu
                             continue
                         else:
                             raise exc
+                    except ValueError as val_err:
+                        if tries < 5:
+                            time.sleep(5)
+                            continue
+                        else:
+                            raise val_err
                     break # while True
         if upload_status:
             upload_status(total_parts, total_parts) # job completed
