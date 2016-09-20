@@ -43,12 +43,18 @@ class HttpResponse(object):
         self._content = content
 
         if self.content and (self.status < 200 or self.status >= 300):
-            message = json.loads(self.content)
+            try:
+                message = json.loads(self.content)
+            except ValueError:  # Invalid or empty response message
+                message = {}
+
             if "error" in message:
                 if type(message["error"]) == dict:
                     raise OneDriveError(message["error"], self.status)
                 else:
                     raise Exception(str(message["error"]))
+            else:
+                raise OneDriveError("Invalid or empty HttpResponseBody", self.status)
 
     def __str__(self):
         properties = {
