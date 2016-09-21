@@ -49,7 +49,7 @@ class HttpResponse(object):
                 from .error import ErrorCode
                 message = {
                     "error": {
-                        "code": ErrorCode.malformed,
+                        "code": ErrorCode.Malformed,
                         "message": "The following invalid JSON was returned:\n%s" % self.content
                         }
                     }
