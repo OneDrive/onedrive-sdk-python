@@ -172,6 +172,9 @@ def fragment_upload_async(self, local_path, conflict_behavior=None, upload_statu
                         if exc.status_code in (408, 500, 502, 503, 504) and tries < 5:
                             time.sleep(5)
                             continue
+                        elif exc.status_code == 416:
+                            # Fragment already received
+                            break
                         elif exc.status_code == 401:
                             self._client.auth_provider.refresh_token()
                             continue
