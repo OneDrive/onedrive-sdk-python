@@ -169,7 +169,7 @@ def fragment_upload_async(self, local_path, conflict_behavior=None, upload_statu
                         tries += 1
                         resp = upload_builder.post(i * __PART_SIZE, length)
                     except OneDriveError as exc:
-                        if exc.status_code in (500, 502, 503, 504) and tries < 5:
+                        if exc.status_code in (408, 500, 502, 503, 504) and tries < 5:
                             time.sleep(5)
                             continue
                         elif exc.status_code == 401:
