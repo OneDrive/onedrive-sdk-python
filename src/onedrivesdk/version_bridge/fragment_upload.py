@@ -37,8 +37,9 @@ import math
 import os
 import time
 
-__PART_SIZE = 10 * 1024 * 1024 # recommended file size. Should be multiple of 320 * 1024
+__PART_SIZE = 10 * 1024 * 1024  # recommended file size. Should be multiple of 320 * 1024
 __MAX_SINGLE_FILE_UPLOAD = 100 * 1024 * 1024
+
 
 class ItemUploadFragment(RequestBase):
     def __init__(self, request_url, client, options, file_handle):
@@ -69,6 +70,7 @@ class ItemUploadFragment(RequestBase):
         entity = yield from future
         return entity
 
+
 class ItemUploadFragmentBuilder(RequestBuilderBase):
     def __init__(self, request_url, client, content_local_path):
         super(ItemUploadFragmentBuilder, self).__init__(request_url, client)
@@ -86,6 +88,8 @@ class ItemUploadFragmentBuilder(RequestBuilderBase):
         """Builds the request for the ItemUploadFragment
 
         Args:
+            begin (int): First byte in range to be uploaded
+            length (int): Number of bytes in range to be uploaded
             options (list of :class:`Option<onedrivesdk.options.Option>`):
                 Default to None, list of options to include in the request
 
@@ -93,7 +97,6 @@ class ItemUploadFragmentBuilder(RequestBuilderBase):
             :class:`ItemUploadFragment<onedrivesdk.request.item_upload_fragment.ItemUploadFragment>`:
                 The request
         """
-        opts = None
         if not (options is None or len(options) == 0):
             opts = options.copy()
         else:
@@ -162,7 +165,7 @@ def fragment_upload_async(self, local_path, conflict_behavior=None, upload_statu
                 if upload_status:
                     upload_status(i, total_parts)
 
-                length = min(__PART_SIZE, file_size - i  * __PART_SIZE)
+                length = min(__PART_SIZE, file_size - i * __PART_SIZE)
                 tries = 0
                 while True:
                     try:
@@ -172,14 +175,20 @@ def fragment_upload_async(self, local_path, conflict_behavior=None, upload_statu
                         if exc.status_code in (408, 500, 502, 503, 504) and tries < 5:
                             time.sleep(5)
                             continue
+                        elif exc.status_code == 416:
+                            # Fragment already received
+                            break
                         elif exc.status_code == 401:
                             self._client.auth_provider.refresh_token()
                             continue
                         else:
                             raise exc
-                    break # while True
+                    except ValueError:
+                        # Swallow value errors (usually JSON error) and try again.
+                        continue
+                    break  # while True
         if upload_status:
-            upload_status(total_parts, total_parts) # job completed
+            upload_status(total_parts, total_parts)  # job completed
         # return last response
         return resp
 

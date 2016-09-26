@@ -36,7 +36,7 @@ class OneDriveError(Exception):
             status_code (int): The HTTP status code (ex. 200, 201, etc.)
         """
         if "code" not in prop_dict or "message" not in prop_dict:
-            prop_dict["code"] = ErrorCode.Malformed.value
+            prop_dict["code"] = ErrorCode.Malformed
             prop_dict["message"] = "The received response was malformed"
             super(OneDriveError, self).__init__(prop_dict["code"]+" - "+prop_dict["message"])
         else:

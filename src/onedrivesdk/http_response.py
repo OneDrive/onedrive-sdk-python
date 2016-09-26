@@ -46,15 +46,19 @@ class HttpResponse(object):
             try:
                 message = json.loads(self.content)
             except ValueError:  # Invalid or empty response message
-                message = {}
+                from .error import ErrorCode
+                message = {
+                    "error": {
+                        "code": ErrorCode.Malformed,
+                        "message": "The following invalid JSON was returned:\n%s" % self.content
+                        }
+                    }
 
             if "error" in message:
                 if type(message["error"]) == dict:
                     raise OneDriveError(message["error"], self.status)
                 else:
                     raise Exception(str(message["error"]))
-            else:
-                raise OneDriveError("Invalid or empty HttpResponseBody", self.status)
 
     def __str__(self):
         properties = {
