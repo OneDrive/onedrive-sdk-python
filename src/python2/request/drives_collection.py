@@ -39,7 +39,7 @@ class DrivesCollectionRequest(CollectionRequestBase):
 
 
     @staticmethod
-    def get_next_page_request(collection_page, client, options):
+    def get_next_page_request(collection_page, client, options=None):
         """Gets the DrivesCollectionRequest for the next page. Returns None if there is no next page
 
         Yields: 

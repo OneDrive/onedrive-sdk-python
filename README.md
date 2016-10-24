@@ -174,7 +174,7 @@ collection = client.item(drive='me', id='root').children.request(top=3).get()
 item = collection[0]
 
 #get the next page of three elements, if none exist, returns None
-collection2 = collection.next_page_request.get()
+collection2 = onedrivesdk.ChildrenCollectionRequest.get_next_page_request(collection, client).get()
 ```
 
 ### Async operations
