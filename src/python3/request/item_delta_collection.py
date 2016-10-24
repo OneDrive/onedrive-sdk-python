@@ -24,7 +24,8 @@
 '''
 
 from __future__ import unicode_literals
-from ..request.items_collection import ItemsCollectionResponse, ItemsCollectionPage
+from ..model.item_delta_collection_page import ItemDeltaCollectionPage
+from ..request.items_collection import ItemsCollectionResponse
 
 
 class ItemDeltaCollectionResponse(ItemsCollectionResponse):
@@ -39,58 +40,19 @@ class ItemDeltaCollectionResponse(ItemsCollectionResponse):
         """
         token = self._prop_dict["@delta.token"] if "@delta.token" in self._prop_dict else None
         delta_link = self._prop_dict["@odata.deltaLink"] if "@odata.deltaLink" in self._prop_dict else None
+        next_page_link = self._prop_dict["@odata.nextLink"] if "@odata.nextLink" in self._prop_dict else None
 
         if self._collection_page:
             self._collection_page._prop_list = self._prop_dict["value"]
             self._collection_page._token = token
             self._collection_page._delta_link = delta_link
+            self._collection_page._next_page_link = next_page_link
         else:
             self._collection_page = ItemDeltaCollectionPage(self._prop_dict["value"],
                                                             token,
-                                                            delta_link)
+                                                            delta_link,
+                                                            next_page_link)
 
         return self._collection_page
-
-class ItemDeltaCollectionPage(ItemsCollectionPage):
-
-    def __init__(self, prop_list, token=None, delta_link=None):
-        super(ItemDeltaCollectionPage, self).__init__(prop_list)
-        self._token = token
-        self._delta_link = delta_link
-
-    def _init_next_page_request(self, next_page_link, client, options):
-        """Initialize the next page request for the ItemDeltaCollectionPage
-        
-        Args:
-            next_page_link (str): The URL for the next page request
-                to be sent to
-            client (:class:`OneDriveClient<onedrivesdk.model.one_drive_client.OneDriveClient>`:
-                The client to be used for the request
-            options (list of :class:`Option<onedrivesdk.options.Option>`:
-                A list of options
-        """
-        self._next_page_request = ItemDeltaRequest(next_page_link, client, options)
-
-    @property
-    def token(self):
-        """Gets the token property from the
-        ItemDeltaCollectionPage
-
-        Returns:
-            str:
-                The token property from the ItemDeltaCollectionPage
-        """
-        return self._token
-
-    @property
-    def delta_link(self):
-        """Gets the deltaLink property from the
-        ItemDeltaCollectionPage
-
-        Returns:
-            str:
-                The deltaLink property from the ItemDeltaCollectionPage
-        """
-        return self._delta_link
 
 from ..request.item_delta import ItemDeltaRequest

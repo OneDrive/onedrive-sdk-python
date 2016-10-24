@@ -1,24 +1,6 @@
 # -*- coding: utf-8 -*- 
 '''
-# Copyright (c) 2015 Microsoft Corporation
-# 
-# Permission is hereby granted, free of charge, to any person obtaining a copy
-# of this software and associated documentation files (the "Software"), to deal
-# in the Software without restriction, including without limitation the rights
-# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-# copies of the Software, and to permit persons to whom the Software is
-# furnished to do so, subject to the following conditions:
-# 
-# The above copyright notice and this permission notice shall be included in
-# all copies or substantial portions of the Software.
-# 
-# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-# THE SOFTWARE.
+# Copyright (c) Microsoft Corporation.  All Rights Reserved.  Licensed under the MIT License.  See License in the project root for license information.
 '''
 
 from .model.item_reference import ItemReference
@@ -63,22 +45,33 @@ from .request.thumbnail_set_request import ThumbnailSetRequest
 from .request.thumbnail_set_request_builder import ThumbnailSetRequestBuilder
 from .request.thumbnail_request import ThumbnailRequest
 from .request.thumbnail_request_builder import ThumbnailRequestBuilder
-from .request.items_collection import ItemsCollectionRequest, ItemsCollectionRequestBuilder, ItemsCollectionPage, ItemsCollectionResponse
-from .request.shared_collection import SharedCollectionRequest, SharedCollectionRequestBuilder, SharedCollectionPage, SharedCollectionResponse
-from .request.special_collection import SpecialCollectionRequest, SpecialCollectionRequestBuilder, SpecialCollectionPage, SpecialCollectionResponse
-from .request.items_collection import ItemsCollectionRequest, ItemsCollectionRequestBuilder, ItemsCollectionPage, ItemsCollectionResponse
-from .request.permissions_collection import PermissionsCollectionRequest, PermissionsCollectionRequestBuilder, PermissionsCollectionPage, PermissionsCollectionResponse
-from .request.versions_collection import VersionsCollectionRequest, VersionsCollectionRequestBuilder, VersionsCollectionPage, VersionsCollectionResponse
-from .request.children_collection import ChildrenCollectionRequest, ChildrenCollectionRequestBuilder, ChildrenCollectionPage, ChildrenCollectionResponse
-from .request.thumbnails_collection import ThumbnailsCollectionRequest, ThumbnailsCollectionRequestBuilder, ThumbnailsCollectionPage, ThumbnailsCollectionResponse
-from .request.drives_collection import DrivesCollectionRequest, DrivesCollectionRequestBuilder, DrivesCollectionPage, DrivesCollectionResponse
-from .request.shares_collection import SharesCollectionRequest, SharesCollectionRequestBuilder, SharesCollectionPage, SharesCollectionResponse
+from .request.items_collection import ItemsCollectionRequest, ItemsCollectionRequestBuilder, ItemsCollectionResponse
+from .model.items_collection_page import ItemsCollectionPage
+from .request.shared_collection import SharedCollectionRequest, SharedCollectionRequestBuilder, SharedCollectionResponse
+from .model.shared_collection_page import SharedCollectionPage
+from .request.special_collection import SpecialCollectionRequest, SpecialCollectionRequestBuilder, SpecialCollectionResponse
+from .model.special_collection_page import SpecialCollectionPage
+from .request.items_collection import ItemsCollectionRequest, ItemsCollectionRequestBuilder, ItemsCollectionResponse
+from .model.items_collection_page import ItemsCollectionPage
+from .request.permissions_collection import PermissionsCollectionRequest, PermissionsCollectionRequestBuilder, PermissionsCollectionResponse
+from .model.permissions_collection_page import PermissionsCollectionPage
+from .request.versions_collection import VersionsCollectionRequest, VersionsCollectionRequestBuilder, VersionsCollectionResponse
+from .model.versions_collection_page import VersionsCollectionPage
+from .request.children_collection import ChildrenCollectionRequest, ChildrenCollectionRequestBuilder, ChildrenCollectionResponse
+from .model.children_collection_page import ChildrenCollectionPage
+from .request.thumbnails_collection import ThumbnailsCollectionRequest, ThumbnailsCollectionRequestBuilder, ThumbnailsCollectionResponse
+from .model.thumbnails_collection_page import ThumbnailsCollectionPage
+from .request.drives_collection import DrivesCollectionRequest, DrivesCollectionRequestBuilder, DrivesCollectionResponse
+from .model.drives_collection_page import DrivesCollectionPage
+from .request.shares_collection import SharesCollectionRequest, SharesCollectionRequestBuilder, SharesCollectionResponse
+from .model.shares_collection_page import SharesCollectionPage
 from .request.item_create_session import ItemCreateSessionRequest
 from .request.item_copy import ItemCopyRequest
 from .request.item_create_link import ItemCreateLinkRequest
 from .request.item_delta import ItemDeltaRequest
 from .request.item_search import ItemSearchRequest
-from .request.item_delta_collection import ItemDeltaCollectionPage, ItemDeltaCollectionResponse
+from .request.item_delta_collection import ItemDeltaCollectionResponse
+from .model.item_delta_collection_page import ItemDeltaCollectionPage
 from .request.item_content_request import ItemContentRequest, ItemContentRequestBuilder
 from .request.thumbnail_content_request import ThumbnailContentRequest, ThumbnailContentRequestBuilder
 from .request.one_drive_client import OneDriveClient

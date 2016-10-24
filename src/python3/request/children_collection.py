@@ -1,32 +1,14 @@
 # -*- coding: utf-8 -*- 
 '''
-# Copyright (c) 2015 Microsoft Corporation
-# 
-# Permission is hereby granted, free of charge, to any person obtaining a copy
-# of this software and associated documentation files (the "Software"), to deal
-# in the Software without restriction, including without limitation the rights
-# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-# copies of the Software, and to permit persons to whom the Software is
-# furnished to do so, subject to the following conditions:
-# 
-# The above copyright notice and this permission notice shall be included in
-# all copies or substantial portions of the Software.
-# 
-# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-# THE SOFTWARE.
+# Copyright (c) Microsoft Corporation.  All Rights Reserved.  Licensed under the MIT License.  See License in the project root for license information.
 # 
 #  This file was generated and any changes will be overwritten.
 '''
 
 from __future__ import unicode_literals
-from ..collection_base import CollectionRequestBase, CollectionResponseBase, CollectionPageBase
+from ..collection_base import CollectionRequestBase, CollectionResponseBase
 from ..request_builder_base import RequestBuilderBase
-from ..model.item import Item
+from ..model.children_collection_page import ChildrenCollectionPage
 import json
 import asyncio
 
@@ -44,40 +26,6 @@ class ChildrenCollectionRequest(CollectionRequestBase):
                 A list of options to pass into the request
         """
         super(ChildrenCollectionRequest, self).__init__(request_url, client, options)
-
-    def add(self, entity):
-        """Add a Item to the collection
-        
-        Args:
-            entity (:class:`Item<onedrivesdk.model.item.Item>`):
-                The Item that you would like to add to the collection
-        
-        Returns: 
-            :class:`Item<onedrivesdk.model.item.Item>`:
-                The Item that you added, with additional data from OneDrive
-        """
-        self.content_type = "application/json"
-        self.method = "POST"
-        entity = Item(json.loads(self.send(entity).content))
-        return entity
-
-    @asyncio.coroutine
-    def add_async(self, entity):
-        """Add a Item to the collection in async
-        
-        Args:
-            entity (:class:`Item<onedrivesdk.model.item.Item>`):
-                The Item that you would like to add to the collection
-        
-        Yields: 
-            :class:`Item<onedrivesdk.model.item.Item>`:
-                The Item that you added, with additional data from OneDrive
-        """
-        future = self._client._loop.run_in_executor(None,
-                                                    self.add,
-                                                    entity)
-        entity = yield from future
-        return entity
 
     def get(self):
         """Gets the ChildrenCollectionPage
@@ -102,6 +50,19 @@ class ChildrenCollectionRequest(CollectionRequestBase):
                                                     self.get)
         collection_page = yield from future
         return collection_page
+
+    @staticmethod
+    def get_next_page_request(collection_page, client, options):
+        """Gets the ChildrenCollectionRequest for the next page. Returns None if there is no next page
+
+        Yields: 
+            :class:`ChildrenCollectionRequest<onedrivesdk.request.children_collection.ChildrenCollectionRequest>`:
+                The ChildrenCollectionRequest
+        """
+        if collection_page._next_page_link:
+            return ChildrenCollectionRequest(collection_page._next_page_link, client, options)
+        else:
+            return None
 
 class ChildrenCollectionRequestBuilder(RequestBuilderBase):
 
@@ -138,34 +99,6 @@ class ChildrenCollectionRequestBuilder(RequestBuilderBase):
         req = ChildrenCollectionRequest(self._request_url, self._client, options)
         req._set_query_options(expand=expand, select=select, top=top, order_by=order_by)
         return req
-
-    def add(self, entity):
-        """Add a Item to the collection
-        
-        Args:
-            entity (:class:`Item<onedrivesdk.model.item.Item>`):
-                The Item that you would like to add to the collection
-        
-        Returns: 
-            :class:`Item<onedrivesdk.model.item.Item>`:
-                The Item that you added, with additional data from OneDrive
-        """
-        return self.request().add(entity)
-
-    @asyncio.coroutine
-    def add_async(self, entity):
-        """Add a Item to the collection in async
-        
-        Args:
-            entity (:class:`Item<onedrivesdk.model.item.Item>`):
-                The Item that you would like to add to the collection
-        
-        Yields: 
-            :class:`Item<onedrivesdk.model.item.Item>`:
-                The Item that you added, with additional data from OneDrive
-        """
-        entity = yield from self.request().add_async(entity)
-        return entity
 
     def get(self):
         """Gets the ChildrenCollectionPage
@@ -204,44 +137,6 @@ class ChildrenCollectionResponse(CollectionResponseBase):
             self._collection_page = ChildrenCollectionPage(self._prop_dict["value"])
 
         return self._collection_page
-
-
-class ChildrenCollectionPage(CollectionPageBase):
-
-    def __getitem__(self, index):
-        """Get the Item at the index specified
-        
-        Args:
-            index (int): The index of the item to get from the ChildrenCollectionPage
-
-        Returns:
-            :class:`Item<onedrivesdk.model.item.Item>`:
-                The Item at the index
-        """
-        return Item(self._prop_list[index])
-
-    def children(self):
-        """Get a generator of Item within the ChildrenCollectionPage
-        
-        Yields:
-            :class:`Item<onedrivesdk.model.item.Item>`:
-                The next Item in the collection
-        """
-        for item in self._prop_list:
-            yield Item(item)
-
-    def _init_next_page_request(self, next_page_link, client, options):
-        """Initialize the next page request for the ChildrenCollectionPage
-        
-        Args:
-            next_page_link (str): The URL for the next page request
-                to be sent to
-            client (:class:`OneDriveClient<onedrivesdk.model.one_drive_client.OneDriveClient>`:
-                The client to be used for the request
-            options (list of :class:`Option<onedrivesdk.options.Option>`:
-                A list of options
-        """
-        self._next_page_request = ChildrenCollectionRequest(next_page_link, client, options)
 
 
 from ..request.item_request_builder import ItemRequestBuilder

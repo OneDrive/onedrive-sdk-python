@@ -74,7 +74,7 @@ class Item(OneDriveObjectBase):
 
     @created_date_time.setter
     def created_date_time(self, val):
-        self._prop_dict["createdDateTime"] = val.isoformat()+"Z"
+        self._prop_dict["createdDateTime"] = val.isoformat()+".0" if val.time().microsecond == 0 else ""+"Z"
 
     @property
     def c_tag(self):
@@ -186,7 +186,7 @@ class Item(OneDriveObjectBase):
 
     @last_modified_date_time.setter
     def last_modified_date_time(self, val):
-        self._prop_dict["lastModifiedDateTime"] = val.isoformat()+"Z"
+        self._prop_dict["lastModifiedDateTime"] = val.isoformat()+".0" if val.time().microsecond == 0 else ""+"Z"
 
     @property
     def name(self):
@@ -624,3 +624,7 @@ class Item(OneDriveObjectBase):
         else:
             return None
 
+from ..model.permissions_collection_page import PermissionsCollectionPage
+from ..model.versions_collection_page import VersionsCollectionPage
+from ..model.children_collection_page import ChildrenCollectionPage
+from ..model.thumbnails_collection_page import ThumbnailsCollectionPage
