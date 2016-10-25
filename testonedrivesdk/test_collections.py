@@ -36,9 +36,9 @@ class TestCollections(unittest.TestCase):
         items = client.drives["me"].items["root"].children.request().get()
         
         assert len(items) == 2
-        assert isinstance(items, ChildrenCollectionPage)
+        assert type(items) is ChildrenCollectionPage
         assert items[0].name == "test1"
-        assert isinstance(items[0].folder, Folder)
+        assert type(items[0].folder) is Folder
         assert items[1].folder is None
 
     @patch('onedrivesdk.HttpProvider')
@@ -65,8 +65,8 @@ class TestCollections(unittest.TestCase):
         assert items._next_page_link is not None
 
         request = onedrivesdk.ChildrenCollectionRequest.get_next_page_request(items, client)
-        assert isinstance(request, ChildrenCollectionRequest)
-        assert isinstance(request.get(), ChildrenCollectionPage)
+        assert type(request) is ChildrenCollectionRequest
+        assert type(request.get()) is ChildrenCollectionPage
 
 if __name__ == '__main__':
     unittest.main()
