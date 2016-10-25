@@ -31,7 +31,7 @@ class ChildrenCollectionRequest(CollectionRequestBase):
         """Gets the ChildrenCollectionPage
 
         Returns: 
-            :class:`ChildrenCollectionPage<onedrivesdk.request.children_collection.ChildrenCollectionPage>`:
+            :class:`ChildrenCollectionPage<onedrivesdk.model.children_collection_page.ChildrenCollectionPage>`:
                 The ChildrenCollectionPage
         """
         self.method = "GET"
@@ -43,7 +43,7 @@ class ChildrenCollectionRequest(CollectionRequestBase):
         """Gets the ChildrenCollectionPage in async
 
         Yields: 
-            :class:`ChildrenCollectionPage<onedrivesdk.request.children_collection.ChildrenCollectionPage>`:
+            :class:`ChildrenCollectionPage<onedrivesdk.model.children_collection_page.ChildrenCollectionPage>`:
                 The ChildrenCollectionPage
         """
         future = self._client._loop.run_in_executor(None,
@@ -54,6 +54,14 @@ class ChildrenCollectionRequest(CollectionRequestBase):
     @staticmethod
     def get_next_page_request(collection_page, client, options=None):
         """Gets the ChildrenCollectionRequest for the next page. Returns None if there is no next page
+
+        Args:
+            collection_page (:class:`ChildrenCollectionPage<onedrivesdk.model.children_collection_page.ChildrenCollectionPage>`):
+                The collection to get the next page for
+            client (:class:`OneDriveClient<onedrivesdk.request.one_drive_client.OneDriveClient>`):
+                The client which will be used for the request
+            options (list of :class:`Option<onedrivesdk.options.Option>`):
+                A list of options to pass into the request. Defaults to None.
 
         Yields: 
             :class:`ChildrenCollectionRequest<onedrivesdk.request.children_collection.ChildrenCollectionRequest>`:
@@ -104,7 +112,7 @@ class ChildrenCollectionRequestBuilder(RequestBuilderBase):
         """Gets the ChildrenCollectionPage
 
         Returns: 
-            :class:`ChildrenCollectionPage<onedrivesdk.request.children_collection.ChildrenCollectionPage>`:
+            :class:`ChildrenCollectionPage<onedrivesdk.model.children_collection_page.ChildrenCollectionPage>`:
                 The ChildrenCollectionPage
         """
         return self.request().get()
@@ -114,7 +122,7 @@ class ChildrenCollectionRequestBuilder(RequestBuilderBase):
         """Gets the ChildrenCollectionPage in async
 
         Yields: 
-            :class:`ChildrenCollectionPage<onedrivesdk.request.children_collection.ChildrenCollectionPage>`:
+            :class:`ChildrenCollectionPage<onedrivesdk.model.children_collection_page.ChildrenCollectionPage>`:
                 The ChildrenCollectionPage
         """
         collection_page = yield from self.request().get_async()
@@ -128,7 +136,7 @@ class ChildrenCollectionResponse(CollectionResponseBase):
         """The collection page stored in the response JSON
         
         Returns:
-            :class:`ChildrenCollectionPage<onedrivesdk.request.children_collection.ChildrenCollectionPage>`:
+            :class:`ChildrenCollectionPage<onedrivesdk.model.children_collection_page.ChildrenCollectionPage>`:
                 The collection page
         """
         if self._collection_page:

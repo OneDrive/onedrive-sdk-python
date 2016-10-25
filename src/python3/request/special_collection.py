@@ -31,7 +31,7 @@ class SpecialCollectionRequest(CollectionRequestBase):
         """Gets the SpecialCollectionPage
 
         Returns: 
-            :class:`SpecialCollectionPage<onedrivesdk.request.special_collection.SpecialCollectionPage>`:
+            :class:`SpecialCollectionPage<onedrivesdk.model.special_collection_page.SpecialCollectionPage>`:
                 The SpecialCollectionPage
         """
         self.method = "GET"
@@ -43,7 +43,7 @@ class SpecialCollectionRequest(CollectionRequestBase):
         """Gets the SpecialCollectionPage in async
 
         Yields: 
-            :class:`SpecialCollectionPage<onedrivesdk.request.special_collection.SpecialCollectionPage>`:
+            :class:`SpecialCollectionPage<onedrivesdk.model.special_collection_page.SpecialCollectionPage>`:
                 The SpecialCollectionPage
         """
         future = self._client._loop.run_in_executor(None,
@@ -54,6 +54,14 @@ class SpecialCollectionRequest(CollectionRequestBase):
     @staticmethod
     def get_next_page_request(collection_page, client, options=None):
         """Gets the SpecialCollectionRequest for the next page. Returns None if there is no next page
+
+        Args:
+            collection_page (:class:`SpecialCollectionPage<onedrivesdk.model.special_collection_page.SpecialCollectionPage>`):
+                The collection to get the next page for
+            client (:class:`OneDriveClient<onedrivesdk.request.one_drive_client.OneDriveClient>`):
+                The client which will be used for the request
+            options (list of :class:`Option<onedrivesdk.options.Option>`):
+                A list of options to pass into the request. Defaults to None.
 
         Yields: 
             :class:`SpecialCollectionRequest<onedrivesdk.request.special_collection.SpecialCollectionRequest>`:
@@ -104,7 +112,7 @@ class SpecialCollectionRequestBuilder(RequestBuilderBase):
         """Gets the SpecialCollectionPage
 
         Returns: 
-            :class:`SpecialCollectionPage<onedrivesdk.request.special_collection.SpecialCollectionPage>`:
+            :class:`SpecialCollectionPage<onedrivesdk.model.special_collection_page.SpecialCollectionPage>`:
                 The SpecialCollectionPage
         """
         return self.request().get()
@@ -114,7 +122,7 @@ class SpecialCollectionRequestBuilder(RequestBuilderBase):
         """Gets the SpecialCollectionPage in async
 
         Yields: 
-            :class:`SpecialCollectionPage<onedrivesdk.request.special_collection.SpecialCollectionPage>`:
+            :class:`SpecialCollectionPage<onedrivesdk.model.special_collection_page.SpecialCollectionPage>`:
                 The SpecialCollectionPage
         """
         collection_page = yield from self.request().get_async()
@@ -128,7 +136,7 @@ class SpecialCollectionResponse(CollectionResponseBase):
         """The collection page stored in the response JSON
         
         Returns:
-            :class:`SpecialCollectionPage<onedrivesdk.request.special_collection.SpecialCollectionPage>`:
+            :class:`SpecialCollectionPage<onedrivesdk.model.special_collection_page.SpecialCollectionPage>`:
                 The collection page
         """
         if self._collection_page:

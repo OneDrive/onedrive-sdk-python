@@ -31,7 +31,7 @@ class ItemsCollectionRequest(CollectionRequestBase):
         """Gets the ItemsCollectionPage
 
         Returns: 
-            :class:`ItemsCollectionPage<onedrivesdk.request.items_collection.ItemsCollectionPage>`:
+            :class:`ItemsCollectionPage<onedrivesdk.model.items_collection_page.ItemsCollectionPage>`:
                 The ItemsCollectionPage
         """
         self.method = "GET"
@@ -43,7 +43,7 @@ class ItemsCollectionRequest(CollectionRequestBase):
         """Gets the ItemsCollectionPage in async
 
         Yields: 
-            :class:`ItemsCollectionPage<onedrivesdk.request.items_collection.ItemsCollectionPage>`:
+            :class:`ItemsCollectionPage<onedrivesdk.model.items_collection_page.ItemsCollectionPage>`:
                 The ItemsCollectionPage
         """
         future = self._client._loop.run_in_executor(None,
@@ -54,6 +54,14 @@ class ItemsCollectionRequest(CollectionRequestBase):
     @staticmethod
     def get_next_page_request(collection_page, client, options=None):
         """Gets the ItemsCollectionRequest for the next page. Returns None if there is no next page
+
+        Args:
+            collection_page (:class:`ItemsCollectionPage<onedrivesdk.model.items_collection_page.ItemsCollectionPage>`):
+                The collection to get the next page for
+            client (:class:`OneDriveClient<onedrivesdk.request.one_drive_client.OneDriveClient>`):
+                The client which will be used for the request
+            options (list of :class:`Option<onedrivesdk.options.Option>`):
+                A list of options to pass into the request. Defaults to None.
 
         Yields: 
             :class:`ItemsCollectionRequest<onedrivesdk.request.items_collection.ItemsCollectionRequest>`:
@@ -104,7 +112,7 @@ class ItemsCollectionRequestBuilder(RequestBuilderBase):
         """Gets the ItemsCollectionPage
 
         Returns: 
-            :class:`ItemsCollectionPage<onedrivesdk.request.items_collection.ItemsCollectionPage>`:
+            :class:`ItemsCollectionPage<onedrivesdk.model.items_collection_page.ItemsCollectionPage>`:
                 The ItemsCollectionPage
         """
         return self.request().get()
@@ -114,7 +122,7 @@ class ItemsCollectionRequestBuilder(RequestBuilderBase):
         """Gets the ItemsCollectionPage in async
 
         Yields: 
-            :class:`ItemsCollectionPage<onedrivesdk.request.items_collection.ItemsCollectionPage>`:
+            :class:`ItemsCollectionPage<onedrivesdk.model.items_collection_page.ItemsCollectionPage>`:
                 The ItemsCollectionPage
         """
         collection_page = yield from self.request().get_async()
@@ -128,7 +136,7 @@ class ItemsCollectionResponse(CollectionResponseBase):
         """The collection page stored in the response JSON
         
         Returns:
-            :class:`ItemsCollectionPage<onedrivesdk.request.items_collection.ItemsCollectionPage>`:
+            :class:`ItemsCollectionPage<onedrivesdk.model.items_collection_page.ItemsCollectionPage>`:
                 The collection page
         """
         if self._collection_page:

@@ -31,7 +31,7 @@ class SharedCollectionRequest(CollectionRequestBase):
         """Gets the SharedCollectionPage
 
         Returns: 
-            :class:`SharedCollectionPage<onedrivesdk.request.shared_collection.SharedCollectionPage>`:
+            :class:`SharedCollectionPage<onedrivesdk.model.shared_collection_page.SharedCollectionPage>`:
                 The SharedCollectionPage
         """
         self.method = "GET"
@@ -43,7 +43,7 @@ class SharedCollectionRequest(CollectionRequestBase):
         """Gets the SharedCollectionPage in async
 
         Yields: 
-            :class:`SharedCollectionPage<onedrivesdk.request.shared_collection.SharedCollectionPage>`:
+            :class:`SharedCollectionPage<onedrivesdk.model.shared_collection_page.SharedCollectionPage>`:
                 The SharedCollectionPage
         """
         future = self._client._loop.run_in_executor(None,
@@ -54,6 +54,14 @@ class SharedCollectionRequest(CollectionRequestBase):
     @staticmethod
     def get_next_page_request(collection_page, client, options=None):
         """Gets the SharedCollectionRequest for the next page. Returns None if there is no next page
+
+        Args:
+            collection_page (:class:`SharedCollectionPage<onedrivesdk.model.shared_collection_page.SharedCollectionPage>`):
+                The collection to get the next page for
+            client (:class:`OneDriveClient<onedrivesdk.request.one_drive_client.OneDriveClient>`):
+                The client which will be used for the request
+            options (list of :class:`Option<onedrivesdk.options.Option>`):
+                A list of options to pass into the request. Defaults to None.
 
         Yields: 
             :class:`SharedCollectionRequest<onedrivesdk.request.shared_collection.SharedCollectionRequest>`:
@@ -104,7 +112,7 @@ class SharedCollectionRequestBuilder(RequestBuilderBase):
         """Gets the SharedCollectionPage
 
         Returns: 
-            :class:`SharedCollectionPage<onedrivesdk.request.shared_collection.SharedCollectionPage>`:
+            :class:`SharedCollectionPage<onedrivesdk.model.shared_collection_page.SharedCollectionPage>`:
                 The SharedCollectionPage
         """
         return self.request().get()
@@ -114,7 +122,7 @@ class SharedCollectionRequestBuilder(RequestBuilderBase):
         """Gets the SharedCollectionPage in async
 
         Yields: 
-            :class:`SharedCollectionPage<onedrivesdk.request.shared_collection.SharedCollectionPage>`:
+            :class:`SharedCollectionPage<onedrivesdk.model.shared_collection_page.SharedCollectionPage>`:
                 The SharedCollectionPage
         """
         collection_page = yield from self.request().get_async()
@@ -128,7 +136,7 @@ class SharedCollectionResponse(CollectionResponseBase):
         """The collection page stored in the response JSON
         
         Returns:
-            :class:`SharedCollectionPage<onedrivesdk.request.shared_collection.SharedCollectionPage>`:
+            :class:`SharedCollectionPage<onedrivesdk.model.shared_collection_page.SharedCollectionPage>`:
                 The collection page
         """
         if self._collection_page:
