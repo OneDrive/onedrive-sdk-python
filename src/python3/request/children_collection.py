@@ -10,6 +10,7 @@ from ..collection_base import CollectionRequestBase, CollectionResponseBase
 from ..request_builder_base import RequestBuilderBase
 from ..model.children_collection_page import ChildrenCollectionPage
 import json
+import asyncio
 
 class ChildrenCollectionRequest(CollectionRequestBase):
 
@@ -30,25 +31,29 @@ class ChildrenCollectionRequest(CollectionRequestBase):
         """Gets the ChildrenCollectionPage
 
         Returns: 
-            :class:`ChildrenCollectionPage<onedrivesdk.model.children_collection_page.ChildrenCollectionPage>`:
+            :class:`ChildrenCollectionPage<onedrivesdk.request.children_collection.ChildrenCollectionPage>`:
                 The ChildrenCollectionPage
         """
         self.method = "GET"
         collection_response = ChildrenCollectionResponse(json.loads(self.send().content))
         return self._page_from_response(collection_response)
 
+    @asyncio.coroutine
+    def get_async(self):
+        """Gets the ChildrenCollectionPage in async
+
+        Yields: 
+            :class:`ChildrenCollectionPage<onedrivesdk.request.children_collection.ChildrenCollectionPage>`:
+                The ChildrenCollectionPage
+        """
+        future = self._client._loop.run_in_executor(None,
+                                                    self.get)
+        collection_page = yield from future
+        return collection_page
 
     @staticmethod
     def get_next_page_request(collection_page, client, options=None):
         """Gets the ChildrenCollectionRequest for the next page. Returns None if there is no next page
-
-        Args:
-            collection_page (:class:`ChildrenCollectionPage<onedrivesdk.model.children_collection_page.ChildrenCollectionPage>`):
-                The collection to get the next page for
-            client (:class:`OneDriveClient<onedrivesdk.request.one_drive_client.OneDriveClient>`):
-                The client which will be used for the request
-            options (list of :class:`Option<onedrivesdk.options.Option>`):
-                A list of options to pass into the request. Defaults to None.
 
         Yields: 
             :class:`ChildrenCollectionRequest<onedrivesdk.request.children_collection.ChildrenCollectionRequest>`:
@@ -99,11 +104,21 @@ class ChildrenCollectionRequestBuilder(RequestBuilderBase):
         """Gets the ChildrenCollectionPage
 
         Returns: 
-            :class:`ChildrenCollectionPage<onedrivesdk.model.children_collection_page.ChildrenCollectionPage>`:
+            :class:`ChildrenCollectionPage<onedrivesdk.request.children_collection.ChildrenCollectionPage>`:
                 The ChildrenCollectionPage
         """
         return self.request().get()
 
+    @asyncio.coroutine
+    def get_async(self):
+        """Gets the ChildrenCollectionPage in async
+
+        Yields: 
+            :class:`ChildrenCollectionPage<onedrivesdk.request.children_collection.ChildrenCollectionPage>`:
+                The ChildrenCollectionPage
+        """
+        collection_page = yield from self.request().get_async()
+        return collection_page
 
 
 class ChildrenCollectionResponse(CollectionResponseBase):
@@ -113,7 +128,7 @@ class ChildrenCollectionResponse(CollectionResponseBase):
         """The collection page stored in the response JSON
         
         Returns:
-            :class:`ChildrenCollectionPage<onedrivesdk.model.children_collection_page.ChildrenCollectionPage>`:
+            :class:`ChildrenCollectionPage<onedrivesdk.request.children_collection.ChildrenCollectionPage>`:
                 The collection page
         """
         if self._collection_page:

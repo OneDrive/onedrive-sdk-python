@@ -10,6 +10,7 @@ from ..collection_base import CollectionRequestBase, CollectionResponseBase
 from ..request_builder_base import RequestBuilderBase
 from ..model.shares_collection_page import SharesCollectionPage
 import json
+import asyncio
 
 class SharesCollectionRequest(CollectionRequestBase):
 
@@ -30,25 +31,29 @@ class SharesCollectionRequest(CollectionRequestBase):
         """Gets the SharesCollectionPage
 
         Returns: 
-            :class:`SharesCollectionPage<onedrivesdk.model.shares_collection_page.SharesCollectionPage>`:
+            :class:`SharesCollectionPage<onedrivesdk.request.shares_collection.SharesCollectionPage>`:
                 The SharesCollectionPage
         """
         self.method = "GET"
         collection_response = SharesCollectionResponse(json.loads(self.send().content))
         return self._page_from_response(collection_response)
 
+    @asyncio.coroutine
+    def get_async(self):
+        """Gets the SharesCollectionPage in async
+
+        Yields: 
+            :class:`SharesCollectionPage<onedrivesdk.request.shares_collection.SharesCollectionPage>`:
+                The SharesCollectionPage
+        """
+        future = self._client._loop.run_in_executor(None,
+                                                    self.get)
+        collection_page = yield from future
+        return collection_page
 
     @staticmethod
     def get_next_page_request(collection_page, client, options=None):
         """Gets the SharesCollectionRequest for the next page. Returns None if there is no next page
-
-        Args:
-            collection_page (:class:`SharesCollectionPage<onedrivesdk.model.shares_collection_page.SharesCollectionPage>`):
-                The collection to get the next page for
-            client (:class:`OneDriveClient<onedrivesdk.request.one_drive_client.OneDriveClient>`):
-                The client which will be used for the request
-            options (list of :class:`Option<onedrivesdk.options.Option>`):
-                A list of options to pass into the request. Defaults to None.
 
         Yields: 
             :class:`SharesCollectionRequest<onedrivesdk.request.shares_collection.SharesCollectionRequest>`:
@@ -99,11 +104,21 @@ class SharesCollectionRequestBuilder(RequestBuilderBase):
         """Gets the SharesCollectionPage
 
         Returns: 
-            :class:`SharesCollectionPage<onedrivesdk.model.shares_collection_page.SharesCollectionPage>`:
+            :class:`SharesCollectionPage<onedrivesdk.request.shares_collection.SharesCollectionPage>`:
                 The SharesCollectionPage
         """
         return self.request().get()
 
+    @asyncio.coroutine
+    def get_async(self):
+        """Gets the SharesCollectionPage in async
+
+        Yields: 
+            :class:`SharesCollectionPage<onedrivesdk.request.shares_collection.SharesCollectionPage>`:
+                The SharesCollectionPage
+        """
+        collection_page = yield from self.request().get_async()
+        return collection_page
 
 
 class SharesCollectionResponse(CollectionResponseBase):
@@ -113,7 +128,7 @@ class SharesCollectionResponse(CollectionResponseBase):
         """The collection page stored in the response JSON
         
         Returns:
-            :class:`SharesCollectionPage<onedrivesdk.model.shares_collection_page.SharesCollectionPage>`:
+            :class:`SharesCollectionPage<onedrivesdk.request.shares_collection.SharesCollectionPage>`:
                 The collection page
         """
         if self._collection_page:
