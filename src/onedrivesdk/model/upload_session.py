@@ -47,7 +47,7 @@ class UploadSession(OneDriveObjectBase):
 
     @expiration_date_time.setter
     def expiration_date_time(self, val):
-        self._prop_dict["expirationDateTime"] = val.isoformat()+".0" if val.time().microsecond == 0 else ""+"Z"
+        self._prop_dict["expirationDateTime"] = val.isoformat()+(".0" if val.time().microsecond == 0 else ""+"Z")
 
     @property
     def next_expected_ranges(self):
