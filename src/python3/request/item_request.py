@@ -104,6 +104,10 @@ class ItemRequest(RequestBase):
                 if "permissions@odata.nextLink" in value._prop_dict:
                     next_page_link = value._prop_dict["permissions@odata.nextLink"]
                     value.permissions._next_page_link = next_page_link
+            if value.subscriptions:
+                if "subscriptions@odata.nextLink" in value._prop_dict:
+                    next_page_link = value._prop_dict["subscriptions@odata.nextLink"]
+                    value.subscriptions._next_page_link = next_page_link
             if value.versions:
                 if "versions@odata.nextLink" in value._prop_dict:
                     next_page_link = value._prop_dict["versions@odata.nextLink"]
@@ -112,6 +116,10 @@ class ItemRequest(RequestBase):
                 if "children@odata.nextLink" in value._prop_dict:
                     next_page_link = value._prop_dict["children@odata.nextLink"]
                     value.children._next_page_link = next_page_link
+            if value.tags:
+                if "tags@odata.nextLink" in value._prop_dict:
+                    next_page_link = value._prop_dict["tags@odata.nextLink"]
+                    value.tags._next_page_link = next_page_link
             if value.thumbnails:
                 if "thumbnails@odata.nextLink" in value._prop_dict:
                     next_page_link = value._prop_dict["thumbnails@odata.nextLink"]

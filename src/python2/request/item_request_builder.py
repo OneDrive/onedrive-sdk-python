@@ -1,24 +1,6 @@
 # -*- coding: utf-8 -*- 
 '''
-# Copyright (c) 2015 Microsoft Corporation
-# 
-# Permission is hereby granted, free of charge, to any person obtaining a copy
-# of this software and associated documentation files (the "Software"), to deal
-# in the Software without restriction, including without limitation the rights
-# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-# copies of the Software, and to permit persons to whom the Software is
-# furnished to do so, subject to the following conditions:
-# 
-# The above copyright notice and this permission notice shall be included in
-# all copies or substantial portions of the Software.
-# 
-# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-# THE SOFTWARE.
+# Copyright (c) Microsoft Corporation.  All Rights Reserved.  Licensed under the MIT License.  See License in the project root for license information.
 # 
 #  This file was generated and any changes will be overwritten.
 '''
@@ -29,6 +11,7 @@ from ..request_builder_base import RequestBuilderBase
 from ..request.item_create_session import ItemCreateSessionRequestBuilder
 from ..request.item_copy import ItemCopyRequestBuilder
 from ..request.item_create_link import ItemCreateLinkRequestBuilder
+from ..request.item_invite import ItemInviteRequestBuilder
 from ..request.item_delta import ItemDeltaRequestBuilder
 from ..request.item_search import ItemSearchRequestBuilder
 from ..request.item_content_request import ItemContentRequestBuilder
@@ -116,17 +99,6 @@ class ItemRequestBuilder(RequestBuilderBase):
 
 
     @property
-    def remote_item(self):
-        """The remote_item for the ItemRequestBuilder
-
-        Returns: 
-            :class:`RemoteItemRequestBuilder<onedrivesdk.request.remote_item_request.RemoteItemRequestBuilder>`:
-                A request builder created from the ItemRequestBuilder
-        """
-        return RemoteItemRequestBuilder(self.append_to_request_url("remoteItem"), self._client)
-
-
-    @property
     def permissions(self):
         """The permissions for the ItemRequestBuilder
 
@@ -135,6 +107,16 @@ class ItemRequestBuilder(RequestBuilderBase):
                 A request builder created from the ItemRequestBuilder
         """
         return PermissionsCollectionRequestBuilder(self.append_to_request_url("permissions"), self._client)
+
+    @property
+    def subscriptions(self):
+        """The subscriptions for the ItemRequestBuilder
+
+        Returns: 
+            :class:`SubscriptionsCollectionRequestBuilder<onedrivesdk.request.subscriptions_collection.SubscriptionsCollectionRequestBuilder>`:
+                A request builder created from the ItemRequestBuilder
+        """
+        return SubscriptionsCollectionRequestBuilder(self.append_to_request_url("subscriptions"), self._client)
 
     @property
     def versions(self):
@@ -155,6 +137,16 @@ class ItemRequestBuilder(RequestBuilderBase):
                 A request builder created from the ItemRequestBuilder
         """
         return ChildrenCollectionRequestBuilder(self.append_to_request_url("children"), self._client)
+
+    @property
+    def tags(self):
+        """The tags for the ItemRequestBuilder
+
+        Returns: 
+            :class:`TagsCollectionRequestBuilder<onedrivesdk.request.tags_collection.TagsCollectionRequestBuilder>`:
+                A request builder created from the ItemRequestBuilder
+        """
+        return TagsCollectionRequestBuilder(self.append_to_request_url("tags"), self._client)
 
     @property
     def thumbnails(self):
@@ -216,6 +208,27 @@ class ItemRequestBuilder(RequestBuilderBase):
         """
         return ItemCreateLinkRequestBuilder(self.append_to_request_url("action.createLink"), self._client, type)
 
+    def invite(self, recipients, require_sign_in=None, roles=None, send_invitation=None, message=None):
+        """Executes the invite method
+
+        Args:
+            require_sign_in (bool):
+                The require_sign_in to use in the method request          
+            roles (str):
+                The roles to use in the method request          
+            recipients (:class:`Recipients<onedrivesdk.model.recipients.Recipients>`):
+                The recipients to use in the method request
+            send_invitation (bool):
+                The send_invitation to use in the method request          
+            message (str):
+                The message to use in the method request          
+
+        Returns:
+            :class:`ItemInviteRequestBuilder<onedrivesdk.request.item_invite.ItemInviteRequestBuilder>`:
+                A ItemInviteRequestBuilder for the method
+        """
+        return ItemInviteRequestBuilder(self.append_to_request_url("action.invite"), self._client, recipients, require_sign_in=require_sign_in, roles=roles, send_invitation=send_invitation, message=message)
+
     def delta(self, token=None):
         """Executes the delta method
 
@@ -243,6 +256,8 @@ class ItemRequestBuilder(RequestBuilderBase):
         return ItemSearchRequestBuilder(self.append_to_request_url("view.search"), self._client, q=q)
 
 from ..request.permissions_collection import PermissionsCollectionRequestBuilder
+from ..request.subscriptions_collection import SubscriptionsCollectionRequestBuilder
 from ..request.versions_collection import VersionsCollectionRequestBuilder
 from ..request.children_collection import ChildrenCollectionRequestBuilder
+from ..request.tags_collection import TagsCollectionRequestBuilder
 from ..request.thumbnails_collection import ThumbnailsCollectionRequestBuilder
