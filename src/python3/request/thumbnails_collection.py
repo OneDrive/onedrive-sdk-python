@@ -10,7 +10,6 @@ from ..collection_base import CollectionRequestBase, CollectionResponseBase
 from ..request_builder_base import RequestBuilderBase
 from ..model.thumbnails_collection_page import ThumbnailsCollectionPage
 import json
-import asyncio
 
 class ThumbnailsCollectionRequest(CollectionRequestBase):
 
@@ -31,29 +30,25 @@ class ThumbnailsCollectionRequest(CollectionRequestBase):
         """Gets the ThumbnailsCollectionPage
 
         Returns: 
-            :class:`ThumbnailsCollectionPage<onedrivesdk.request.thumbnails_collection.ThumbnailsCollectionPage>`:
+            :class:`ThumbnailsCollectionPage<onedrivesdk.model.thumbnails_collection_page.ThumbnailsCollectionPage>`:
                 The ThumbnailsCollectionPage
         """
         self.method = "GET"
         collection_response = ThumbnailsCollectionResponse(json.loads(self.send().content))
         return self._page_from_response(collection_response)
 
-    @asyncio.coroutine
-    def get_async(self):
-        """Gets the ThumbnailsCollectionPage in async
-
-        Yields: 
-            :class:`ThumbnailsCollectionPage<onedrivesdk.request.thumbnails_collection.ThumbnailsCollectionPage>`:
-                The ThumbnailsCollectionPage
-        """
-        future = self._client._loop.run_in_executor(None,
-                                                    self.get)
-        collection_page = yield from future
-        return collection_page
 
     @staticmethod
     def get_next_page_request(collection_page, client, options=None):
         """Gets the ThumbnailsCollectionRequest for the next page. Returns None if there is no next page
+
+        Args:
+            collection_page (:class:`ThumbnailsCollectionPage<onedrivesdk.model.thumbnails_collection_page.ThumbnailsCollectionPage>`):
+                The collection to get the next page for
+            client (:class:`OneDriveClient<onedrivesdk.request.one_drive_client.OneDriveClient>`):
+                The client which will be used for the request
+            options (list of :class:`Option<onedrivesdk.options.Option>`):
+                A list of options to pass into the request. Defaults to None.
 
         Yields: 
             :class:`ThumbnailsCollectionRequest<onedrivesdk.request.thumbnails_collection.ThumbnailsCollectionRequest>`:
@@ -104,21 +99,11 @@ class ThumbnailsCollectionRequestBuilder(RequestBuilderBase):
         """Gets the ThumbnailsCollectionPage
 
         Returns: 
-            :class:`ThumbnailsCollectionPage<onedrivesdk.request.thumbnails_collection.ThumbnailsCollectionPage>`:
+            :class:`ThumbnailsCollectionPage<onedrivesdk.model.thumbnails_collection_page.ThumbnailsCollectionPage>`:
                 The ThumbnailsCollectionPage
         """
         return self.request().get()
 
-    @asyncio.coroutine
-    def get_async(self):
-        """Gets the ThumbnailsCollectionPage in async
-
-        Yields: 
-            :class:`ThumbnailsCollectionPage<onedrivesdk.request.thumbnails_collection.ThumbnailsCollectionPage>`:
-                The ThumbnailsCollectionPage
-        """
-        collection_page = yield from self.request().get_async()
-        return collection_page
 
 
 class ThumbnailsCollectionResponse(CollectionResponseBase):
@@ -128,7 +113,7 @@ class ThumbnailsCollectionResponse(CollectionResponseBase):
         """The collection page stored in the response JSON
         
         Returns:
-            :class:`ThumbnailsCollectionPage<onedrivesdk.request.thumbnails_collection.ThumbnailsCollectionPage>`:
+            :class:`ThumbnailsCollectionPage<onedrivesdk.model.thumbnails_collection_page.ThumbnailsCollectionPage>`:
                 The collection page
         """
         if self._collection_page:

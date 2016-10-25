@@ -10,7 +10,6 @@ from ..collection_base import CollectionRequestBase, CollectionResponseBase
 from ..request_builder_base import RequestBuilderBase
 from ..model.versions_collection_page import VersionsCollectionPage
 import json
-import asyncio
 
 class VersionsCollectionRequest(CollectionRequestBase):
 
@@ -31,29 +30,25 @@ class VersionsCollectionRequest(CollectionRequestBase):
         """Gets the VersionsCollectionPage
 
         Returns: 
-            :class:`VersionsCollectionPage<onedrivesdk.request.versions_collection.VersionsCollectionPage>`:
+            :class:`VersionsCollectionPage<onedrivesdk.model.versions_collection_page.VersionsCollectionPage>`:
                 The VersionsCollectionPage
         """
         self.method = "GET"
         collection_response = VersionsCollectionResponse(json.loads(self.send().content))
         return self._page_from_response(collection_response)
 
-    @asyncio.coroutine
-    def get_async(self):
-        """Gets the VersionsCollectionPage in async
-
-        Yields: 
-            :class:`VersionsCollectionPage<onedrivesdk.request.versions_collection.VersionsCollectionPage>`:
-                The VersionsCollectionPage
-        """
-        future = self._client._loop.run_in_executor(None,
-                                                    self.get)
-        collection_page = yield from future
-        return collection_page
 
     @staticmethod
     def get_next_page_request(collection_page, client, options=None):
         """Gets the VersionsCollectionRequest for the next page. Returns None if there is no next page
+
+        Args:
+            collection_page (:class:`VersionsCollectionPage<onedrivesdk.model.versions_collection_page.VersionsCollectionPage>`):
+                The collection to get the next page for
+            client (:class:`OneDriveClient<onedrivesdk.request.one_drive_client.OneDriveClient>`):
+                The client which will be used for the request
+            options (list of :class:`Option<onedrivesdk.options.Option>`):
+                A list of options to pass into the request. Defaults to None.
 
         Yields: 
             :class:`VersionsCollectionRequest<onedrivesdk.request.versions_collection.VersionsCollectionRequest>`:
@@ -104,21 +99,11 @@ class VersionsCollectionRequestBuilder(RequestBuilderBase):
         """Gets the VersionsCollectionPage
 
         Returns: 
-            :class:`VersionsCollectionPage<onedrivesdk.request.versions_collection.VersionsCollectionPage>`:
+            :class:`VersionsCollectionPage<onedrivesdk.model.versions_collection_page.VersionsCollectionPage>`:
                 The VersionsCollectionPage
         """
         return self.request().get()
 
-    @asyncio.coroutine
-    def get_async(self):
-        """Gets the VersionsCollectionPage in async
-
-        Yields: 
-            :class:`VersionsCollectionPage<onedrivesdk.request.versions_collection.VersionsCollectionPage>`:
-                The VersionsCollectionPage
-        """
-        collection_page = yield from self.request().get_async()
-        return collection_page
 
 
 class VersionsCollectionResponse(CollectionResponseBase):
@@ -128,7 +113,7 @@ class VersionsCollectionResponse(CollectionResponseBase):
         """The collection page stored in the response JSON
         
         Returns:
-            :class:`VersionsCollectionPage<onedrivesdk.request.versions_collection.VersionsCollectionPage>`:
+            :class:`VersionsCollectionPage<onedrivesdk.model.versions_collection_page.VersionsCollectionPage>`:
                 The collection page
         """
         if self._collection_page:

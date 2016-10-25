@@ -10,7 +10,6 @@ from ..collection_base import CollectionRequestBase, CollectionResponseBase
 from ..request_builder_base import RequestBuilderBase
 from ..model.permissions_collection_page import PermissionsCollectionPage
 import json
-import asyncio
 
 class PermissionsCollectionRequest(CollectionRequestBase):
 
@@ -31,29 +30,25 @@ class PermissionsCollectionRequest(CollectionRequestBase):
         """Gets the PermissionsCollectionPage
 
         Returns: 
-            :class:`PermissionsCollectionPage<onedrivesdk.request.permissions_collection.PermissionsCollectionPage>`:
+            :class:`PermissionsCollectionPage<onedrivesdk.model.permissions_collection_page.PermissionsCollectionPage>`:
                 The PermissionsCollectionPage
         """
         self.method = "GET"
         collection_response = PermissionsCollectionResponse(json.loads(self.send().content))
         return self._page_from_response(collection_response)
 
-    @asyncio.coroutine
-    def get_async(self):
-        """Gets the PermissionsCollectionPage in async
-
-        Yields: 
-            :class:`PermissionsCollectionPage<onedrivesdk.request.permissions_collection.PermissionsCollectionPage>`:
-                The PermissionsCollectionPage
-        """
-        future = self._client._loop.run_in_executor(None,
-                                                    self.get)
-        collection_page = yield from future
-        return collection_page
 
     @staticmethod
     def get_next_page_request(collection_page, client, options=None):
         """Gets the PermissionsCollectionRequest for the next page. Returns None if there is no next page
+
+        Args:
+            collection_page (:class:`PermissionsCollectionPage<onedrivesdk.model.permissions_collection_page.PermissionsCollectionPage>`):
+                The collection to get the next page for
+            client (:class:`OneDriveClient<onedrivesdk.request.one_drive_client.OneDriveClient>`):
+                The client which will be used for the request
+            options (list of :class:`Option<onedrivesdk.options.Option>`):
+                A list of options to pass into the request. Defaults to None.
 
         Yields: 
             :class:`PermissionsCollectionRequest<onedrivesdk.request.permissions_collection.PermissionsCollectionRequest>`:
@@ -104,21 +99,11 @@ class PermissionsCollectionRequestBuilder(RequestBuilderBase):
         """Gets the PermissionsCollectionPage
 
         Returns: 
-            :class:`PermissionsCollectionPage<onedrivesdk.request.permissions_collection.PermissionsCollectionPage>`:
+            :class:`PermissionsCollectionPage<onedrivesdk.model.permissions_collection_page.PermissionsCollectionPage>`:
                 The PermissionsCollectionPage
         """
         return self.request().get()
 
-    @asyncio.coroutine
-    def get_async(self):
-        """Gets the PermissionsCollectionPage in async
-
-        Yields: 
-            :class:`PermissionsCollectionPage<onedrivesdk.request.permissions_collection.PermissionsCollectionPage>`:
-                The PermissionsCollectionPage
-        """
-        collection_page = yield from self.request().get_async()
-        return collection_page
 
 
 class PermissionsCollectionResponse(CollectionResponseBase):
@@ -128,7 +113,7 @@ class PermissionsCollectionResponse(CollectionResponseBase):
         """The collection page stored in the response JSON
         
         Returns:
-            :class:`PermissionsCollectionPage<onedrivesdk.request.permissions_collection.PermissionsCollectionPage>`:
+            :class:`PermissionsCollectionPage<onedrivesdk.model.permissions_collection_page.PermissionsCollectionPage>`:
                 The collection page
         """
         if self._collection_page:
