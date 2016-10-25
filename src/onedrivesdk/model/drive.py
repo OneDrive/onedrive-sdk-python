@@ -154,3 +154,6 @@ class Drive(OneDriveObjectBase):
         else:
             return None
 
+from ..model.items_collection_page import ItemsCollectionPage
+from ..model.shared_collection_page import SharedCollectionPage
+from ..model.special_collection_page import SpecialCollectionPage

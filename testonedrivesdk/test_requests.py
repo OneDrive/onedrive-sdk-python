@@ -13,7 +13,7 @@ import onedrivesdk
 from onedrivesdk.error import OneDriveError, ErrorCode
 from onedrivesdk.http_response import HttpResponse
 from onedrivesdk.model.item_reference import ItemReference
-from onedrivesdk.request.item_delta_collection import ItemDeltaCollectionPage
+from onedrivesdk.model.item_delta_collection_page import ItemDeltaCollectionPage
 from onedrivesdk.request.item_delta import ItemDeltaRequest
 import time
 import json
@@ -150,8 +150,9 @@ class TestRequests(unittest.TestCase):
         client = onedrivesdk.OneDriveClient("onedriveurl", http_provider, auth_provider)
 
         items = client.drives["me"].items["testitem!id"].delta().request().get()
-        assert type(items.next_page_request) is ItemDeltaRequest
-        assert type(items.next_page_request.get()) is ItemDeltaCollectionPage
+        request = onedrivesdk.ItemDeltaRequest.get_next_page_request(items, client, None)
+        assert type(request) is ItemDeltaRequest
+        assert type(request.get()) is ItemDeltaCollectionPage
 
     @patch('onedrivesdk.HttpProvider')
     @patch('onedrivesdk.AuthProvider')

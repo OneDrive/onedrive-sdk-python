@@ -105,3 +105,4 @@ class Share(OneDriveObjectBase):
         else:
             return None
 
+from ..model.items_collection_page import ItemsCollectionPage
