@@ -30,7 +30,7 @@ class SharesCollectionRequest(CollectionRequestBase):
         """Gets the SharesCollectionPage
 
         Returns: 
-            :class:`SharesCollectionPage<onedrivesdk.request.shares_collection.SharesCollectionPage>`:
+            :class:`SharesCollectionPage<onedrivesdk.model.shares_collection_page.SharesCollectionPage>`:
                 The SharesCollectionPage
         """
         self.method = "GET"
@@ -41,6 +41,14 @@ class SharesCollectionRequest(CollectionRequestBase):
     @staticmethod
     def get_next_page_request(collection_page, client, options=None):
         """Gets the SharesCollectionRequest for the next page. Returns None if there is no next page
+
+        Args:
+            collection_page (:class:`SharesCollectionPage<onedrivesdk.model.shares_collection_page.SharesCollectionPage>`):
+                The collection to get the next page for
+            client (:class:`OneDriveClient<onedrivesdk.request.one_drive_client.OneDriveClient>`):
+                The client which will be used for the request
+            options (list of :class:`Option<onedrivesdk.options.Option>`):
+                A list of options to pass into the request. Defaults to None.
 
         Yields: 
             :class:`SharesCollectionRequest<onedrivesdk.request.shares_collection.SharesCollectionRequest>`:
@@ -91,7 +99,7 @@ class SharesCollectionRequestBuilder(RequestBuilderBase):
         """Gets the SharesCollectionPage
 
         Returns: 
-            :class:`SharesCollectionPage<onedrivesdk.request.shares_collection.SharesCollectionPage>`:
+            :class:`SharesCollectionPage<onedrivesdk.model.shares_collection_page.SharesCollectionPage>`:
                 The SharesCollectionPage
         """
         return self.request().get()
@@ -105,7 +113,7 @@ class SharesCollectionResponse(CollectionResponseBase):
         """The collection page stored in the response JSON
         
         Returns:
-            :class:`SharesCollectionPage<onedrivesdk.request.shares_collection.SharesCollectionPage>`:
+            :class:`SharesCollectionPage<onedrivesdk.model.shares_collection_page.SharesCollectionPage>`:
                 The collection page
         """
         if self._collection_page:

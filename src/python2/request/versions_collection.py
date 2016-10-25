@@ -30,7 +30,7 @@ class VersionsCollectionRequest(CollectionRequestBase):
         """Gets the VersionsCollectionPage
 
         Returns: 
-            :class:`VersionsCollectionPage<onedrivesdk.request.versions_collection.VersionsCollectionPage>`:
+            :class:`VersionsCollectionPage<onedrivesdk.model.versions_collection_page.VersionsCollectionPage>`:
                 The VersionsCollectionPage
         """
         self.method = "GET"
@@ -41,6 +41,14 @@ class VersionsCollectionRequest(CollectionRequestBase):
     @staticmethod
     def get_next_page_request(collection_page, client, options=None):
         """Gets the VersionsCollectionRequest for the next page. Returns None if there is no next page
+
+        Args:
+            collection_page (:class:`VersionsCollectionPage<onedrivesdk.model.versions_collection_page.VersionsCollectionPage>`):
+                The collection to get the next page for
+            client (:class:`OneDriveClient<onedrivesdk.request.one_drive_client.OneDriveClient>`):
+                The client which will be used for the request
+            options (list of :class:`Option<onedrivesdk.options.Option>`):
+                A list of options to pass into the request. Defaults to None.
 
         Yields: 
             :class:`VersionsCollectionRequest<onedrivesdk.request.versions_collection.VersionsCollectionRequest>`:
@@ -91,7 +99,7 @@ class VersionsCollectionRequestBuilder(RequestBuilderBase):
         """Gets the VersionsCollectionPage
 
         Returns: 
-            :class:`VersionsCollectionPage<onedrivesdk.request.versions_collection.VersionsCollectionPage>`:
+            :class:`VersionsCollectionPage<onedrivesdk.model.versions_collection_page.VersionsCollectionPage>`:
                 The VersionsCollectionPage
         """
         return self.request().get()
@@ -105,7 +113,7 @@ class VersionsCollectionResponse(CollectionResponseBase):
         """The collection page stored in the response JSON
         
         Returns:
-            :class:`VersionsCollectionPage<onedrivesdk.request.versions_collection.VersionsCollectionPage>`:
+            :class:`VersionsCollectionPage<onedrivesdk.model.versions_collection_page.VersionsCollectionPage>`:
                 The collection page
         """
         if self._collection_page:

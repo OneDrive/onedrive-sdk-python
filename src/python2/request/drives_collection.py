@@ -30,7 +30,7 @@ class DrivesCollectionRequest(CollectionRequestBase):
         """Gets the DrivesCollectionPage
 
         Returns: 
-            :class:`DrivesCollectionPage<onedrivesdk.request.drives_collection.DrivesCollectionPage>`:
+            :class:`DrivesCollectionPage<onedrivesdk.model.drives_collection_page.DrivesCollectionPage>`:
                 The DrivesCollectionPage
         """
         self.method = "GET"
@@ -41,6 +41,14 @@ class DrivesCollectionRequest(CollectionRequestBase):
     @staticmethod
     def get_next_page_request(collection_page, client, options=None):
         """Gets the DrivesCollectionRequest for the next page. Returns None if there is no next page
+
+        Args:
+            collection_page (:class:`DrivesCollectionPage<onedrivesdk.model.drives_collection_page.DrivesCollectionPage>`):
+                The collection to get the next page for
+            client (:class:`OneDriveClient<onedrivesdk.request.one_drive_client.OneDriveClient>`):
+                The client which will be used for the request
+            options (list of :class:`Option<onedrivesdk.options.Option>`):
+                A list of options to pass into the request. Defaults to None.
 
         Yields: 
             :class:`DrivesCollectionRequest<onedrivesdk.request.drives_collection.DrivesCollectionRequest>`:
@@ -91,7 +99,7 @@ class DrivesCollectionRequestBuilder(RequestBuilderBase):
         """Gets the DrivesCollectionPage
 
         Returns: 
-            :class:`DrivesCollectionPage<onedrivesdk.request.drives_collection.DrivesCollectionPage>`:
+            :class:`DrivesCollectionPage<onedrivesdk.model.drives_collection_page.DrivesCollectionPage>`:
                 The DrivesCollectionPage
         """
         return self.request().get()
@@ -105,7 +113,7 @@ class DrivesCollectionResponse(CollectionResponseBase):
         """The collection page stored in the response JSON
         
         Returns:
-            :class:`DrivesCollectionPage<onedrivesdk.request.drives_collection.DrivesCollectionPage>`:
+            :class:`DrivesCollectionPage<onedrivesdk.model.drives_collection_page.DrivesCollectionPage>`:
                 The collection page
         """
         if self._collection_page:

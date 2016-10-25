@@ -30,7 +30,7 @@ class ThumbnailsCollectionRequest(CollectionRequestBase):
         """Gets the ThumbnailsCollectionPage
 
         Returns: 
-            :class:`ThumbnailsCollectionPage<onedrivesdk.request.thumbnails_collection.ThumbnailsCollectionPage>`:
+            :class:`ThumbnailsCollectionPage<onedrivesdk.model.thumbnails_collection_page.ThumbnailsCollectionPage>`:
                 The ThumbnailsCollectionPage
         """
         self.method = "GET"
@@ -41,6 +41,14 @@ class ThumbnailsCollectionRequest(CollectionRequestBase):
     @staticmethod
     def get_next_page_request(collection_page, client, options=None):
         """Gets the ThumbnailsCollectionRequest for the next page. Returns None if there is no next page
+
+        Args:
+            collection_page (:class:`ThumbnailsCollectionPage<onedrivesdk.model.thumbnails_collection_page.ThumbnailsCollectionPage>`):
+                The collection to get the next page for
+            client (:class:`OneDriveClient<onedrivesdk.request.one_drive_client.OneDriveClient>`):
+                The client which will be used for the request
+            options (list of :class:`Option<onedrivesdk.options.Option>`):
+                A list of options to pass into the request. Defaults to None.
 
         Yields: 
             :class:`ThumbnailsCollectionRequest<onedrivesdk.request.thumbnails_collection.ThumbnailsCollectionRequest>`:
@@ -91,7 +99,7 @@ class ThumbnailsCollectionRequestBuilder(RequestBuilderBase):
         """Gets the ThumbnailsCollectionPage
 
         Returns: 
-            :class:`ThumbnailsCollectionPage<onedrivesdk.request.thumbnails_collection.ThumbnailsCollectionPage>`:
+            :class:`ThumbnailsCollectionPage<onedrivesdk.model.thumbnails_collection_page.ThumbnailsCollectionPage>`:
                 The ThumbnailsCollectionPage
         """
         return self.request().get()
@@ -105,7 +113,7 @@ class ThumbnailsCollectionResponse(CollectionResponseBase):
         """The collection page stored in the response JSON
         
         Returns:
-            :class:`ThumbnailsCollectionPage<onedrivesdk.request.thumbnails_collection.ThumbnailsCollectionPage>`:
+            :class:`ThumbnailsCollectionPage<onedrivesdk.model.thumbnails_collection_page.ThumbnailsCollectionPage>`:
                 The collection page
         """
         if self._collection_page:
