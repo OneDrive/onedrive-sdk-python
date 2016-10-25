@@ -30,7 +30,7 @@ class FileSystemInfo(OneDriveObjectBase):
 
     @created_date_time.setter
     def created_date_time(self, val):
-        self._prop_dict["createdDateTime"] = val.isoformat()+(".0" if val.time().microsecond == 0 else ""+"Z")
+        self._prop_dict["createdDateTime"] = val.isoformat()+((".0" if val.time().microsecond == 0 else "")+"Z")
 
     @property
     def last_modified_date_time(self):
@@ -47,5 +47,5 @@ class FileSystemInfo(OneDriveObjectBase):
 
     @last_modified_date_time.setter
     def last_modified_date_time(self, val):
-        self._prop_dict["lastModifiedDateTime"] = val.isoformat()+(".0" if val.time().microsecond == 0 else ""+"Z")
+        self._prop_dict["lastModifiedDateTime"] = val.isoformat()+((".0" if val.time().microsecond == 0 else "")+"Z")
 
