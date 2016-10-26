@@ -79,6 +79,7 @@ from .request.drives_collection import DrivesCollectionRequest, DrivesCollection
 from .model.drives_collection_page import DrivesCollectionPage
 from .request.shares_collection import SharesCollectionRequest, SharesCollectionRequestBuilder, SharesCollectionResponse
 from .model.shares_collection_page import SharesCollectionPage
+from .request.drive_recent import DriveRecentRequest
 from .request.item_create_session import ItemCreateSessionRequest
 from .request.item_copy import ItemCopyRequest
 from .request.item_create_link import ItemCreateLinkRequest
