@@ -1,24 +1,6 @@
 # -*- coding: utf-8 -*- 
 '''
-# Copyright (c) 2015 Microsoft Corporation
-# 
-# Permission is hereby granted, free of charge, to any person obtaining a copy
-# of this software and associated documentation files (the "Software"), to deal
-# in the Software without restriction, including without limitation the rights
-# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-# copies of the Software, and to permit persons to whom the Software is
-# furnished to do so, subject to the following conditions:
-# 
-# The above copyright notice and this permission notice shall be included in
-# all copies or substantial portions of the Software.
-# 
-# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-# THE SOFTWARE.
+# Copyright (c) Microsoft Corporation.  All Rights Reserved.  Licensed under the MIT License.  See License in the project root for license information.
 # 
 #  This file was generated and any changes will be overwritten.
 '''
@@ -26,6 +8,7 @@
 from __future__ import unicode_literals
 from ..model.identity_set import IdentitySet
 from ..model.quota import Quota
+from ..model.status import Status
 from ..model.item import Item
 from ..one_drive_object_base import OneDriveObjectBase
 
@@ -116,6 +99,28 @@ class Drive(OneDriveObjectBase):
         self._prop_dict["quota"] = val
 
     @property
+    def status(self):
+        """
+        Gets and sets the status
+        
+        Returns: 
+            :class:`Status<onedrivesdk.model.status.Status>`:
+                The status
+        """
+        if "status" in self._prop_dict:
+            if isinstance(self._prop_dict["status"], OneDriveObjectBase):
+                return self._prop_dict["status"]
+            else :
+                self._prop_dict["status"] = Status(self._prop_dict["status"])
+                return self._prop_dict["status"]
+
+        return None
+
+    @status.setter
+    def status(self, val):
+        self._prop_dict["status"] = val
+
+    @property
     def items(self):
         """Gets and sets the items
         
@@ -154,3 +159,6 @@ class Drive(OneDriveObjectBase):
         else:
             return None
 
+from ..model.items_collection_page import ItemsCollectionPage
+from ..model.shared_collection_page import SharedCollectionPage
+from ..model.special_collection_page import SpecialCollectionPage

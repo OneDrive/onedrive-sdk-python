@@ -30,10 +30,6 @@ class CollectionRequestBase(RequestBase):
     def __init__(self, request_url, client, options):
         super(CollectionRequestBase, self).__init__(request_url, client, options)
 
-    def _init_next_page_request(self, next_page_link, client, options):
-        #implemented in each collection request
-        pass
-
     def _page_from_response(self, response):
         """Get the collection page from within the response
         
@@ -47,7 +43,7 @@ class CollectionRequestBase(RequestBase):
         if response:
             if "@odata.nextLink" in response._prop_dict:
                 next_page_link = response._prop_dict["@odata.nextLink"]
-                response.collection_page._init_next_page_request(next_page_link, self._client, None)
+                response.collection_page._next_page_link = next_page_link
             return response.collection_page
         return None
 
@@ -68,15 +64,3 @@ class CollectionPageBase(object):
 
     def __len__(self):
         return len(self._prop_list)
-
-    @property
-    def next_page_request(self):
-        """Gets a request for the next page of a collection, if one exists
-        
-        Returns:
-            The request object to send
-        """
-        try:
-            return self._next_page_request
-        except:
-            return None

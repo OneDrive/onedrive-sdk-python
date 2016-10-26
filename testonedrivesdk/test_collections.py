@@ -6,7 +6,8 @@ except ImportError:
 
 import onedrivesdk
 from onedrivesdk.http_response import HttpResponse
-from onedrivesdk.request.children_collection import ChildrenCollectionPage, ChildrenCollectionRequest
+from onedrivesdk.request.children_collection import ChildrenCollectionRequest
+from onedrivesdk.model.children_collection_page import ChildrenCollectionPage
 from onedrivesdk.model.folder import Folder
 import json
 
@@ -35,9 +36,9 @@ class TestCollections(unittest.TestCase):
         items = client.drives["me"].items["root"].children.request().get()
         
         assert len(items) == 2
-        assert type(items) is ChildrenCollectionPage
+        assert isinstance(items, ChildrenCollectionPage)
         assert items[0].name == "test1"
-        assert type(items[0].folder) is Folder
+        assert isinstance(items[0].folder, Folder)
         assert items[1].folder is None
 
     @patch('onedrivesdk.HttpProvider')
@@ -61,8 +62,11 @@ class TestCollections(unittest.TestCase):
 
         items = client.drives["me"].items["root"].children.request().get()
         
-        assert type(items.next_page_request) is ChildrenCollectionRequest
-        assert type(items.next_page_request.get()) is ChildrenCollectionPage
+        assert items._next_page_link is not None
+
+        request = onedrivesdk.ChildrenCollectionRequest.get_next_page_request(items, client)
+        assert isinstance(request, ChildrenCollectionRequest)
+        assert isinstance(request.get(), ChildrenCollectionPage)
 
 if __name__ == '__main__':
     unittest.main()
