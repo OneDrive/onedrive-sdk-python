@@ -88,7 +88,7 @@ redirect_uri = 'http://localhost:8080'
 client_id = your_client_id
 client_secret = your_client_secret
 discovery_uri = 'https://api.office.com/discovery/'
-auth_server_url='https://login.microsoftonline.com/common/oauth2/authorize',
+auth_server_url='https://login.microsoftonline.com/common/oauth2/authorize'
 auth_token_url='https://login.microsoftonline.com/common/oauth2/token'
 
 http = onedrivesdk.HttpProvider()
