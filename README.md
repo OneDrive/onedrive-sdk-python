@@ -98,7 +98,7 @@ auth = onedrivesdk.AuthProvider(http,
                                 auth_token_url=auth_token_url)
 auth_url = auth.get_auth_url(redirect_uri)
 code = GetAuthCodeServer.get_auth_code(auth_url, redirect_uri)
-auth.authenticate(code, redirect_uri, client_secret, resource=resource)
+auth.authenticate(code, redirect_uri, client_secret, resource=discovery_uri)
 # If you have access to more than one service, you'll need to decide
 # which ServiceInfo to use instead of just using the first one, as below.
 service_info = ResourceDiscoveryRequest().get_service_info(auth.access_token)[0]
