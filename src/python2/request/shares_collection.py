@@ -1,32 +1,14 @@
 # -*- coding: utf-8 -*- 
 '''
-# Copyright (c) 2015 Microsoft Corporation
-# 
-# Permission is hereby granted, free of charge, to any person obtaining a copy
-# of this software and associated documentation files (the "Software"), to deal
-# in the Software without restriction, including without limitation the rights
-# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-# copies of the Software, and to permit persons to whom the Software is
-# furnished to do so, subject to the following conditions:
-# 
-# The above copyright notice and this permission notice shall be included in
-# all copies or substantial portions of the Software.
-# 
-# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-# THE SOFTWARE.
+# Copyright (c) Microsoft Corporation.  All Rights Reserved.  Licensed under the MIT License.  See License in the project root for license information.
 # 
 #  This file was generated and any changes will be overwritten.
 '''
 
 from __future__ import unicode_literals
-from ..collection_base import CollectionRequestBase, CollectionResponseBase, CollectionPageBase
+from ..collection_base import CollectionRequestBase, CollectionResponseBase
 from ..request_builder_base import RequestBuilderBase
-from ..model.share import Share
+from ..model.shares_collection_page import SharesCollectionPage
 import json
 
 class SharesCollectionRequest(CollectionRequestBase):
@@ -48,13 +30,34 @@ class SharesCollectionRequest(CollectionRequestBase):
         """Gets the SharesCollectionPage
 
         Returns: 
-            :class:`SharesCollectionPage<onedrivesdk.request.shares_collection.SharesCollectionPage>`:
+            :class:`SharesCollectionPage<onedrivesdk.model.shares_collection_page.SharesCollectionPage>`:
                 The SharesCollectionPage
         """
         self.method = "GET"
         collection_response = SharesCollectionResponse(json.loads(self.send().content))
         return self._page_from_response(collection_response)
 
+
+    @staticmethod
+    def get_next_page_request(collection_page, client, options=None):
+        """Gets the SharesCollectionRequest for the next page. Returns None if there is no next page
+
+        Args:
+            collection_page (:class:`SharesCollectionPage<onedrivesdk.model.shares_collection_page.SharesCollectionPage>`):
+                The collection to get the next page for
+            client (:class:`OneDriveClient<onedrivesdk.request.one_drive_client.OneDriveClient>`):
+                The client which will be used for the request
+            options (list of :class:`Option<onedrivesdk.options.Option>`):
+                A list of options to pass into the request. Defaults to None.
+
+        Yields: 
+            :class:`SharesCollectionRequest<onedrivesdk.request.shares_collection.SharesCollectionRequest>`:
+                The SharesCollectionRequest
+        """
+        if collection_page._next_page_link:
+            return SharesCollectionRequest(collection_page._next_page_link, client, options)
+        else:
+            return None
 
 class SharesCollectionRequestBuilder(RequestBuilderBase):
 
@@ -96,7 +99,7 @@ class SharesCollectionRequestBuilder(RequestBuilderBase):
         """Gets the SharesCollectionPage
 
         Returns: 
-            :class:`SharesCollectionPage<onedrivesdk.request.shares_collection.SharesCollectionPage>`:
+            :class:`SharesCollectionPage<onedrivesdk.model.shares_collection_page.SharesCollectionPage>`:
                 The SharesCollectionPage
         """
         return self.request().get()
@@ -110,7 +113,7 @@ class SharesCollectionResponse(CollectionResponseBase):
         """The collection page stored in the response JSON
         
         Returns:
-            :class:`SharesCollectionPage<onedrivesdk.request.shares_collection.SharesCollectionPage>`:
+            :class:`SharesCollectionPage<onedrivesdk.model.shares_collection_page.SharesCollectionPage>`:
                 The collection page
         """
         if self._collection_page:
@@ -119,44 +122,6 @@ class SharesCollectionResponse(CollectionResponseBase):
             self._collection_page = SharesCollectionPage(self._prop_dict["value"])
 
         return self._collection_page
-
-
-class SharesCollectionPage(CollectionPageBase):
-
-    def __getitem__(self, index):
-        """Get the Share at the index specified
-        
-        Args:
-            index (int): The index of the item to get from the SharesCollectionPage
-
-        Returns:
-            :class:`Share<onedrivesdk.model.share.Share>`:
-                The Share at the index
-        """
-        return Share(self._prop_list[index])
-
-    def shares(self):
-        """Get a generator of Share within the SharesCollectionPage
-        
-        Yields:
-            :class:`Share<onedrivesdk.model.share.Share>`:
-                The next Share in the collection
-        """
-        for item in self._prop_list:
-            yield Share(item)
-
-    def _init_next_page_request(self, next_page_link, client, options):
-        """Initialize the next page request for the SharesCollectionPage
-        
-        Args:
-            next_page_link (str): The URL for the next page request
-                to be sent to
-            client (:class:`OneDriveClient<onedrivesdk.model.one_drive_client.OneDriveClient>`:
-                The client to be used for the request
-            options (list of :class:`Option<onedrivesdk.options.Option>`:
-                A list of options
-        """
-        self._next_page_request = SharesCollectionRequest(next_page_link, client, options)
 
 
 from ..request.share_request_builder import ShareRequestBuilder

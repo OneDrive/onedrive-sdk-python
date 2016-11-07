@@ -1,24 +1,6 @@
 # -*- coding: utf-8 -*- 
 '''
-# Copyright (c) 2015 Microsoft Corporation
-# 
-# Permission is hereby granted, free of charge, to any person obtaining a copy
-# of this software and associated documentation files (the "Software"), to deal
-# in the Software without restriction, including without limitation the rights
-# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-# copies of the Software, and to permit persons to whom the Software is
-# furnished to do so, subject to the following conditions:
-# 
-# The above copyright notice and this permission notice shall be included in
-# all copies or substantial portions of the Software.
-# 
-# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-# THE SOFTWARE.
+# Copyright (c) Microsoft Corporation.  All Rights Reserved.  Licensed under the MIT License.  See License in the project root for license information.
 # 
 #  This file was generated and any changes will be overwritten.
 '''
@@ -48,6 +30,19 @@ class ItemDeltaRequest(CollectionRequestBase):
         collection_response = ItemDeltaCollectionResponse(json.loads(self.send().content))
         return self._page_from_response(collection_response)
 
+    
+    @staticmethod
+    def get_next_page_request(collection_page, client, options, token=None):
+        """Gets the ItemDeltaRequest for the next page. Returns None if there is no next page
+
+        Yields: 
+            :class:`ItemDeltaRequest<onedrivesdk.request.item_delta.ItemDeltaRequest>`:
+                The ItemDeltaRequest
+        """
+        if collection_page._next_page_link:
+            return ItemDeltaRequest(collection_page._next_page_link, client, options, token)
+        else:
+            return None
 
 
 class ItemDeltaRequestBuilder(RequestBuilderBase):
@@ -58,7 +53,7 @@ class ItemDeltaRequestBuilder(RequestBuilderBase):
 
         self._method_options["token"] = token
 
-    def request(self, expand=None, select=None, top=None, options=None):
+    def request(self, expand=None, select=None, top=None, order_by=None, options=None):
         """Builds the request for the ItemDelta
         
         Args:
@@ -67,6 +62,8 @@ class ItemDeltaRequestBuilder(RequestBuilderBase):
             select (str): Default None, comma-seperated list of properties to
                 include in the response.
             top (int): Default None, the number of items to return in a result.
+            order_by (str): Default None, comma-seperated list of properties
+                that are used to sort the order of items in the response.
             options (list of :class:`Option<onedrivesdk.options.Option>`):
                 Default to None, list of options to include in the request
 
@@ -75,7 +72,7 @@ class ItemDeltaRequestBuilder(RequestBuilderBase):
                 The request
         """
         req = ItemDeltaRequest(self._request_url, self._client, options, token=self._method_options["token"])
-        req._set_query_options(expand=expand, select=select, top=top)
+        req._set_query_options(expand=expand, select=select, top=top, order_by=order_by)
         return req
 
     def get(self):

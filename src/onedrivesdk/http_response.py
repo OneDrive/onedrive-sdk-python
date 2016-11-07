@@ -43,7 +43,17 @@ class HttpResponse(object):
         self._content = content
 
         if self.content and (self.status < 200 or self.status >= 300):
-            message = json.loads(self.content)
+            try:
+                message = json.loads(self.content)
+            except ValueError:  # Invalid or empty response message
+                from .error import ErrorCode
+                message = {
+                    "error": {
+                        "code": ErrorCode.Malformed,
+                        "message": "The following invalid JSON was returned:\n%s" % self.content
+                        }
+                    }
+
             if "error" in message:
                 if type(message["error"]) == dict:
                     raise OneDriveError(message["error"], self.status)

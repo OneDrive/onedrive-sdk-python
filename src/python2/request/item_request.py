@@ -1,24 +1,6 @@
 # -*- coding: utf-8 -*- 
 '''
-# Copyright (c) 2015 Microsoft Corporation
-# 
-# Permission is hereby granted, free of charge, to any person obtaining a copy
-# of this software and associated documentation files (the "Software"), to deal
-# in the Software without restriction, including without limitation the rights
-# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-# copies of the Software, and to permit persons to whom the Software is
-# furnished to do so, subject to the following conditions:
-# 
-# The above copyright notice and this permission notice shall be included in
-# all copies or substantial portions of the Software.
-# 
-# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-# THE SOFTWARE.
+# Copyright (c) Microsoft Corporation.  All Rights Reserved.  Licensed under the MIT License.  See License in the project root for license information.
 # 
 #  This file was generated and any changes will be overwritten.
 '''
@@ -79,19 +61,27 @@ class ItemRequest(RequestBase):
 
     def _initialize_collection_properties(self, value):
         if value and value._prop_dict:
-            if value.permissions and value.permissions._prop_dict:
+            if value.permissions:
                 if "permissions@odata.nextLink" in value._prop_dict:
                     next_page_link = value._prop_dict["permissions@odata.nextLink"]
-                    value.permissions._init_next_page_request(next_page_link, self._client, None)
-            if value.versions and value.versions._prop_dict:
+                    value.permissions._next_page_link = next_page_link
+            if value.subscriptions:
+                if "subscriptions@odata.nextLink" in value._prop_dict:
+                    next_page_link = value._prop_dict["subscriptions@odata.nextLink"]
+                    value.subscriptions._next_page_link = next_page_link
+            if value.versions:
                 if "versions@odata.nextLink" in value._prop_dict:
                     next_page_link = value._prop_dict["versions@odata.nextLink"]
-                    value.versions._init_next_page_request(next_page_link, self._client, None)
-            if value.children and value.children._prop_dict:
+                    value.versions._next_page_link = next_page_link
+            if value.children:
                 if "children@odata.nextLink" in value._prop_dict:
                     next_page_link = value._prop_dict["children@odata.nextLink"]
-                    value.children._init_next_page_request(next_page_link, self._client, None)
-            if value.thumbnails and value.thumbnails._prop_dict:
+                    value.children._next_page_link = next_page_link
+            if value.tags:
+                if "tags@odata.nextLink" in value._prop_dict:
+                    next_page_link = value._prop_dict["tags@odata.nextLink"]
+                    value.tags._next_page_link = next_page_link
+            if value.thumbnails:
                 if "thumbnails@odata.nextLink" in value._prop_dict:
                     next_page_link = value._prop_dict["thumbnails@odata.nextLink"]
-                    value.thumbnails._init_next_page_request(next_page_link, self._client, None)
+                    value.thumbnails._next_page_link = next_page_link

@@ -40,7 +40,7 @@ auth_url = client.auth_provider.get_auth_url(redirect_uri)
 print('Paste this URL into your browser, approve the app\'s access.')
 print('Copy everything in the address bar after "code=", and paste it below.')
 print(auth_url)
-code = input('Paste code here: ')
+code = raw_input('Paste code here: ')
 
 client.auth_provider.authenticate(code, redirect_uri, client_secret)
 ```
@@ -55,9 +55,10 @@ from onedrivesdk.helpers import GetAuthCodeServer
 
 redirect_uri = 'http://localhost:8080/'
 client_secret = 'your_app_secret'
+scopes=['wl.signin', 'wl.offline_access', 'onedrive.readwrite']
 
 client = onedrivesdk.get_default_client(
-    client_id='your_client_id',
+    client_id='your_client_id', scopes=scopes)
 
 auth_url = client.auth_provider.get_auth_url(redirect_uri)
 
@@ -87,7 +88,7 @@ redirect_uri = 'http://localhost:8080'
 client_id = your_client_id
 client_secret = your_client_secret
 discovery_uri = 'https://api.office.com/discovery/'
-auth_server_url='https://login.microsoftonline.com/common/oauth2/authorize',
+auth_server_url='https://login.microsoftonline.com/common/oauth2/authorize'
 auth_token_url='https://login.microsoftonline.com/common/oauth2/token'
 
 http = onedrivesdk.HttpProvider()
@@ -97,7 +98,7 @@ auth = onedrivesdk.AuthProvider(http,
                                 auth_token_url=auth_token_url)
 auth_url = auth.get_auth_url(redirect_uri)
 code = GetAuthCodeServer.get_auth_code(auth_url, redirect_uri)
-auth.authenticate(code, redirect_uri, client_secret, resource=resource)
+auth.authenticate(code, redirect_uri, client_secret, resource=discovery_uri)
 # If you have access to more than one service, you'll need to decide
 # which ServiceInfo to use instead of just using the first one, as below.
 service_info = ResourceDiscoveryRequest().get_service_info(auth.access_token)[0]
@@ -173,7 +174,7 @@ collection = client.item(drive='me', id='root').children.request(top=3).get()
 item = collection[0]
 
 #get the next page of three elements, if none exist, returns None
-collection2 = collection.next_page_request.get()
+collection2 = onedrivesdk.ChildrenCollectionRequest.get_next_page_request(collection, client).get()
 ```
 
 ### Async operations
@@ -195,6 +196,41 @@ def run_gets(client):
 loop = asyncio.get_event_loop()
 loop.run_until_complete(run_gets(client))   
 ```
+
+## Saving and Loading a Session
+
+You can save your OAuth session details so that you don't have to go through the full
+OAuth flow every time you start your app. To do so, follow these steps:
+
+```python
+auth_provider = onedrivesdk.AuthProvider(http_provider,
+                                         client_id,
+                                         scopes)
+auth_provider.authenticate(code, redirect_uri, client_secret)
+
+# Save the session for later
+auth_provider.save_session()
+
+#### Next time you start the app ####
+auth_provider = onedrivesdk.AuthProvider(http_provider,
+                                         client_id,
+                                         scopes)
+auth_provider.load_session()
+auth_provider.refresh_token()
+client = onedrivesdk.OneDriveClient(base_url, auth_provider, http_provider)
+```
+
+After the call to `refresh_token()` your `AuthProvider` will be ready to authenticate calls
+to the OneDrive API. This implementation is not complete, though.
+
+1. The default implementation of [Session](\src\onedrivesdk\session.py) saves the session
+information in a Pickle file. Session data should be treated with equal protection as a
+password, so this is not safe for deployment to real users. You should re-implement
+`Session` to fit your app's needs.
+2. Calling `.load_session()` may throw an exception, depending on your implementation
+of `Session`. For example, the default implementation tries to open the file `session.pickle`,
+ which may not exist and will raise `FileNotFoundError`. You will need to account for that here
+ (or, even better, in your implementation of `Session`).
 
 ## Using a Proxy
 If you need to proxy your requests, you can use the helper class `HttpProviderWithProxy`.
