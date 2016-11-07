@@ -30,7 +30,7 @@ from ..one_drive_object_base import OneDriveObjectBase
 class AsyncOperationStatus(OneDriveObjectBase):
 
     def __init__(self, prop_dict=None):
-        self._prop_dict = prop_dict if prop_dict not None else {}
+        self._prop_dict = prop_dict if prop_dict is not None else {}
 
     @property
     def operation(self):
