@@ -126,7 +126,10 @@ class Photo(OneDriveObjectBase):
                 The takenDateTime
         """
         if "takenDateTime" in self._prop_dict:
-            return datetime.strptime(self._prop_dict["takenDateTime"].replace("Z", ""), "%Y-%m-%dT%H:%M:%S.%f")
+            if '.' in self._prop_dict["takenDateTime"]:
+                return datetime.strptime(self._prop_dict["takenDateTime"].replace("Z", ""), "%Y-%m-%dT%H:%M:%S.%f")
+            else:
+                return datetime.strptime(self._prop_dict["takenDateTime"].replace("Z", ""), "%Y-%m-%dT%H:%M:%S")
         else:
             return None
 

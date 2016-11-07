@@ -54,6 +54,16 @@ class TestModels(unittest.TestCase):
         assert isinstance(item.last_modified_date_time, datetime)
         assert item.last_modified_date_time.isoformat()+"Z" == "2015-07-09T22:22:53.990000Z"
 
+        response = {"name":self.name, "folder":{}, "parentReference":ref._prop_dict, "lastModifiedDateTime": "2015-07-09T22:22:53Z"}
+        item._prop_dict = response
+
+        assert isinstance(item.folder, Folder)
+        assert item.name == self.name
+        assert isinstance(item.parent_reference, ItemReference)
+        assert item.parent_reference.id == self.id
+        assert isinstance(item.last_modified_date_time, datetime)
+        assert item.last_modified_date_time.isoformat()+"Z" == "2015-07-09T22:22:53Z"
+
         timenow = datetime.now()
         item.last_modified_date_time = timenow
         assert item.last_modified_date_time.isoformat() == timenow.isoformat()
