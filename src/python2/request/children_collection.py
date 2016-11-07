@@ -26,6 +26,22 @@ class ChildrenCollectionRequest(CollectionRequestBase):
         """
         super(ChildrenCollectionRequest, self).__init__(request_url, client, options)
 
+    def add(self, entity):
+        """Add a Item to the collection
+        
+        Args:
+            entity (:class:`Item<onedrivesdk.model.item.Item>`):
+                The Item that you would like to add to the collection
+        
+        Returns: 
+            :class:`Item<onedrivesdk.model.item.Item>`:
+                The Item that you added, with additional data from OneDrive
+        """
+        self.content_type = "application/json"
+        self.method = "POST"
+        entity = Item(json.loads(self.send(entity).content))
+        return entity
+
     def get(self):
         """Gets the ChildrenCollectionPage
 
@@ -94,6 +110,19 @@ class ChildrenCollectionRequestBuilder(RequestBuilderBase):
         req = ChildrenCollectionRequest(self._request_url, self._client, options)
         req._set_query_options(expand=expand, select=select, top=top, order_by=order_by)
         return req
+
+    def add(self, entity):
+        """Add a Item to the collection
+        
+        Args:
+            entity (:class:`Item<onedrivesdk.model.item.Item>`):
+                The Item that you would like to add to the collection
+        
+        Returns: 
+            :class:`Item<onedrivesdk.model.item.Item>`:
+                The Item that you added, with additional data from OneDrive
+        """
+        return self.request().add(entity)
 
     def get(self):
         """Gets the ChildrenCollectionPage
