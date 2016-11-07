@@ -27,6 +27,40 @@ class ChildrenCollectionRequest(CollectionRequestBase):
         """
         super(ChildrenCollectionRequest, self).__init__(request_url, client, options)
 
+    def add(self, entity):
+        """Add a Item to the collection
+        
+        Args:
+            entity (:class:`Item<onedrivesdk.model.item.Item>`):
+                The Item that you would like to add to the collection
+        
+        Returns: 
+            :class:`Item<onedrivesdk.model.item.Item>`:
+                The Item that you added, with additional data from OneDrive
+        """
+        self.content_type = "application/json"
+        self.method = "POST"
+        entity = Item(json.loads(self.send(entity).content))
+        return entity
+
+    @asyncio.coroutine
+    def add_async(self, entity):
+        """Add a Item to the collection in async
+        
+        Args:
+            entity (:class:`Item<onedrivesdk.model.item.Item>`):
+                The Item that you would like to add to the collection
+        
+        Yields: 
+            :class:`Item<onedrivesdk.model.item.Item>`:
+                The Item that you added, with additional data from OneDrive
+        """
+        future = self._client._loop.run_in_executor(None,
+                                                    self.add,
+                                                    entity)
+        entity = yield from future
+        return entity
+
     def get(self):
         """Gets the ChildrenCollectionPage
 
@@ -107,6 +141,34 @@ class ChildrenCollectionRequestBuilder(RequestBuilderBase):
         req = ChildrenCollectionRequest(self._request_url, self._client, options)
         req._set_query_options(expand=expand, select=select, top=top, order_by=order_by)
         return req
+
+    def add(self, entity):
+        """Add a Item to the collection
+        
+        Args:
+            entity (:class:`Item<onedrivesdk.model.item.Item>`):
+                The Item that you would like to add to the collection
+        
+        Returns: 
+            :class:`Item<onedrivesdk.model.item.Item>`:
+                The Item that you added, with additional data from OneDrive
+        """
+        return self.request().add(entity)
+
+    @asyncio.coroutine
+    def add_async(self, entity):
+        """Add a Item to the collection in async
+        
+        Args:
+            entity (:class:`Item<onedrivesdk.model.item.Item>`):
+                The Item that you would like to add to the collection
+        
+        Yields: 
+            :class:`Item<onedrivesdk.model.item.Item>`:
+                The Item that you added, with additional data from OneDrive
+        """
+        entity = yield from self.request().add_async(entity)
+        return entity
 
     def get(self):
         """Gets the ChildrenCollectionPage
