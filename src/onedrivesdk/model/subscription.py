@@ -84,7 +84,10 @@ class Subscription(OneDriveObjectBase):
                 The expirationDateTime
         """
         if "expirationDateTime" in self._prop_dict:
-            return datetime.strptime(self._prop_dict["expirationDateTime"].replace("Z", ""), "%Y-%m-%dT%H:%M:%S.%f")
+            if '.' in self._prop_dict["expirationDateTime"]:
+                return datetime.strptime(self._prop_dict["expirationDateTime"].replace("Z", ""), "%Y-%m-%dT%H:%M:%S.%f")
+            else:
+                return datetime.strptime(self._prop_dict["expirationDateTime"].replace("Z", ""), "%Y-%m-%dT%H:%M:%S")
         else:
             return None
 

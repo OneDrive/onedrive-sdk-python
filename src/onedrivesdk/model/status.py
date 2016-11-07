@@ -41,7 +41,10 @@ class Status(OneDriveObjectBase):
                 The lockdownDateTime
         """
         if "lockdownDateTime" in self._prop_dict:
-            return datetime.strptime(self._prop_dict["lockdownDateTime"].replace("Z", ""), "%Y-%m-%dT%H:%M:%S.%f")
+            if '.' in self._prop_dict["lockdownDateTime"]:
+                return datetime.strptime(self._prop_dict["lockdownDateTime"].replace("Z", ""), "%Y-%m-%dT%H:%M:%S.%f")
+            else:
+                return datetime.strptime(self._prop_dict["lockdownDateTime"].replace("Z", ""), "%Y-%m-%dT%H:%M:%S")
         else:
             return None
 
@@ -75,7 +78,10 @@ class Status(OneDriveObjectBase):
                 The driveDeletionDateTime
         """
         if "driveDeletionDateTime" in self._prop_dict:
-            return datetime.strptime(self._prop_dict["driveDeletionDateTime"].replace("Z", ""), "%Y-%m-%dT%H:%M:%S.%f")
+            if '.' in self._prop_dict["driveDeletionDateTime"]:
+                return datetime.strptime(self._prop_dict["driveDeletionDateTime"].replace("Z", ""), "%Y-%m-%dT%H:%M:%S.%f")
+            else:
+                return datetime.strptime(self._prop_dict["driveDeletionDateTime"].replace("Z", ""), "%Y-%m-%dT%H:%M:%S")
         else:
             return None
 
@@ -92,7 +98,10 @@ class Status(OneDriveObjectBase):
                 The lastUnlockDateTime
         """
         if "lastUnlockDateTime" in self._prop_dict:
-            return datetime.strptime(self._prop_dict["lastUnlockDateTime"].replace("Z", ""), "%Y-%m-%dT%H:%M:%S.%f")
+            if '.' in self._prop_dict["lastUnlockDateTime"]:
+                return datetime.strptime(self._prop_dict["lastUnlockDateTime"].replace("Z", ""), "%Y-%m-%dT%H:%M:%S.%f")
+            else:
+                return datetime.strptime(self._prop_dict["lastUnlockDateTime"].replace("Z", ""), "%Y-%m-%dT%H:%M:%S")
         else:
             return None
 
