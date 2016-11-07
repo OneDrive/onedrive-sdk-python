@@ -14,7 +14,7 @@ from ..one_drive_object_base import OneDriveObjectBase
 class Share(OneDriveObjectBase):
 
     def __init__(self, prop_dict=None):
-        self._prop_dict = prop_dict if prop_dict else {}
+        self._prop_dict = prop_dict if prop_dict is not None else {}
 
     @property
     def id(self):
