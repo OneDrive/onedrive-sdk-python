@@ -9,6 +9,7 @@ from __future__ import unicode_literals
 from ..collection_base import CollectionRequestBase, CollectionResponseBase
 from ..request_builder_base import RequestBuilderBase
 from ..model.children_collection_page import ChildrenCollectionPage
+from ..model.item import Item
 import json
 
 class ChildrenCollectionRequest(CollectionRequestBase):
