@@ -153,8 +153,12 @@ def list_changes(client, item_id, token):
 
 
 def get_parent_id(client, item_id):
-    id = client.item(id=item_id).get().parent_reference.id
-    return id
+    try:
+        id = client.item(id=item_id).get().parent_reference.id
+        return id
+    except AttributeError:
+        print("Error: There's no parent to this folder.")
+        return "root"
 
 if __name__ == "__main__":
     main()
