@@ -80,7 +80,8 @@ class ItemCreateSessionRequestBuilder(RequestBuilderBase):
         super(ItemCreateSessionRequestBuilder, self).__init__(request_url, client)
         self._method_options = {}
 
-        self._method_options["item"] = item._prop_dict
+        if item:
+            self._method_options["item"] = item._prop_dict
 
     def request(self, options=None):
         """Builds the request for the ItemCreateSession
@@ -93,7 +94,7 @@ class ItemCreateSessionRequestBuilder(RequestBuilderBase):
             :class:`ItemCreateSessionRequest<onedrivesdk.request.item_create_session.ItemCreateSessionRequest>`:
                 The request
         """
-        req = ItemCreateSessionRequest(self._request_url, self._client, options, item=self._method_options["item"])
+        req = ItemCreateSessionRequest(self._request_url, self._client, options, item=self._method_options.get("item"))
         return req
 
     def post(self):
