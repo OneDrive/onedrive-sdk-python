@@ -73,6 +73,7 @@ def get_auth_code(auth_url, redirect_uri):
 class GetAuthCodeServer(HTTPServer, object):
 
     def __init__(self, server_address, stop_event, RequestHandlerClass):
+        self.allow_reuse_address = True
         HTTPServer.__init__(self, server_address, RequestHandlerClass)
         self._stop_event = stop_event
         self.auth_code = None
