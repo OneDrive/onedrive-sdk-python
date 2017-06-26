@@ -49,7 +49,7 @@ class AuthProvider(AuthProviderBase):
                 The HTTP provider to use for all auth requests
             client_id (str): Defaults to None, the client id for your
                 application
-            scopes (list of str): Defaults to None, the scopes 
+            scopes (list of str): Defaults to None, the scopes
                 that are required for your application
             access_token (str): Defaults to None. Not used in this implementation.
             session_type (:class:`SessionBase<onedrivesdk.session_base.SessionBase>`):
@@ -110,15 +110,28 @@ class AuthProvider(AuthProviderBase):
 
     @property
     def access_token(self):
-        """Gets and sets the access_token for the
-            :class:`AuthProvider`
+        """Gets the access_token for the :class:`AuthProvider`
 
         Returns:
-            str: The access token. Looks at the session to figure out what the access token is, since this
-                class does not directly store the access token.
+            str: The access token. Looks at the session to figure out what the
+                access token is, since this class does not directly store the
+                access token.
         """
         if self._session is not None:
             return self._session.access_token
+        return None
+
+    @property
+    def user_id(self):
+        """Gets the user_id for the :class:`AuthProvider`
+
+        Returns:
+            str: The user id. Looks at the session to figure out what the
+                user id is, since this class does not directly store the
+                user id.
+        """
+        if self._session is not None:
+            return self._session.user_id
         return None
 
     @property
@@ -180,7 +193,7 @@ class AuthProvider(AuthProviderBase):
             redirect_uri (str): The URI to redirect the callback
                 to
             client_secret (str): The client secret of your app.
-            resource (str): Defaults to None,The resource  
+            resource (str): Defaults to None,The resource
                 you want to access
         """
         params = {
@@ -203,15 +216,17 @@ class AuthProvider(AuthProviderBase):
                                             data=params)
 
         rcont = json.loads(response.content)
-        self._session = self._session_type(rcont["token_type"],
-                                rcont["expires_in"],
-                                rcont["scope"],
-                                rcont["access_token"],
-                                self.client_id,
-                                self._auth_token_url,
-                                redirect_uri,
-                                rcont["refresh_token"] if "refresh_token" in rcont else None,
-                                client_secret)
+        self._session = self._session_type(
+            rcont["token_type"],
+            rcont["expires_in"],
+            rcont["scope"],
+            rcont["access_token"],
+            self.client_id,
+            self._auth_token_url,
+            redirect_uri,
+            rcont["refresh_token"] if "refresh_token" in rcont else None,
+            client_secret,
+            rcont["user_id"] if "user_id" in rcont else None)
 
     def authenticate_request(self, request):
         """Append the required authentication headers
@@ -225,7 +240,7 @@ class AuthProvider(AuthProviderBase):
                 The request to authenticate
         """
         if self._session is None:
-            raise RuntimeError("""Session must be authenticated 
+            raise RuntimeError("""Session must be authenticated
                 before applying authentication to a request.""")
 
         if self._session.is_expired() and 'wl.offline_access' in self.scopes:
@@ -238,7 +253,7 @@ class AuthProvider(AuthProviderBase):
     def refresh_token(self):
         """Refresh the token currently used by the session"""
         if self._session is None:
-            raise RuntimeError("""Session must be authenticated 
+            raise RuntimeError("""Session must be authenticated
                 before refreshing token.""")
 
         if self._session.refresh_token is None:
@@ -303,9 +318,9 @@ class AuthProvider(AuthProviderBase):
     def save_session(self, **save_session_kwargs):
         """Save the current session. Must have already
         obtained an access_token.
-        
+
         Args:
-            save_session_kwargs (dict): Arguments to 
+            save_session_kwargs (dict): Arguments to
                 be passed to save_session.
         """
         if self._session is None:

@@ -37,7 +37,8 @@ class Session(SessionBase):
                  auth_server_url,
                  redirect_uri,
                  refresh_token=None,
-                 client_secret=None):
+                 client_secret=None,
+                 user_id=None):
         self.token_type = token_type
         self._expires_at = time() + int(expires_in)
         self.scope = scope_string.split(" ")
@@ -47,6 +48,7 @@ class Session(SessionBase):
         self.redirect_uri = redirect_uri
         self.refresh_token = refresh_token
         self.client_secret = client_secret
+        self.user_id = user_id
 
     def is_expired(self):
         """Whether or not the session has expired
@@ -70,7 +72,7 @@ class Session(SessionBase):
         both save_session() and load_session() should be overwritten using
         the client system's correct mechanism (keychain, database, etc.).
         Remember, the access_token should be treated the same as a password.
-        
+
         Args:
             save_session_kwargs (dicr): To be used by implementation
             of save_session, however save_session wants to use them. The
@@ -80,7 +82,7 @@ class Session(SessionBase):
         path = "session.pickle"
         if "path" in save_session_kwargs:
             path = save_session_kwargs["path"]
-        
+
         with open(path, "wb") as session_file:
             import pickle
             # pickle.HIGHEST_PROTOCOL is binary format. Good perf.
@@ -94,7 +96,7 @@ class Session(SessionBase):
         both save_session() and load_session() should be overwritten using
         the client system's correct mechanism (keychain, database, etc.).
         Remember, the access_token should be treated the same as a password.
-        
+
         Args:
             load_session_kwargs (dict): To be used by implementation
             of load_session, however load_session wants to use them. The
@@ -107,7 +109,7 @@ class Session(SessionBase):
         path = "session.pickle"
         if "path" in load_session_kwargs:
             path = load_session_kwargs["path"]
-        
+
         with open(path, "rb") as session_file:
             import pickle
             return pickle.load(session_file)

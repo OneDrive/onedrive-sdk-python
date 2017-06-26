@@ -36,9 +36,10 @@ class SessionBase(object):
                  auth_server_url,
                  redirect_uri,
                  refresh_token=None,
-                 client_secret=None):
+                 client_secret=None,
+                 user_id=None):
         pass
-    
+
     @abc.abstractmethod
     def is_expired(self):
         pass
@@ -46,11 +47,11 @@ class SessionBase(object):
     @abc.abstractmethod
     def refresh_session(self, expires_in, scope_string, access_token, refresh_token):
         pass
-    
+
     @abc.abstractmethod
     def save_session(self, **save_session_kwargs):
         pass
-    
+
     @abc.abstractmethod
     def load_session(**load_session_kwargs):
         pass
