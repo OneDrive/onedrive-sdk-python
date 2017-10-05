@@ -31,7 +31,7 @@ try:
 except ImportError:
     from urlparse import urlparse, parse_qsl, urlunparse
     from urllib import urlencode
-
+from collections import OrderedDict
 
 class RequestBase(object):
 
@@ -48,7 +48,7 @@ class RequestBase(object):
         self._client = client
         self._request_url = request_url
         self._headers = {}
-        self._query_options = {}
+        self._query_options = OrderedDict()
         self.content_type = None
 
         if (options):
@@ -58,7 +58,7 @@ class RequestBase(object):
 
             query_list = [
                 pair for pair in options if isinstance(pair, QueryOption)]
-            self._query_options = {pair.key: pair.value for pair in query_list}
+            self._query_options = OrderedDict((pair.key, pair.value) for pair in query_list)
 
     @property
     def request_url(self):
@@ -68,7 +68,7 @@ class RequestBase(object):
             str: The request URL
         """
         url_parts = list(urlparse(self._request_url))
-        query_dict = dict(parse_qsl(url_parts[4]))
+        query_dict = OrderedDict(parse_qsl(url_parts[4]))
         self._query_options.update(query_dict)
         url_parts[4] = urlencode(self._query_options)
         return urlunparse(url_parts)
@@ -172,7 +172,7 @@ class RequestBase(object):
 
         Returns:
             :class:`HttpResponse<onedrivesdk.http_response.HttpResponse>`:
-                The response to the request 
+                The response to the request
         """
         self._client.auth_provider.authenticate_request(self)
 
