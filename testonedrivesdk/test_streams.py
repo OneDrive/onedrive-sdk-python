@@ -28,7 +28,7 @@ class TestStreams(unittest.TestCase):
         auth_provider = onedrivesdk.AuthProvider()
         client = onedrivesdk.OneDriveClient("onedriveurl/", http_provider, auth_provider)
 
-        response_item = client.drives["me"].items["root"].children["newFile.txt"].content.request().upload("./myPath/myFile.txt")
+        response_item = client.drives["me"].items["root"].children["newFile.txt"].content.request().upload(path="./myPath/myFile.txt")
 
         assert client.http_provider.send.call_args[1]["path"] == "./myPath/myFile.txt"
         assert client.http_provider.send.call_args[0][2] == "onedriveurl/drives/me/items/root/children/newFile.txt/content"

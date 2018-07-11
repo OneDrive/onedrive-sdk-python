@@ -76,16 +76,16 @@ class ItemRequestBuilder(RequestBuilderBase):
         return self.request().update(item)
 
 
-    def upload(self, local_path):
+    def upload(self, path=None, content=None):
         """Uploads the file using PUT
         
         Args:
-            local_path (str): The path to the local file to upload.
-
+            path(str): The path to the local file to upload.
+            content(bytes): The content of file.
         Returns: 
             The created entity.
         """
-        return self.content.request().upload(local_path)
+        return self.content.request().upload(path=path, content=content)
 
 
     def download(self, local_path):
