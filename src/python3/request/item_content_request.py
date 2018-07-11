@@ -44,19 +44,24 @@ class ItemContentRequest(RequestBase):
         """
         super(ItemContentRequest, self).__init__(request_url, client, options)
 
-    def upload(self, content_local_path):
+    def upload(self, content=None, path=None):
         """Uploads the file using PUT
         
         Args:
-            content_local_path (str):
+            path (str):
                 The path to the local file to upload.
+            content(bytes)
+                The cotent of the file
 
         Returns: 
             :class:`Item<onedrivesdk.model.item.Item>`:
                 The created Item.
         """
         self.method = "PUT"
-        entity_response = self.send(path=content_local_path)
+        if content:
+            entity_response = self.send(content=content)
+        else path:
+            entity_response = self.send(path=path)
         entity = Item(json.loads(entity_response.content))
         return entity
 

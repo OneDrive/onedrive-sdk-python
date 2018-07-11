@@ -114,7 +114,7 @@ client = onedrivesdk.OneDriveClient(service_info.service_resource_id + '/_api/v2
 ### Upload an Item
 
 ```python
-returned_item = client.item(drive='me', id='root').children['newfile.txt'].upload('./path_to_file.txt')
+returned_item = client.item(drive='me', id='root').children['newfile.txt'].upload(path='./path_to_file.txt')
 ```
 
 ### Download an Item

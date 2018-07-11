@@ -105,16 +105,16 @@ class ItemRequestBuilder(RequestBuilderBase):
         entity = yield from self.request().update_async(item)
         return entity
 
-    def upload(self, local_path):
+    def upload(self, path=None, content=None):
         """Uploads the file using PUT
         
         Args:
-            local_path (str): The path to the local file to upload.
-
+            path(str): The path to the local file to upload.
+            content(bytes): The content of file.
         Returns: 
             The created entity.
         """
-        return self.content.request().upload(local_path)
+        return self.content.request().upload(path=path, content=content)
 
     @asyncio.coroutine
     def upload_async(self, local_path):

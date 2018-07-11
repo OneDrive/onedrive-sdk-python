@@ -128,7 +128,7 @@ def download(client, item_id):
 def upload(client, item_id):
     directory = input("Enter upload file directory (can be relative): ")
     name = input("Enter file name with extension: ")
-    client.item(id=item_id).children[name].upload(directory)
+    client.item(id=item_id).children[name].upload(path=directory)
 
 
 def delete(client, item_id):
