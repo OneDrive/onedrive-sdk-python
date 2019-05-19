@@ -115,7 +115,16 @@ class ItemRequestBuilder(RequestBuilderBase):
             The created entity.
         """
         return self.content.request().upload(local_path)
+    def uploadFromData(self, data):
+        """Uploads the file using PUT
+        
+        Args:
+            local_path (str): The path to the local file to upload.
 
+        Returns: 
+            The created entity.
+        """
+        return self.content.request().uploadFromData(data)
     @asyncio.coroutine
     def upload_async(self, local_path):
         """Uploads the file using PUT in async

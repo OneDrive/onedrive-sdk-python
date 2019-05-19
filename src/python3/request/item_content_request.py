@@ -59,7 +59,21 @@ class ItemContentRequest(RequestBase):
         entity_response = self.send(path=content_local_path)
         entity = Item(json.loads(entity_response.content))
         return entity
+    def uploadFromData(self, data):
+        """Uploads the file using PUT
+        
+        Args:
+            content_local_path (str):
+                The path to the local file to upload.
 
+        Returns: 
+            :class:`Item<onedrivesdk.model.item.Item>`:
+                The created Item.
+        """
+        self.method = "PUT"
+        entity_response = self.send(data=data)
+        entity = Item(json.loads(entity_response.content))
+        return entity
     @asyncio.coroutine
     def upload_async(self, content_local_path):
         """Uploads the file using PUT in async
