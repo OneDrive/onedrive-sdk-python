@@ -50,9 +50,6 @@ class OneDriveClient(object):
         self.auth_provider = auth_provider
         self.http_provider = http_provider
 
-        if sys.version_info >= (3, 4, 0):
-            import asyncio
-            self._loop = loop if loop else asyncio.get_event_loop()
 
     @property
     def auth_provider(self):
