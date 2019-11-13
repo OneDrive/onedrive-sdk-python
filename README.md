@@ -22,7 +22,7 @@ If you are looking for an alternative api, consider using one of:
 
 Once you've downloaded the OneDrive SDK for Python, open a command prompt and type the following to install it:
 
-<pre><code>pip install onedrivesdk-fork</code></pre>
+<pre><code>pip install onedrivesdk_fork</code></pre>
 
 Next, include the SDK in your Python project by adding:
 
