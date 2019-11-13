@@ -12,20 +12,20 @@ version = "1.1.10"
 
 
 def main():
-    package_list = ['onedrivesdk-fork',
-                    'onedrivesdk-fork.request',
-                    'onedrivesdk-fork.model',
-                    'onedrivesdk-fork.extensions',
-                    'onedrivesdk-fork.helpers']
+    package_list = ['onedrivesdk_fork',
+                    'onedrivesdk_fork.request',
+                    'onedrivesdk_fork.model',
+                    'onedrivesdk_fork.extensions',
+                    'onedrivesdk_fork.helpers']
 
     if sys.version_info >= (3, 4):
         base_dir = 'python3'
-        package_list.append('onedrivesdk-fork.version_bridge')
+        package_list.append('onedrivesdk_fork.version_bridge')
     else:
         base_dir = 'python2'
 
     setup(
-        name='onedrivesdk-fork',
+        name='onedrivesdk_fork',
 
         version=version,
 
@@ -55,8 +55,8 @@ def main():
 
         packages=package_list,
 
-        package_dir={'onedrivesdk-fork': 'src/onedrivesdk',
-                     'onedrivesdk-fork.request': 'src/' + base_dir + '/request'},
+        package_dir={'onedrivesdk_fork': 'src/onedrivesdk',
+                     'onedrivesdk_fork.request': 'src/' + base_dir + '/request'},
 
         install_requires=['requests>=2.6.1'],
 
