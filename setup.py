@@ -8,25 +8,24 @@ here = path.abspath(path.dirname(__file__))
 with open(path.join(here, 'DESCRIPTION.rst'), encoding='utf-8') as f:
     long_description = f.read()
 
-with open(path.join(here, 'src/onedrivesdk/version.txt'), encoding='utf-8') as f:
-    version = f.read()
+version = "1.1.10"
 
 
 def main():
-    package_list = ['onedrivesdk',
-                    'onedrivesdk.request',
-                    'onedrivesdk.model',
-                    'onedrivesdk.extensions',
-                    'onedrivesdk.helpers']
+    package_list = ['onedrivesdk-fork',
+                    'onedrivesdk-fork.request',
+                    'onedrivesdk-fork.model',
+                    'onedrivesdk-fork.extensions',
+                    'onedrivesdk-fork.helpers']
 
     if sys.version_info >= (3, 4):
         base_dir = 'python3'
-        package_list.append('onedrivesdk.version_bridge')
+        package_list.append('onedrivesdk-fork.version_bridge')
     else:
         base_dir = 'python2'
 
     setup(
-        name='onedrivesdk',
+        name='onedrivesdk-fork',
 
         version=version,
 
@@ -52,14 +51,12 @@ def main():
             'Operating System :: MacOS :: MacOS X',
         ],
 
-        keywords='onedrive sdk microsoft',
+        keywords='onedrive sdk',
 
         packages=package_list,
 
-        package_dir={'onedrivesdk': 'src/onedrivesdk',
-                     'onedrivesdk.request': 'src/' + base_dir + '/request'},
-
-        package_data={'onedrivesdk': ['version.txt']},
+        package_dir={'onedrivesdk-fork': 'src/onedrivesdk',
+                     'onedrivesdk-fork.request': 'src/' + base_dir + '/request'},
 
         install_requires=['requests>=2.6.1'],
 
