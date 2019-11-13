@@ -106,6 +106,20 @@ auth.redeem_refresh_token(service_info.service_resource_id)
 client = onedrivesdk.OneDriveClient(service_info.service_resource_id + '/_api/v2.0/', auth, http)
 ```
 
+## About this form
+This fork is maintained by Atakama, LLC.   This is not the official sdk but a number of pull requests have been incorporated:
+
+- OrderedDict fix for python 3.5 (https://github.com/OneDrive/onedrive-sdk-python/pull/116)
+- Socket linger fix (https://github.com/OneDrive/onedrive-sdk-python/pull/96)
+- PyInstaller packaging fix
+
+If you are looking for an alternative api, consider using one of:
+
+- requests-oauthlib for OAuth and requests + .json() for the direct REST calls
+- authomatic
+
+(Personally, I believe that the onedrivesdk needs a replacement with less marshalling and more documentation.)
+
 ## Examples
 
 **Note:** All examples assume that your app has already been
