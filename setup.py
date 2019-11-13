@@ -8,7 +8,7 @@ here = path.abspath(path.dirname(__file__))
 with open(path.join(here, 'DESCRIPTION.rst'), encoding='utf-8') as f:
     long_description = f.read()
 
-version = "1.1.10"
+version = "1.1.11"
 
 
 def main():
@@ -55,7 +55,7 @@ def main():
 
         packages=package_list,
 
-        package_dir={'onedrivesdk_fork': 'src/onedrivesdk',
+        package_dir={'onedrivesdk_fork': 'src/onedrivesdk_fork',
                      'onedrivesdk_fork.request': 'src/' + base_dir + '/request'},
 
         install_requires=['requests>=2.6.1'],
