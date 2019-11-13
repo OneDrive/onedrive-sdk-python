@@ -8,7 +8,7 @@ here = path.abspath(path.dirname(__file__))
 with open(path.join(here, 'DESCRIPTION.rst'), encoding='utf-8') as f:
     long_description = f.read()
 
-version = "1.1.12"
+version = "1.1.13"
 
 
 def main():
@@ -29,13 +29,13 @@ def main():
 
         version=version,
 
-        description='Official Python OneDrive SDK for interfacing with OneDrive APIs',
+        description='Un-Official Python OneDrive SDK for interfacing with OneDrive APIs',
         long_description=long_description,
 
-        url='http://dev.onedrive.com',
+        url='https://github.com/AtakamaLLC/onedrive-sdk-python',
 
-        author='Microsoft',
-        author_email='',
+        author='Atakama, LLC',
+        author_email='support@atakama.com',
 
         license='MIT',
 
