@@ -223,7 +223,7 @@ client = onedrivesdk.OneDriveClient(base_url, auth_provider, http_provider)
 After the call to `refresh_token()` your `AuthProvider` will be ready to authenticate calls
 to the OneDrive API. This implementation is not complete, though.
 
-1. The default implementation of [Session](\src\onedrivesdk\session.py) saves the session
+1. The default implementation of [Session](src/onedrivesdk/session.py) saves the session
 information in a Pickle file. Session data should be treated with equal protection as a
 password, so this is not safe for deployment to real users. You should re-implement
 `Session` to fit your app's needs.
