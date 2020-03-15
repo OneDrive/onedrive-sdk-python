@@ -17,7 +17,7 @@ Next, include the SDK in your Python project by adding:
 
 ### OneDrive
 
-To interact with the OneDrive API, your app must authenticate with a client ID and client secret. You can use the following code sample to do so.
+To interact with the OneDrive API, your app must authenticate with a client ID and client secret (available at [Azure](https://portal.azure.com/#blade/Microsoft_AAD_RegisteredApps/ApplicationsListBlade)). You can use the following code sample to do so.
 
 ```python3
 import onedrivesdk
