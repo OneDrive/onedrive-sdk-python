@@ -73,7 +73,7 @@ can begin making calls using the SDK.
 
 ### OneDrive for Business
 
-To interact with the OneDrive API, your app must authenticate for a specific resource. Your
+To interact with the OneDrive API, your app must autKTibow:masterhenticate for a specific resource. Your
 app must first use the Resource Discovery helper to find out which service you can access.
 Then, you can build a client to access those resources. This uses a slightly different
 auth flow than the standard code flow - note the use of `redeem_refresh_token` with
@@ -132,7 +132,7 @@ id_of_file = root_folder[0].id
 client.item(drive='me', id=id_of_file).download('./path_to_download_to.txt')
 ```
 
-### Add a folderMake sure you want to do this.
+### Add a folder
 
 ```python3
 f = onedrivesdk.Folder()
@@ -171,6 +171,7 @@ new_item = client.item(drive='me', id=renamed_item.id).update(renamed_item)
 ```
 
 ### Delete an Item
+#### Warning: Make sure you really want to do this.
 
 ```python3
 root_folder = client.item(drive='me', id='root').children.get()
