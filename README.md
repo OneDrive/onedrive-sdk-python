@@ -73,7 +73,7 @@ can begin making calls using the SDK.
 
 ### OneDrive for Business
 
-To interact with the OneDrive API, your app must autKTibow:masterhenticate for a specific resource. Your
+To interact with the OneDrive API, your app must authenticate for a specific resource. Your
 app must first use the Resource Discovery helper to find out which service you can access.
 Then, you can build a client to access those resources. This uses a slightly different
 auth flow than the standard code flow - note the use of `redeem_refresh_token` with
