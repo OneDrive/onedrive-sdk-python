@@ -40,7 +40,7 @@ auth_url = client.auth_provider.get_auth_url(redirect_uri)
 print('Paste this URL into your browser, approve the app\'s access.')
 print('Copy everything in the address bar after "code=", and paste it below.')
 print(auth_url)
-code = raw_input('Paste code here: ')
+code = input('Paste code here: ')
 
 client.auth_provider.authenticate(code, redirect_uri, client_secret)
 ```
