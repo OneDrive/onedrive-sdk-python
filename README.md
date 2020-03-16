@@ -220,7 +220,7 @@ For async uploads, you can get the progress by calling `upload_async` with a
 ```python3
 def status(current_part, total_parts):
     print(str(current_part)+"/"+str(total_parts))
-returned_item = client.item(drive='me', id='root').children['newfile.txt'].upload_async('./path_to_file.txt', upload_status=status)
+returned_item = client.item(dris:open ive='me', id='root').children['newfile.txt'].upload_async('./path_to_file.txt', upload_status=status)
 ```
 
 ## Saving and Loading a Session
@@ -248,6 +248,8 @@ client = onedrivesdk.OneDriveClient(api_base_url, auth_provider, http_provider)
 
 After the call to `refresh_token()` your `AuthProvider` will be ready to authenticate calls
 to the OneDrive API. This implementation is not complete, though.
+## CLI
+If you'd rather use a command line, then you can use the [example](https://github.com/OneDrive/onedrive-sdk-python/tree/master/examples) instead.
 
 1. The default implementation of [Session](\src\onedrivesdk\session.py) saves the session
 information in a Pickle file. Session data should be treated with equal protection as a
