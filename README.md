@@ -243,7 +243,7 @@ auth_provider = onedrivesdk.AuthProvider(http_provider,
                                          scopes)
 auth_provider.load_session()
 auth_provider.refresh_token()
-client = onedrivesdk.OneDriveClient(base_url, auth_provider, http_provider)
+client = onedrivesdk.OneDriveClient(api_base_url, auth_provider, http_provider)
 ```
 
 After the call to `refresh_token()` your `AuthProvider` will be ready to authenticate calls
