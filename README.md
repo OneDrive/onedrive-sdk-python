@@ -9,6 +9,7 @@ This fork is maintained by Atakama, LLC.   This is not the official sdk but a nu
 - OrderedDict fix for python 3.5 (https://github.com/OneDrive/onedrive-sdk-python/pull/116)
 - Socket linger fix (https://github.com/OneDrive/onedrive-sdk-python/pull/96)
 - PyInstaller packaging fix
+- Improve docs (https://github.com/OneDrive/onedrive-sdk-python/pull/174)
 
 If you are looking for an alternative api, consider using one of:
 
