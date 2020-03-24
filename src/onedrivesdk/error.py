@@ -125,3 +125,12 @@ class ErrorCode(object):
 
     #: The response was malformed
     Malformed = "malformed"
+
+    #: Path exceeds maximum length.
+    PathIsTooLong = 'pathIsTooLong'
+    #: Name contains invalid characters.
+    InvalidPath = 'invalidPath'
+    #: Folder hierarchy depth limit reached.
+    PathTooDeep = 'pathTooDeep'
+    #: Too many requests.
+    ThrottledRequest = 'throttledRequest'
