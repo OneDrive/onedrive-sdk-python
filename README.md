@@ -3,31 +3,19 @@
 ------------------------------------------------------------------------
 [![Build status](https://ci.appveyor.com/api/projects/status/x1cjahp817w6r455?svg=true)](https://ci.appveyor.com/project/OneDrive/vroom-client-python)
 
-## About this fork
-This fork is maintained by Atakama, LLC.   This is not the official sdk but a number of pull requests have been incorporated:
-
-- OrderedDict fix for python 3.5 (https://github.com/OneDrive/onedrive-sdk-python/pull/116)
-- Socket linger fix (https://github.com/OneDrive/onedrive-sdk-python/pull/96)
-- PyInstaller packaging fix
-- Improve docs (https://github.com/OneDrive/onedrive-sdk-python/pull/174)
-
-If you are looking for an alternative api, consider using one of:
-
-- requests-oauthlib for OAuth and requests + .json() for the direct REST calls
-- authomatic
-
-(Personally, I believe that the onedrivesdk needs a replacement with less marshalling and more documentation.)
-
-
 ## Installation
 
 Once you've downloaded the OneDrive SDK for Python, open a command prompt and type the following to install it:
 
-<pre><code>pip install onedrivesdk_fork</code></pre>
+```bash
+pip install onedrivesdk
+```
 
 Next, include the SDK in your Python project by adding:
 
-<pre><code>import onedrivesdk_fork as onedrivesdk</code></pre>
+```bash
+import onedrivesdk
+```
 
 ## Authentication
 
@@ -198,13 +186,13 @@ client.item(drive='me', id=id_of_file).delete()
 ### Paging through a collection
 
 ```python3
-#get the top three elements of root, leaving the next page for more elements
+# get the top three elements of root, leaving the next page for more elements
 collection = client.item(drive='me', id='root').children.request(top=3).get()
 
-#get the first item in the collection
+# get the first item in the collection
 item = collection[0]
 
-#get the next page of three elements, if none exist, returns None
+# get the next page of three elements, if none exist, returns None
 collection2 = onedrivesdk.ChildrenCollectionRequest.get_next_page_request(collection, client).get()
 ```
 
@@ -265,7 +253,7 @@ client = onedrivesdk.OneDriveClient(api_base_url, auth_provider, http_provider)
 After the call to `refresh_token()` your `AuthProvider` will be ready to authenticate calls
 to the OneDrive API. This implementation is not complete, though.
 
-1. The default implementation of [Session](\src\onedrivesdk\session.py) saves the session
+1. The default implementation of [Session](src/onedrivesdk/session.py) saves the session
 information in a Pickle file. Session data should be treated with equal protection as a
 password, so this is not safe for deployment to real users. You should re-implement
 `Session` to fit your app's needs.
@@ -275,7 +263,7 @@ of `Session`. For example, the default implementation tries to open the file `se
  (or, even better, in your implementation of `Session`).
 
 ## CLI
-If you'd rather use a command line, then you can use the [example](https://github.com/OneDrive/onedrive-sdk-python/tree/master/examples) instead.
+If you'd rather use a command line, then you can use the [example](examples) instead.
 
 ## Using a Proxy
 If you need to proxy your requests, you can use the helper class `HttpProviderWithProxy`.
