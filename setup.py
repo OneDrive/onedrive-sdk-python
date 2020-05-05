@@ -8,35 +8,34 @@ here = path.abspath(path.dirname(__file__))
 with open(path.join(here, 'DESCRIPTION.rst'), encoding='utf-8') as f:
     long_description = f.read()
 
-with open(path.join(here, 'src/onedrivesdk/version.txt'), encoding='utf-8') as f:
-    version = f.read()
+version = "1.1.14"
 
 
 def main():
-    package_list = ['onedrivesdk',
-                    'onedrivesdk.request',
-                    'onedrivesdk.model',
-                    'onedrivesdk.extensions',
-                    'onedrivesdk.helpers']
+    package_list = ['onedrivesdk_fork',
+                    'onedrivesdk_fork.request',
+                    'onedrivesdk_fork.model',
+                    'onedrivesdk_fork.extensions',
+                    'onedrivesdk_fork.helpers']
 
     if sys.version_info >= (3, 4):
         base_dir = 'python3'
-        package_list.append('onedrivesdk.version_bridge')
+        package_list.append('onedrivesdk_fork.version_bridge')
     else:
         base_dir = 'python2'
 
     setup(
-        name='onedrivesdk',
+        name='onedrivesdk_fork',
 
         version=version,
 
-        description='Official Python OneDrive SDK for interfacing with OneDrive APIs',
+        description='Un-Official Python OneDrive SDK for interfacing with OneDrive APIs',
         long_description=long_description,
 
-        url='http://dev.onedrive.com',
+        url='https://github.com/AtakamaLLC/onedrive-sdk-python',
 
-        author='Microsoft',
-        author_email='',
+        author='Atakama, LLC',
+        author_email='support@atakama.com',
 
         license='MIT',
 
@@ -52,14 +51,12 @@ def main():
             'Operating System :: MacOS :: MacOS X',
         ],
 
-        keywords='onedrive sdk microsoft',
+        keywords='onedrive sdk',
 
         packages=package_list,
 
-        package_dir={'onedrivesdk': 'src/onedrivesdk',
-                     'onedrivesdk.request': 'src/' + base_dir + '/request'},
-
-        package_data={'onedrivesdk': ['version.txt']},
+        package_dir={'onedrivesdk_fork': 'src/onedrivesdk_fork',
+                     'onedrivesdk_fork.request': 'src/' + base_dir + '/request'},
 
         install_requires=['requests>=2.6.1'],
 

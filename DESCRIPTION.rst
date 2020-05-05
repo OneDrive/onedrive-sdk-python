@@ -1,4 +1,4 @@
 OneDrive Python SDK
 ===================
 
-Lorem ipsum
+This is the Official OneDrive SDK for Python!

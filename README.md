@@ -7,19 +7,23 @@
 
 Once you've downloaded the OneDrive SDK for Python, open a command prompt and type the following to install it:
 
-<pre><code>pip install onedrivesdk</code></pre>
+```bash
+pip install onedrivesdk
+```
 
 Next, include the SDK in your Python project by adding:
 
-<pre><code>import onedrivesdk</code></pre>
+```bash
+import onedrivesdk
+```
 
 ## Authentication
 
 ### OneDrive
 
-To interact with the OneDrive API, your app must authenticate. You can use the following code sample to do so.
+To interact with the OneDrive API, your app must authenticate with a client ID and client secret (available at [Azure](https://portal.azure.com/#blade/Microsoft_AAD_RegisteredApps/ApplicationsListBlade)). You can use the following code sample to do so.
 
-```python
+```python3
 import onedrivesdk
 
 redirect_uri = 'http://localhost:8080/'
@@ -40,7 +44,7 @@ auth_url = client.auth_provider.get_auth_url(redirect_uri)
 print('Paste this URL into your browser, approve the app\'s access.')
 print('Copy everything in the address bar after "code=", and paste it below.')
 print(auth_url)
-code = raw_input('Paste code here: ')
+code = input('Paste code here: ')
 
 client.auth_provider.authenticate(code, redirect_uri, client_secret)
 ```
@@ -49,7 +53,7 @@ The above code requires copy-pasting into your browser and back into your consol
 that manual work, you can use the helper class `GetAuthCodeServer`. That helper class spins up a webserver, so
 this method cannot be used on all environments.
 
-```python
+```python3
 import onedrivesdk
 from onedrivesdk.helpers import GetAuthCodeServer
 
@@ -79,7 +83,7 @@ Then, you can build a client to access those resources. This uses a slightly dif
 auth flow than the standard code flow - note the use of `redeem_refresh_token` with
 the `service_resource_id` of the service you want to access.
 
-```python
+```python3
 import onedrivesdk
 from onedrivesdk.helpers import GetAuthCodeServer
 from onedrivesdk.helpers.resource_discovery import ResourceDiscoveryRequest
@@ -113,13 +117,19 @@ client = onedrivesdk.OneDriveClient(service_info.service_resource_id + '/_api/v2
 
 ### Upload an Item
 
-```python
+```python3
 returned_item = client.item(drive='me', id='root').children['newfile.txt'].upload('./path_to_file.txt')
+```
+
+### Select an Item by Filename
+
+```python3
+item = client.item(drive='me', path="online_file_name")
 ```
 
 ### Download an Item
 
-```python
+```python3
 root_folder = client.item(drive='me', id='root').children.get()
 id_of_file = root_folder[0].id
 
@@ -128,7 +138,7 @@ client.item(drive='me', id=id_of_file).download('./path_to_download_to.txt')
 
 ### Add a folder
 
-```python
+```python3
 f = onedrivesdk.Folder()
 i = onedrivesdk.Item()
 i.name = 'New Folder'
@@ -139,7 +149,7 @@ returned_item = client.item(drive='me', id='root').children.add(i)
 
 ### Copy an Item
 
-```python
+```python3
 from onedrivesdk.item_reference import ItemReference
 
 ref = ItemReference()
@@ -156,7 +166,7 @@ copy_operation.poll_until_complete()
 
 ### Rename an Item
 
-```python
+```python3
 renamed_item = onedrivesdk.Item()
 renamed_item.name = 'NewItemName'
 renamed_item.id = 'youritemtorename!id'
@@ -164,16 +174,25 @@ renamed_item.id = 'youritemtorename!id'
 new_item = client.item(drive='me', id=renamed_item.id).update(renamed_item)
 ```
 
+### Delete an Item
+#### Warning: Make sure you really want to do this.
+
+```python3
+root_folder = client.item(drive='me', id='root').children.get()
+id_of_file = root_folder[0].id
+# WARNING: This can have catastrophic consequences. Make sure you really want to do this.
+client.item(drive='me', id=id_of_file).delete()
+```
 ### Paging through a collection
 
-```python
-#get the top three elements of root, leaving the next page for more elements
+```python3
+# get the top three elements of root, leaving the next page for more elements
 collection = client.item(drive='me', id='root').children.request(top=3).get()
 
-#get the first item in the collection
+# get the first item in the collection
 item = collection[0]
 
-#get the next page of three elements, if none exist, returns None
+# get the next page of three elements, if none exist, returns None
 collection2 = onedrivesdk.ChildrenCollectionRequest.get_next_page_request(collection, client).get()
 ```
 
@@ -182,8 +201,10 @@ collection2 = onedrivesdk.ChildrenCollectionRequest.get_next_page_request(collec
 For async operations, you create an `asyncio.coroutine` which
 implements `asyncio.ascompleted`, and execute it with
 `loop.run\_until\_complete`.
+To download an item, use `download_async()` instead of `download()`.
+To upload an item, use `upload_async()` instead of `upload()`.
 
-```python
+```python3
 import asyncio
 
 @asyncio.coroutine
@@ -196,13 +217,22 @@ def run_gets(client):
 loop = asyncio.get_event_loop()
 loop.run_until_complete(run_gets(client))   
 ```
+#### Upload Progress
+
+For async uploads, you can get the progress by calling `upload_async` with a
+`function(current_part, total_parts)` to call every time a 10MB chunk is uploaded.
+```python3
+def status(current_part, total_parts):
+    print(str(current_part)+"/"+str(total_parts))
+returned_item = client.item(dris:open ive='me', id='root').children['newfile.txt'].upload_async('./path_to_file.txt', upload_status=status)
+```
 
 ## Saving and Loading a Session
 
 You can save your OAuth session details so that you don't have to go through the full
 OAuth flow every time you start your app. To do so, follow these steps:
 
-```python
+```python3
 auth_provider = onedrivesdk.AuthProvider(http_provider,
                                          client_id,
                                          scopes)
@@ -217,13 +247,13 @@ auth_provider = onedrivesdk.AuthProvider(http_provider,
                                          scopes)
 auth_provider.load_session()
 auth_provider.refresh_token()
-client = onedrivesdk.OneDriveClient(base_url, auth_provider, http_provider)
+client = onedrivesdk.OneDriveClient(api_base_url, auth_provider, http_provider)
 ```
 
 After the call to `refresh_token()` your `AuthProvider` will be ready to authenticate calls
 to the OneDrive API. This implementation is not complete, though.
 
-1. The default implementation of [Session](\src\onedrivesdk\session.py) saves the session
+1. The default implementation of [Session](src/onedrivesdk/session.py) saves the session
 information in a Pickle file. Session data should be treated with equal protection as a
 password, so this is not safe for deployment to real users. You should re-implement
 `Session` to fit your app's needs.
@@ -232,9 +262,12 @@ of `Session`. For example, the default implementation tries to open the file `se
  which may not exist and will raise `FileNotFoundError`. You will need to account for that here
  (or, even better, in your implementation of `Session`).
 
+## CLI
+If you'd rather use a command line, then you can use the [example](examples) instead.
+
 ## Using a Proxy
 If you need to proxy your requests, you can use the helper class `HttpProviderWithProxy`.
-```python
+```python3
 import onedrivesdk
 from onedrivesdk.helpers import http_provider_with_proxy
 
