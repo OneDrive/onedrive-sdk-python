@@ -35,7 +35,7 @@ class TagRequest(RequestBase):
         """Deletes the specified Tag."""
         future = self._client._loop.run_in_executor(None,
                                                     self.delete)
-        yield from future
+        await future
 
     def get(self):
         """Gets the specified Tag.
@@ -58,7 +58,7 @@ class TagRequest(RequestBase):
         """
         future = self._client._loop.run_in_executor(None,
                                                     self.get)
-        entity = yield from future
+        entity = await future
         return entity
 
     def update(self, tag):
@@ -92,6 +92,6 @@ class TagRequest(RequestBase):
         future = self._client._loop.run_in_executor(None,
                                                     self.update,
                                                     tag)
-        entity = yield from future
+        entity = await future
         return entity
 

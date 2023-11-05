@@ -42,7 +42,7 @@ async def authenticate_async(self, code, redirect_uri, client_secret=None):
                                         code,
                                         redirect_uri,
                                         client_secret)
-    yield from future
+    await future
 
 
 async def authenticate_request_async(self, request):
@@ -56,14 +56,14 @@ async def authenticate_request_async(self, request):
     future = self._loop.run_in_executor(None,
                                         self.authenticate_request,
                                         request)
-    yield from future
+    await future
 
 
 async def refresh_token_async(self):
     """Refresh the token currently used by the session"""
     future = self._loop.run_in_executor(None,
                                         self.refresh_token)
-    yield from future
+    await future
 
 AuthProvider.authenticate_async = authenticate_async
 AuthProvider.authenticate_request_async = authenticate_async

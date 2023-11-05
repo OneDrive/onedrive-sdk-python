@@ -35,7 +35,7 @@ class DriveRequest(RequestBase):
         """Deletes the specified Drive."""
         future = self._client._loop.run_in_executor(None,
                                                     self.delete)
-        yield from future
+        await future
 
     def get(self):
         """Gets the specified Drive.
@@ -58,7 +58,7 @@ class DriveRequest(RequestBase):
         """
         future = self._client._loop.run_in_executor(None,
                                                     self.get)
-        entity = yield from future
+        entity = await future
         return entity
 
     def update(self, drive):
@@ -92,7 +92,7 @@ class DriveRequest(RequestBase):
         future = self._client._loop.run_in_executor(None,
                                                     self.update,
                                                     drive)
-        entity = yield from future
+        entity = await future
         return entity
 
     def _initialize_collection_properties(self, value):

@@ -35,7 +35,7 @@ class ItemRequest(RequestBase):
         """Deletes the specified Item."""
         future = self._client._loop.run_in_executor(None,
                                                     self.delete)
-        yield from future
+        await future
 
     def get(self):
         """Gets the specified Item.
@@ -58,7 +58,7 @@ class ItemRequest(RequestBase):
         """
         future = self._client._loop.run_in_executor(None,
                                                     self.get)
-        entity = yield from future
+        entity = await future
         return entity
 
     def update(self, item):
@@ -92,7 +92,7 @@ class ItemRequest(RequestBase):
         future = self._client._loop.run_in_executor(None,
                                                     self.update,
                                                     item)
-        entity = yield from future
+        entity = await future
         return entity
 
     def _initialize_collection_properties(self, value):

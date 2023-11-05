@@ -69,7 +69,7 @@ class ItemCreateLinkRequest(RequestBase):
         """
         future = self._client._loop.run_in_executor(None,
                                                     self.post)
-        entity = yield from future
+        entity = await future
         return entity
 
 
@@ -111,6 +111,6 @@ class ItemCreateLinkRequestBuilder(RequestBuilderBase):
             :class:`Permission<onedrivesdk.model.permission.Permission>`:
                 The resulting Permission from the operation
         """
-        entity = yield from self.request().post_async()
+        entity = await self.request().post_async()
         return entity
 

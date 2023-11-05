@@ -74,7 +74,7 @@ class ItemContentRequest(RequestBase):
         future = self._client._loop.run_in_executor(None,
                                                     self.put,
                                                     content_local_path)
-        entity = yield from future
+        entity = await future
         return entity
 
     def download(self, content_local_path):
@@ -97,7 +97,7 @@ class ItemContentRequest(RequestBase):
         future = self._client._loop.run_in_executor(None,
                                                     self.download,
                                                     content_local_path)
-        yield from future
+        await future
 
 class ItemContentRequestBuilder(RequestBuilderBase):
 

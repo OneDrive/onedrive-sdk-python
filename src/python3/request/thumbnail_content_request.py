@@ -64,7 +64,7 @@ class ThumbnailContentRequest(RequestBase):
         future = self._client._loop.run_in_executor(None,
                                                     self.download,
                                                     content_local_path)
-        yield from future
+        await future
 
 class ThumbnailContentRequestBuilder(RequestBuilderBase):
 

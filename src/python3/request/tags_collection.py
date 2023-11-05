@@ -47,7 +47,7 @@ class TagsCollectionRequest(CollectionRequestBase):
         """
         future = self._client._loop.run_in_executor(None,
                                                     self.get)
-        collection_page = yield from future
+        collection_page = await future
         return collection_page
 
     @staticmethod
@@ -123,7 +123,7 @@ class TagsCollectionRequestBuilder(RequestBuilderBase):
             :class:`TagsCollectionPage<onedrivesdk.model.tags_collection_page.TagsCollectionPage>`:
                 The TagsCollectionPage
         """
-        collection_page = yield from self.request().get_async()
+        collection_page = await self.request().get_async()
         return collection_page
 
 

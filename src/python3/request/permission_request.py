@@ -35,7 +35,7 @@ class PermissionRequest(RequestBase):
         """Deletes the specified Permission."""
         future = self._client._loop.run_in_executor(None,
                                                     self.delete)
-        yield from future
+        await future
 
     def get(self):
         """Gets the specified Permission.
@@ -58,7 +58,7 @@ class PermissionRequest(RequestBase):
         """
         future = self._client._loop.run_in_executor(None,
                                                     self.get)
-        entity = yield from future
+        entity = await future
         return entity
 
     def update(self, permission):
@@ -92,6 +92,6 @@ class PermissionRequest(RequestBase):
         future = self._client._loop.run_in_executor(None,
                                                     self.update,
                                                     permission)
-        entity = yield from future
+        entity = await future
         return entity
 

@@ -35,7 +35,7 @@ class ThumbnailSetRequest(RequestBase):
         """Deletes the specified ThumbnailSet."""
         future = self._client._loop.run_in_executor(None,
                                                     self.delete)
-        yield from future
+        await future
 
     def get(self):
         """Gets the specified ThumbnailSet.
@@ -58,7 +58,7 @@ class ThumbnailSetRequest(RequestBase):
         """
         future = self._client._loop.run_in_executor(None,
                                                     self.get)
-        entity = yield from future
+        entity = await future
         return entity
 
     def update(self, thumbnail_set):
@@ -92,6 +92,6 @@ class ThumbnailSetRequest(RequestBase):
         future = self._client._loop.run_in_executor(None,
                                                     self.update,
                                                     thumbnail_set)
-        entity = yield from future
+        entity = await future
         return entity
 

@@ -68,7 +68,7 @@ class ThumbnailSetRequestBuilder(RequestBuilderBase):
 
     async def delete_async(self):
         """Deletes the specified ThumbnailSet."""
-        yield from self.request().delete_async()
+        await self.request().delete_async()
     def get(self):
         """Gets the specified ThumbnailSet.
         
@@ -85,7 +85,7 @@ class ThumbnailSetRequestBuilder(RequestBuilderBase):
             :class:`ThumbnailSet<onedrivesdk.model.thumbnail_set.ThumbnailSet>`:
                 The ThumbnailSet.
         """
-        entity = yield from self.request().get_async()
+        entity = await self.request().get_async()
         return entity
     def update(self, thumbnail_set):
         """Updates the specified ThumbnailSet.
@@ -111,7 +111,7 @@ class ThumbnailSetRequestBuilder(RequestBuilderBase):
             :class:`ThumbnailSet<onedrivesdk.model.thumbnail_set.ThumbnailSet>`:
                 The updated ThumbnailSet.
         """
-        entity = yield from self.request().update_async(thumbnail_set)
+        entity = await self.request().update_async(thumbnail_set)
         return entity
 
     @property

@@ -40,7 +40,7 @@ class ItemDeltaRequest(CollectionRequestBase):
         """
         future = self._client._loop.run_in_executor(None,
                                                     self.get)
-        collection_response = yield from future
+        collection_response = await future
         return collection_response
     
     @staticmethod
@@ -103,7 +103,7 @@ class ItemDeltaRequestBuilder(RequestBuilderBase):
             :class:`ItemDeltaCollectionResponse<onedrivesdk.request.item_delta_collection.ItemDeltaCollectionResponse>`:
                 The resulting ItemDeltaCollectionResponse from the operation
         """
-        collection_page = yield from self.request().get_async()
+        collection_page = await self.request().get_async()
         return collection_page
 
 from ..request.item_delta_collection import ItemDeltaCollectionResponse

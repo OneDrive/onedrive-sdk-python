@@ -50,7 +50,7 @@ class DriveRequestBuilder(RequestBuilderBase):
 
     async def delete_async(self):
         """Deletes the specified Drive."""
-        yield from self.request().delete_async()
+        await self.request().delete_async()
     def get(self):
         """Gets the specified Drive.
         
@@ -67,7 +67,7 @@ class DriveRequestBuilder(RequestBuilderBase):
             :class:`Drive<onedrivesdk.model.drive.Drive>`:
                 The Drive.
         """
-        entity = yield from self.request().get_async()
+        entity = await self.request().get_async()
         return entity
     def update(self, drive):
         """Updates the specified Drive.
@@ -93,7 +93,7 @@ class DriveRequestBuilder(RequestBuilderBase):
             :class:`Drive<onedrivesdk.model.drive.Drive>`:
                 The updated Drive.
         """
-        entity = yield from self.request().update_async(drive)
+        entity = await self.request().update_async(drive)
         return entity
 
     @property

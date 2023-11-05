@@ -67,7 +67,7 @@ class PermissionRequestBuilder(RequestBuilderBase):
 
     async def delete_async(self):
         """Deletes the specified Permission."""
-        yield from self.request().delete_async()
+        await self.request().delete_async()
     def get(self):
         """Gets the specified Permission.
         
@@ -84,7 +84,7 @@ class PermissionRequestBuilder(RequestBuilderBase):
             :class:`Permission<onedrivesdk.model.permission.Permission>`:
                 The Permission.
         """
-        entity = yield from self.request().get_async()
+        entity = await self.request().get_async()
         return entity
     def update(self, permission):
         """Updates the specified Permission.
@@ -110,5 +110,5 @@ class PermissionRequestBuilder(RequestBuilderBase):
             :class:`Permission<onedrivesdk.model.permission.Permission>`:
                 The updated Permission.
         """
-        entity = yield from self.request().update_async(permission)
+        entity = await self.request().update_async(permission)
         return entity

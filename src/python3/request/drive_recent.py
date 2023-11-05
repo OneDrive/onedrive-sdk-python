@@ -38,7 +38,7 @@ class DriveRecentRequest(CollectionRequestBase):
         """
         future = self._client._loop.run_in_executor(None,
                                                     self.get)
-        collection_response = yield from future
+        collection_response = await future
         return collection_response
     
     @staticmethod
@@ -98,7 +98,7 @@ class DriveRecentRequestBuilder(RequestBuilderBase):
             :class:`ItemsCollectionResponse<onedrivesdk.request.items_collection.ItemsCollectionResponse>`:
                 The resulting ItemsCollectionResponse from the operation
         """
-        collection_page = yield from self.request().get_async()
+        collection_page = await self.request().get_async()
         return collection_page
 
 from ..request.items_collection import ItemsCollectionResponse

@@ -35,7 +35,7 @@ class SubscriptionRequest(RequestBase):
         """Deletes the specified Subscription."""
         future = self._client._loop.run_in_executor(None,
                                                     self.delete)
-        yield from future
+        await future
 
     def get(self):
         """Gets the specified Subscription.
@@ -58,7 +58,7 @@ class SubscriptionRequest(RequestBase):
         """
         future = self._client._loop.run_in_executor(None,
                                                     self.get)
-        entity = yield from future
+        entity = await future
         return entity
 
     def update(self, subscription):
@@ -92,6 +92,6 @@ class SubscriptionRequest(RequestBase):
         future = self._client._loop.run_in_executor(None,
                                                     self.update,
                                                     subscription)
-        entity = yield from future
+        entity = await future
         return entity
 

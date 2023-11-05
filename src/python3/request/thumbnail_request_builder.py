@@ -68,7 +68,7 @@ class ThumbnailRequestBuilder(RequestBuilderBase):
 
     async def delete_async(self):
         """Deletes the specified Thumbnail."""
-        yield from self.request().delete_async()
+        await self.request().delete_async()
     def get(self):
         """Gets the specified Thumbnail.
         
@@ -85,7 +85,7 @@ class ThumbnailRequestBuilder(RequestBuilderBase):
             :class:`Thumbnail<onedrivesdk.model.thumbnail.Thumbnail>`:
                 The Thumbnail.
         """
-        entity = yield from self.request().get_async()
+        entity = await self.request().get_async()
         return entity
     def update(self, thumbnail):
         """Updates the specified Thumbnail.
@@ -111,7 +111,7 @@ class ThumbnailRequestBuilder(RequestBuilderBase):
             :class:`Thumbnail<onedrivesdk.model.thumbnail.Thumbnail>`:
                 The updated Thumbnail.
         """
-        entity = yield from self.request().update_async(thumbnail)
+        entity = await self.request().update_async(thumbnail)
         return entity
 
     def download(self, local_path):
@@ -130,7 +130,7 @@ class ThumbnailRequestBuilder(RequestBuilderBase):
             local_path (str): The path where the entity should be
                 downloaded to
         """
-        entity = yield from self.content.request().download_async(local_path)
+        entity = await self.content.request().download_async(local_path)
         return entity
 
     @property

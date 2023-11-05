@@ -59,7 +59,7 @@ class ItemInviteRequest(CollectionRequestBase):
         """
         future = self._client._loop.run_in_executor(None,
                                                     self.post)
-        collection_response = yield from future
+        collection_response = await future
         return collection_response
 
 
@@ -113,7 +113,7 @@ class ItemInviteRequestBuilder(RequestBuilderBase):
             :class:`ItemsCollectionResponse<onedrivesdk.request.items_collection.ItemsCollectionResponse>`:
                 The resulting ItemsCollectionResponse from the operation
         """
-        collection_page = yield from self.request().post_async()
+        collection_page = await self.request().post_async()
         return collection_page
 
 from ..request.items_collection import ItemsCollectionResponse

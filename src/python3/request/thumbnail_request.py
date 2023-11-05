@@ -35,7 +35,7 @@ class ThumbnailRequest(RequestBase):
         """Deletes the specified Thumbnail."""
         future = self._client._loop.run_in_executor(None,
                                                     self.delete)
-        yield from future
+        await future
 
     def get(self):
         """Gets the specified Thumbnail.
@@ -58,7 +58,7 @@ class ThumbnailRequest(RequestBase):
         """
         future = self._client._loop.run_in_executor(None,
                                                     self.get)
-        entity = yield from future
+        entity = await future
         return entity
 
     def update(self, thumbnail):
@@ -92,6 +92,6 @@ class ThumbnailRequest(RequestBase):
         future = self._client._loop.run_in_executor(None,
                                                     self.update,
                                                     thumbnail)
-        entity = yield from future
+        entity = await future
         return entity
 

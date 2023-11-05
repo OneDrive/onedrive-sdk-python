@@ -66,7 +66,7 @@ class ItemUploadFragment(RequestBase):
         """
         future = self._client._loop.run_in_executor(None,
                                                     self.post)
-        entity = yield from future
+        entity = await future
         return entity
 
 
@@ -126,7 +126,7 @@ class ItemUploadFragmentBuilder(RequestBuilderBase):
             :class:`UploadedFragment<onedrivesdk.model.uploaded_fragment.UploadedFragment>`:
                 The resulting UploadSession from the operation
         """
-        entity = yield from self.request(begin, length, options).post_async()
+        entity = await self.request(begin, length, options).post_async()
         return entity
 
 

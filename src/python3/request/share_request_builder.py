@@ -67,7 +67,7 @@ class ShareRequestBuilder(RequestBuilderBase):
 
     async def delete_async(self):
         """Deletes the specified Share."""
-        yield from self.request().delete_async()
+        await self.request().delete_async()
     def get(self):
         """Gets the specified Share.
         
@@ -84,7 +84,7 @@ class ShareRequestBuilder(RequestBuilderBase):
             :class:`Share<onedrivesdk.model.share.Share>`:
                 The Share.
         """
-        entity = yield from self.request().get_async()
+        entity = await self.request().get_async()
         return entity
     def update(self, share):
         """Updates the specified Share.
@@ -110,7 +110,7 @@ class ShareRequestBuilder(RequestBuilderBase):
             :class:`Share<onedrivesdk.model.share.Share>`:
                 The updated Share.
         """
-        entity = yield from self.request().update_async(share)
+        entity = await self.request().update_async(share)
         return entity
 
     @property

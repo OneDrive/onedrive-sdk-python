@@ -58,7 +58,7 @@ class ChildrenCollectionRequest(CollectionRequestBase):
         future = self._client._loop.run_in_executor(None,
                                                     self.add,
                                                     entity)
-        entity = yield from future
+        entity = await future
         return entity
 
     def get(self):
@@ -81,7 +81,7 @@ class ChildrenCollectionRequest(CollectionRequestBase):
         """
         future = self._client._loop.run_in_executor(None,
                                                     self.get)
-        collection_page = yield from future
+        collection_page = await future
         return collection_page
 
     @staticmethod
@@ -165,7 +165,7 @@ class ChildrenCollectionRequestBuilder(RequestBuilderBase):
             :class:`Item<onedrivesdk.model.item.Item>`:
                 The Item that you added, with additional data from OneDrive
         """
-        entity = yield from self.request().add_async(entity)
+        entity = await self.request().add_async(entity)
         return entity
 
     def get(self):
@@ -184,7 +184,7 @@ class ChildrenCollectionRequestBuilder(RequestBuilderBase):
             :class:`ChildrenCollectionPage<onedrivesdk.model.children_collection_page.ChildrenCollectionPage>`:
                 The ChildrenCollectionPage
         """
-        collection_page = yield from self.request().get_async()
+        collection_page = await self.request().get_async()
         return collection_page
 
 

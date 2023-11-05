@@ -35,7 +35,7 @@ class ShareRequest(RequestBase):
         """Deletes the specified Share."""
         future = self._client._loop.run_in_executor(None,
                                                     self.delete)
-        yield from future
+        await future
 
     def get(self):
         """Gets the specified Share.
@@ -58,7 +58,7 @@ class ShareRequest(RequestBase):
         """
         future = self._client._loop.run_in_executor(None,
                                                     self.get)
-        entity = yield from future
+        entity = await future
         return entity
 
     def update(self, share):
@@ -92,7 +92,7 @@ class ShareRequest(RequestBase):
         future = self._client._loop.run_in_executor(None,
                                                     self.update,
                                                     share)
-        entity = yield from future
+        entity = await future
         return entity
 
     def _initialize_collection_properties(self, value):

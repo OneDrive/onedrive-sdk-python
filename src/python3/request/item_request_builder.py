@@ -56,7 +56,7 @@ class ItemRequestBuilder(RequestBuilderBase):
 
     async def delete_async(self):
         """Deletes the specified Item."""
-        yield from self.request().delete_async()
+        await self.request().delete_async()
     def get(self):
         """Gets the specified Item.
         
@@ -73,7 +73,7 @@ class ItemRequestBuilder(RequestBuilderBase):
             :class:`Item<onedrivesdk.model.item.Item>`:
                 The Item.
         """
-        entity = yield from self.request().get_async()
+        entity = await self.request().get_async()
         return entity
     def update(self, item):
         """Updates the specified Item.
@@ -99,7 +99,7 @@ class ItemRequestBuilder(RequestBuilderBase):
             :class:`Item<onedrivesdk.model.item.Item>`:
                 The updated Item.
         """
-        entity = yield from self.request().update_async(item)
+        entity = await self.request().update_async(item)
         return entity
 
     def upload(self, local_path):
@@ -121,7 +121,7 @@ class ItemRequestBuilder(RequestBuilderBase):
 
         Returns: The created entity.
         """
-        entity = yield from self.content.request().upload_async(local_path)
+        entity = await self.content.request().upload_async(local_path)
         return entity
 
     def download(self, local_path):
@@ -140,7 +140,7 @@ class ItemRequestBuilder(RequestBuilderBase):
             local_path (str): The path where the entity should be
                 downloaded to
         """
-        entity = yield from self.content.request().download_async(local_path)
+        entity = await self.content.request().download_async(local_path)
         return entity
 
     @property

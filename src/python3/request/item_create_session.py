@@ -69,7 +69,7 @@ class ItemCreateSessionRequest(RequestBase):
         """
         future = self._client._loop.run_in_executor(None,
                                                     self.post)
-        entity = yield from future
+        entity = await future
         return entity
 
 
@@ -111,6 +111,6 @@ class ItemCreateSessionRequestBuilder(RequestBuilderBase):
             :class:`UploadSession<onedrivesdk.model.upload_session.UploadSession>`:
                 The resulting UploadSession from the operation
         """
-        entity = yield from self.request().post_async()
+        entity = await self.request().post_async()
         return entity
 
