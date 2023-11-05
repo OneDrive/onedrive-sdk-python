@@ -38,8 +38,7 @@ class TagsCollectionRequest(CollectionRequestBase):
         collection_response = TagsCollectionResponse(json.loads(self.send().content))
         return self._page_from_response(collection_response)
 
-    @asyncio.coroutine
-    def get_async(self):
+    async def get_async(self):
         """Gets the TagsCollectionPage in async
 
         Yields: 
@@ -48,7 +47,7 @@ class TagsCollectionRequest(CollectionRequestBase):
         """
         future = self._client._loop.run_in_executor(None,
                                                     self.get)
-        collection_page = yield from future
+        collection_page = await future
         return collection_page
 
     @staticmethod
@@ -117,15 +116,14 @@ class TagsCollectionRequestBuilder(RequestBuilderBase):
         """
         return self.request().get()
 
-    @asyncio.coroutine
-    def get_async(self):
+    async def get_async(self):
         """Gets the TagsCollectionPage in async
 
         Yields: 
             :class:`TagsCollectionPage<onedrivesdk.model.tags_collection_page.TagsCollectionPage>`:
                 The TagsCollectionPage
         """
-        collection_page = yield from self.request().get_async()
+        collection_page = await self.request().get_async()
         return collection_page
 
 

@@ -31,12 +31,11 @@ class SubscriptionRequest(RequestBase):
         self.method = "DELETE"
         self.send()
 
-    @asyncio.coroutine
-    def delete_async(self):
+    async def delete_async(self):
         """Deletes the specified Subscription."""
         future = self._client._loop.run_in_executor(None,
                                                     self.delete)
-        yield from future
+        await future
 
     def get(self):
         """Gets the specified Subscription.
@@ -50,8 +49,7 @@ class SubscriptionRequest(RequestBase):
         self._initialize_collection_properties(entity)
         return entity
 
-    @asyncio.coroutine
-    def get_async(self):
+    async def get_async(self):
         """Gets the specified Subscription in async.
 
         Yields:
@@ -60,7 +58,7 @@ class SubscriptionRequest(RequestBase):
         """
         future = self._client._loop.run_in_executor(None,
                                                     self.get)
-        entity = yield from future
+        entity = await future
         return entity
 
     def update(self, subscription):
@@ -80,8 +78,7 @@ class SubscriptionRequest(RequestBase):
         self._initialize_collection_properties(entity)
         return entity
 
-    @asyncio.coroutine
-    def update_async(self, subscription):
+    async def update_async(self, subscription):
         """Updates the specified Subscription in async
         
         Args:
@@ -95,6 +92,6 @@ class SubscriptionRequest(RequestBase):
         future = self._client._loop.run_in_executor(None,
                                                     self.update,
                                                     subscription)
-        entity = yield from future
+        entity = await future
         return entity
 

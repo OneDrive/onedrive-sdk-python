@@ -38,8 +38,7 @@ class ThumbnailsCollectionRequest(CollectionRequestBase):
         collection_response = ThumbnailsCollectionResponse(json.loads(self.send().content))
         return self._page_from_response(collection_response)
 
-    @asyncio.coroutine
-    def get_async(self):
+    async def get_async(self):
         """Gets the ThumbnailsCollectionPage in async
 
         Yields: 
@@ -48,7 +47,7 @@ class ThumbnailsCollectionRequest(CollectionRequestBase):
         """
         future = self._client._loop.run_in_executor(None,
                                                     self.get)
-        collection_page = yield from future
+        collection_page = await future
         return collection_page
 
     @staticmethod
@@ -117,15 +116,14 @@ class ThumbnailsCollectionRequestBuilder(RequestBuilderBase):
         """
         return self.request().get()
 
-    @asyncio.coroutine
-    def get_async(self):
+    async def get_async(self):
         """Gets the ThumbnailsCollectionPage in async
 
         Yields: 
             :class:`ThumbnailsCollectionPage<onedrivesdk.model.thumbnails_collection_page.ThumbnailsCollectionPage>`:
                 The ThumbnailsCollectionPage
         """
-        collection_page = yield from self.request().get_async()
+        collection_page = await self.request().get_async()
         return collection_page
 
 

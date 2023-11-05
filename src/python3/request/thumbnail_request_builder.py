@@ -66,10 +66,9 @@ class ThumbnailRequestBuilder(RequestBuilderBase):
         """Deletes the specified Thumbnail."""
         self.request().delete()
 
-    @asyncio.coroutine
-    def delete_async(self):
+    async def delete_async(self):
         """Deletes the specified Thumbnail."""
-        yield from self.request().delete_async()
+        await self.request().delete_async()
     def get(self):
         """Gets the specified Thumbnail.
         
@@ -79,15 +78,14 @@ class ThumbnailRequestBuilder(RequestBuilderBase):
         """
         return self.request().get()
 
-    @asyncio.coroutine
-    def get_async(self):
+    async def get_async(self):
         """Gets the specified Thumbnail in async.
 
         Returns:
             :class:`Thumbnail<onedrivesdk.model.thumbnail.Thumbnail>`:
                 The Thumbnail.
         """
-        entity = yield from self.request().get_async()
+        entity = await self.request().get_async()
         return entity
     def update(self, thumbnail):
         """Updates the specified Thumbnail.
@@ -102,8 +100,7 @@ class ThumbnailRequestBuilder(RequestBuilderBase):
         """
         return self.request().update(thumbnail)
 
-    @asyncio.coroutine
-    def update_async(self, thumbnail):
+    async def update_async(self, thumbnail):
         """Updates the specified Thumbnail in async
         
         Args:
@@ -114,7 +111,7 @@ class ThumbnailRequestBuilder(RequestBuilderBase):
             :class:`Thumbnail<onedrivesdk.model.thumbnail.Thumbnail>`:
                 The updated Thumbnail.
         """
-        entity = yield from self.request().update_async(thumbnail)
+        entity = await self.request().update_async(thumbnail)
         return entity
 
     def download(self, local_path):
@@ -126,15 +123,14 @@ class ThumbnailRequestBuilder(RequestBuilderBase):
         """
         return self.content.request().download(local_path)
 
-    @asyncio.coroutine
-    def download_async(self, local_path):
+    async def download_async(self, local_path):
         """Downloads the specified entity in async.
 
         Args:
             local_path (str): The path where the entity should be
                 downloaded to
         """
-        entity = yield from self.content.request().download_async(local_path)
+        entity = await self.content.request().download_async(local_path)
         return entity
 
     @property

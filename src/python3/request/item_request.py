@@ -31,12 +31,11 @@ class ItemRequest(RequestBase):
         self.method = "DELETE"
         self.send()
 
-    @asyncio.coroutine
-    def delete_async(self):
+    async def delete_async(self):
         """Deletes the specified Item."""
         future = self._client._loop.run_in_executor(None,
                                                     self.delete)
-        yield from future
+        await future
 
     def get(self):
         """Gets the specified Item.
@@ -50,8 +49,7 @@ class ItemRequest(RequestBase):
         self._initialize_collection_properties(entity)
         return entity
 
-    @asyncio.coroutine
-    def get_async(self):
+    async def get_async(self):
         """Gets the specified Item in async.
 
         Yields:
@@ -60,7 +58,7 @@ class ItemRequest(RequestBase):
         """
         future = self._client._loop.run_in_executor(None,
                                                     self.get)
-        entity = yield from future
+        entity = await future
         return entity
 
     def update(self, item):
@@ -80,8 +78,7 @@ class ItemRequest(RequestBase):
         self._initialize_collection_properties(entity)
         return entity
 
-    @asyncio.coroutine
-    def update_async(self, item):
+    async def update_async(self, item):
         """Updates the specified Item in async
         
         Args:
@@ -95,7 +92,7 @@ class ItemRequest(RequestBase):
         future = self._client._loop.run_in_executor(None,
                                                     self.update,
                                                     item)
-        entity = yield from future
+        entity = await future
         return entity
 
     def _initialize_collection_properties(self, value):

@@ -31,8 +31,7 @@ class ItemDeltaRequest(CollectionRequestBase):
         collection_response = ItemDeltaCollectionResponse(json.loads(self.send().content))
         return self._page_from_response(collection_response)
 
-    @asyncio.coroutine
-    def get_async(self):
+    async def get_async(self):
         """Sends the GET request using an asyncio coroutine
         
         Yields:
@@ -41,7 +40,7 @@ class ItemDeltaRequest(CollectionRequestBase):
         """
         future = self._client._loop.run_in_executor(None,
                                                     self.get)
-        collection_response = yield from future
+        collection_response = await future
         return collection_response
     
     @staticmethod
@@ -97,15 +96,14 @@ class ItemDeltaRequestBuilder(RequestBuilderBase):
         """
         return self.request().get()
 
-    @asyncio.coroutine
-    def get_async(self):
+    async def get_async(self):
         """Sends the GET request using an asyncio coroutine
         
         Yields:
             :class:`ItemDeltaCollectionResponse<onedrivesdk.request.item_delta_collection.ItemDeltaCollectionResponse>`:
                 The resulting ItemDeltaCollectionResponse from the operation
         """
-        collection_page = yield from self.request().get_async()
+        collection_page = await self.request().get_async()
         return collection_page
 
 from ..request.item_delta_collection import ItemDeltaCollectionResponse

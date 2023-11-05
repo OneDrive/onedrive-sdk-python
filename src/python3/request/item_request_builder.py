@@ -54,10 +54,9 @@ class ItemRequestBuilder(RequestBuilderBase):
         """Deletes the specified Item."""
         self.request().delete()
 
-    @asyncio.coroutine
-    def delete_async(self):
+    async def delete_async(self):
         """Deletes the specified Item."""
-        yield from self.request().delete_async()
+        await self.request().delete_async()
     def get(self):
         """Gets the specified Item.
         
@@ -67,15 +66,14 @@ class ItemRequestBuilder(RequestBuilderBase):
         """
         return self.request().get()
 
-    @asyncio.coroutine
-    def get_async(self):
+    async def get_async(self):
         """Gets the specified Item in async.
 
         Returns:
             :class:`Item<onedrivesdk.model.item.Item>`:
                 The Item.
         """
-        entity = yield from self.request().get_async()
+        entity = await self.request().get_async()
         return entity
     def update(self, item):
         """Updates the specified Item.
@@ -90,8 +88,7 @@ class ItemRequestBuilder(RequestBuilderBase):
         """
         return self.request().update(item)
 
-    @asyncio.coroutine
-    def update_async(self, item):
+    async def update_async(self, item):
         """Updates the specified Item in async
         
         Args:
@@ -102,7 +99,7 @@ class ItemRequestBuilder(RequestBuilderBase):
             :class:`Item<onedrivesdk.model.item.Item>`:
                 The updated Item.
         """
-        entity = yield from self.request().update_async(item)
+        entity = await self.request().update_async(item)
         return entity
 
     def upload(self, local_path):
@@ -116,8 +113,7 @@ class ItemRequestBuilder(RequestBuilderBase):
         """
         return self.content.request().upload(local_path)
 
-    @asyncio.coroutine
-    def upload_async(self, local_path):
+    async def upload_async(self, local_path):
         """Uploads the file using PUT in async
         
         Args:
@@ -125,7 +121,7 @@ class ItemRequestBuilder(RequestBuilderBase):
 
         Returns: The created entity.
         """
-        entity = yield from self.content.request().upload_async(local_path)
+        entity = await self.content.request().upload_async(local_path)
         return entity
 
     def download(self, local_path):
@@ -137,15 +133,14 @@ class ItemRequestBuilder(RequestBuilderBase):
         """
         return self.content.request().download(local_path)
 
-    @asyncio.coroutine
-    def download_async(self, local_path):
+    async def download_async(self, local_path):
         """Downloads the specified entity in async.
 
         Args:
             local_path (str): The path where the entity should be
                 downloaded to
         """
-        entity = yield from self.content.request().download_async(local_path)
+        entity = await self.content.request().download_async(local_path)
         return entity
 
     @property

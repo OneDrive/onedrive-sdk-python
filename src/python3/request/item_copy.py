@@ -65,8 +65,7 @@ class ItemCopyRequest(RequestBase):
         entity = AsyncOperationMonitor(response.headers["Location"], self._client, None)
         return entity
 
-    @asyncio.coroutine
-    def post_async(self):
+    async def post_async(self):
         """Sends the POST request using an asyncio coroutine
 
         Yields:
@@ -75,7 +74,7 @@ class ItemCopyRequest(RequestBase):
         """
         future = self._client._loop.run_in_executor(None,
                                                     self.post)
-        entity = yield from future
+        entity = await future
         return entity
 
 
@@ -111,14 +110,13 @@ class ItemCopyRequestBuilder(RequestBuilderBase):
         """
         return self.request().post()
 
-    @asyncio.coroutine
-    def post_async(self):
+    async def post_async(self):
         """Sends the POST request using an asyncio coroutine
         
         Yields:
             :class:`Item<onedrivesdk.model.item.Item>`:
                 The resulting Item from the operation
         """
-        entity = yield from self.request().post_async()
+        entity = await self.request().post_async()
         return entity
 

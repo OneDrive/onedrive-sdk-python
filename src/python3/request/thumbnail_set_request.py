@@ -31,12 +31,11 @@ class ThumbnailSetRequest(RequestBase):
         self.method = "DELETE"
         self.send()
 
-    @asyncio.coroutine
-    def delete_async(self):
+    async def delete_async(self):
         """Deletes the specified ThumbnailSet."""
         future = self._client._loop.run_in_executor(None,
                                                     self.delete)
-        yield from future
+        await future
 
     def get(self):
         """Gets the specified ThumbnailSet.
@@ -50,8 +49,7 @@ class ThumbnailSetRequest(RequestBase):
         self._initialize_collection_properties(entity)
         return entity
 
-    @asyncio.coroutine
-    def get_async(self):
+    async def get_async(self):
         """Gets the specified ThumbnailSet in async.
 
         Yields:
@@ -60,7 +58,7 @@ class ThumbnailSetRequest(RequestBase):
         """
         future = self._client._loop.run_in_executor(None,
                                                     self.get)
-        entity = yield from future
+        entity = await future
         return entity
 
     def update(self, thumbnail_set):
@@ -80,8 +78,7 @@ class ThumbnailSetRequest(RequestBase):
         self._initialize_collection_properties(entity)
         return entity
 
-    @asyncio.coroutine
-    def update_async(self, thumbnail_set):
+    async def update_async(self, thumbnail_set):
         """Updates the specified ThumbnailSet in async
         
         Args:
@@ -95,6 +92,6 @@ class ThumbnailSetRequest(RequestBase):
         future = self._client._loop.run_in_executor(None,
                                                     self.update,
                                                     thumbnail_set)
-        entity = yield from future
+        entity = await future
         return entity
 

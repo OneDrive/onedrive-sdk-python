@@ -47,10 +47,9 @@ class SubscriptionRequestBuilder(RequestBuilderBase):
         """Deletes the specified Subscription."""
         self.request().delete()
 
-    @asyncio.coroutine
-    def delete_async(self):
+    async def delete_async(self):
         """Deletes the specified Subscription."""
-        yield from self.request().delete_async()
+        await self.request().delete_async()
     def get(self):
         """Gets the specified Subscription.
         
@@ -60,15 +59,14 @@ class SubscriptionRequestBuilder(RequestBuilderBase):
         """
         return self.request().get()
 
-    @asyncio.coroutine
-    def get_async(self):
+    async def get_async(self):
         """Gets the specified Subscription in async.
 
         Returns:
             :class:`Subscription<onedrivesdk.model.subscription.Subscription>`:
                 The Subscription.
         """
-        entity = yield from self.request().get_async()
+        entity = await self.request().get_async()
         return entity
     def update(self, subscription):
         """Updates the specified Subscription.
@@ -83,8 +81,7 @@ class SubscriptionRequestBuilder(RequestBuilderBase):
         """
         return self.request().update(subscription)
 
-    @asyncio.coroutine
-    def update_async(self, subscription):
+    async def update_async(self, subscription):
         """Updates the specified Subscription in async
         
         Args:
@@ -95,5 +92,5 @@ class SubscriptionRequestBuilder(RequestBuilderBase):
             :class:`Subscription<onedrivesdk.model.subscription.Subscription>`:
                 The updated Subscription.
         """
-        entity = yield from self.request().update_async(subscription)
+        entity = await self.request().update_async(subscription)
         return entity

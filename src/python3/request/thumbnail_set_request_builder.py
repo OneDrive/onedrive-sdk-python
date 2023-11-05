@@ -66,10 +66,9 @@ class ThumbnailSetRequestBuilder(RequestBuilderBase):
         """Deletes the specified ThumbnailSet."""
         self.request().delete()
 
-    @asyncio.coroutine
-    def delete_async(self):
+    async def delete_async(self):
         """Deletes the specified ThumbnailSet."""
-        yield from self.request().delete_async()
+        await self.request().delete_async()
     def get(self):
         """Gets the specified ThumbnailSet.
         
@@ -79,15 +78,14 @@ class ThumbnailSetRequestBuilder(RequestBuilderBase):
         """
         return self.request().get()
 
-    @asyncio.coroutine
-    def get_async(self):
+    async def get_async(self):
         """Gets the specified ThumbnailSet in async.
 
         Returns:
             :class:`ThumbnailSet<onedrivesdk.model.thumbnail_set.ThumbnailSet>`:
                 The ThumbnailSet.
         """
-        entity = yield from self.request().get_async()
+        entity = await self.request().get_async()
         return entity
     def update(self, thumbnail_set):
         """Updates the specified ThumbnailSet.
@@ -102,8 +100,7 @@ class ThumbnailSetRequestBuilder(RequestBuilderBase):
         """
         return self.request().update(thumbnail_set)
 
-    @asyncio.coroutine
-    def update_async(self, thumbnail_set):
+    async def update_async(self, thumbnail_set):
         """Updates the specified ThumbnailSet in async
         
         Args:
@@ -114,7 +111,7 @@ class ThumbnailSetRequestBuilder(RequestBuilderBase):
             :class:`ThumbnailSet<onedrivesdk.model.thumbnail_set.ThumbnailSet>`:
                 The updated ThumbnailSet.
         """
-        entity = yield from self.request().update_async(thumbnail_set)
+        entity = await self.request().update_async(thumbnail_set)
         return entity
 
     @property

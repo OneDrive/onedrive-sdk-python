@@ -44,8 +44,7 @@ class ChildrenCollectionRequest(CollectionRequestBase):
         entity = Item(json.loads(self.send(entity).content))
         return entity
 
-    @asyncio.coroutine
-    def add_async(self, entity):
+    async def add_async(self, entity):
         """Add a Item to the collection in async
         
         Args:
@@ -59,7 +58,7 @@ class ChildrenCollectionRequest(CollectionRequestBase):
         future = self._client._loop.run_in_executor(None,
                                                     self.add,
                                                     entity)
-        entity = yield from future
+        entity = await future
         return entity
 
     def get(self):
@@ -73,8 +72,7 @@ class ChildrenCollectionRequest(CollectionRequestBase):
         collection_response = ChildrenCollectionResponse(json.loads(self.send().content))
         return self._page_from_response(collection_response)
 
-    @asyncio.coroutine
-    def get_async(self):
+    async def get_async(self):
         """Gets the ChildrenCollectionPage in async
 
         Yields: 
@@ -83,7 +81,7 @@ class ChildrenCollectionRequest(CollectionRequestBase):
         """
         future = self._client._loop.run_in_executor(None,
                                                     self.get)
-        collection_page = yield from future
+        collection_page = await future
         return collection_page
 
     @staticmethod
@@ -156,8 +154,7 @@ class ChildrenCollectionRequestBuilder(RequestBuilderBase):
         """
         return self.request().add(entity)
 
-    @asyncio.coroutine
-    def add_async(self, entity):
+    async def add_async(self, entity):
         """Add a Item to the collection in async
         
         Args:
@@ -168,7 +165,7 @@ class ChildrenCollectionRequestBuilder(RequestBuilderBase):
             :class:`Item<onedrivesdk.model.item.Item>`:
                 The Item that you added, with additional data from OneDrive
         """
-        entity = yield from self.request().add_async(entity)
+        entity = await self.request().add_async(entity)
         return entity
 
     def get(self):
@@ -180,15 +177,14 @@ class ChildrenCollectionRequestBuilder(RequestBuilderBase):
         """
         return self.request().get()
 
-    @asyncio.coroutine
-    def get_async(self):
+    async def get_async(self):
         """Gets the ChildrenCollectionPage in async
 
         Yields: 
             :class:`ChildrenCollectionPage<onedrivesdk.model.children_collection_page.ChildrenCollectionPage>`:
                 The ChildrenCollectionPage
         """
-        collection_page = yield from self.request().get_async()
+        collection_page = await self.request().get_async()
         return collection_page
 
 

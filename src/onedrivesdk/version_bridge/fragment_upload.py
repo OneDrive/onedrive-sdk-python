@@ -57,8 +57,7 @@ class ItemUploadFragment(RequestBase):
         entity = UploadSession(json.loads(self.send(data=self._file_handle).content))
         return entity
 
-    @asyncio.coroutine
-    def post_async(self):
+    async def post_async(self):
         """Sends the POST request using an asyncio coroutine
 
         Yields:
@@ -67,7 +66,7 @@ class ItemUploadFragment(RequestBase):
         """
         future = self._client._loop.run_in_executor(None,
                                                     self.post)
-        entity = yield from future
+        entity = await future
         return entity
 
 
@@ -120,15 +119,14 @@ class ItemUploadFragmentBuilder(RequestBuilderBase):
         """
         return self.request(begin, length, options).post()
 
-    @asyncio.coroutine
-    def post_async(self, begin, length, options=None):
+    async def post_async(self, begin, length, options=None):
         """Sends the POST request using an asyncio coroutine
 
         Yields:
             :class:`UploadedFragment<onedrivesdk.model.uploaded_fragment.UploadedFragment>`:
                 The resulting UploadSession from the operation
         """
-        entity = yield from self.request(begin, length, options).post_async()
+        entity = await self.request(begin, length, options).post_async()
         return entity
 
 

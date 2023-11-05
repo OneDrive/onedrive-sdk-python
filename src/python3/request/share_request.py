@@ -31,12 +31,11 @@ class ShareRequest(RequestBase):
         self.method = "DELETE"
         self.send()
 
-    @asyncio.coroutine
-    def delete_async(self):
+    async def delete_async(self):
         """Deletes the specified Share."""
         future = self._client._loop.run_in_executor(None,
                                                     self.delete)
-        yield from future
+        await future
 
     def get(self):
         """Gets the specified Share.
@@ -50,8 +49,7 @@ class ShareRequest(RequestBase):
         self._initialize_collection_properties(entity)
         return entity
 
-    @asyncio.coroutine
-    def get_async(self):
+    async def get_async(self):
         """Gets the specified Share in async.
 
         Yields:
@@ -60,7 +58,7 @@ class ShareRequest(RequestBase):
         """
         future = self._client._loop.run_in_executor(None,
                                                     self.get)
-        entity = yield from future
+        entity = await future
         return entity
 
     def update(self, share):
@@ -80,8 +78,7 @@ class ShareRequest(RequestBase):
         self._initialize_collection_properties(entity)
         return entity
 
-    @asyncio.coroutine
-    def update_async(self, share):
+    async def update_async(self, share):
         """Updates the specified Share in async
         
         Args:
@@ -95,7 +92,7 @@ class ShareRequest(RequestBase):
         future = self._client._loop.run_in_executor(None,
                                                     self.update,
                                                     share)
-        entity = yield from future
+        entity = await future
         return entity
 
     def _initialize_collection_properties(self, value):

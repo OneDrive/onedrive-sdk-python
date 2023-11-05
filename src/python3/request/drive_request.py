@@ -31,12 +31,11 @@ class DriveRequest(RequestBase):
         self.method = "DELETE"
         self.send()
 
-    @asyncio.coroutine
-    def delete_async(self):
+    async def delete_async(self):
         """Deletes the specified Drive."""
         future = self._client._loop.run_in_executor(None,
                                                     self.delete)
-        yield from future
+        await future
 
     def get(self):
         """Gets the specified Drive.
@@ -50,8 +49,7 @@ class DriveRequest(RequestBase):
         self._initialize_collection_properties(entity)
         return entity
 
-    @asyncio.coroutine
-    def get_async(self):
+    async def get_async(self):
         """Gets the specified Drive in async.
 
         Yields:
@@ -60,7 +58,7 @@ class DriveRequest(RequestBase):
         """
         future = self._client._loop.run_in_executor(None,
                                                     self.get)
-        entity = yield from future
+        entity = await future
         return entity
 
     def update(self, drive):
@@ -80,8 +78,7 @@ class DriveRequest(RequestBase):
         self._initialize_collection_properties(entity)
         return entity
 
-    @asyncio.coroutine
-    def update_async(self, drive):
+    async def update_async(self, drive):
         """Updates the specified Drive in async
         
         Args:
@@ -95,7 +92,7 @@ class DriveRequest(RequestBase):
         future = self._client._loop.run_in_executor(None,
                                                     self.update,
                                                     drive)
-        entity = yield from future
+        entity = await future
         return entity
 
     def _initialize_collection_properties(self, value):

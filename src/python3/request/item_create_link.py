@@ -60,8 +60,7 @@ class ItemCreateLinkRequest(RequestBase):
         entity = Permission(json.loads(self.send(self.body_options).content))
         return entity
 
-    @asyncio.coroutine
-    def post_async(self):
+    async def post_async(self):
         """Sends the POST request using an asyncio coroutine
 
         Yields:
@@ -70,7 +69,7 @@ class ItemCreateLinkRequest(RequestBase):
         """
         future = self._client._loop.run_in_executor(None,
                                                     self.post)
-        entity = yield from future
+        entity = await future
         return entity
 
 
@@ -105,14 +104,13 @@ class ItemCreateLinkRequestBuilder(RequestBuilderBase):
         """
         return self.request().post()
 
-    @asyncio.coroutine
-    def post_async(self):
+    async def post_async(self):
         """Sends the POST request using an asyncio coroutine
         
         Yields:
             :class:`Permission<onedrivesdk.model.permission.Permission>`:
                 The resulting Permission from the operation
         """
-        entity = yield from self.request().post_async()
+        entity = await self.request().post_async()
         return entity
 

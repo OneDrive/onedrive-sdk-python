@@ -47,10 +47,9 @@ class TagRequestBuilder(RequestBuilderBase):
         """Deletes the specified Tag."""
         self.request().delete()
 
-    @asyncio.coroutine
-    def delete_async(self):
+    async def delete_async(self):
         """Deletes the specified Tag."""
-        yield from self.request().delete_async()
+        await self.request().delete_async()
     def get(self):
         """Gets the specified Tag.
         
@@ -60,15 +59,14 @@ class TagRequestBuilder(RequestBuilderBase):
         """
         return self.request().get()
 
-    @asyncio.coroutine
-    def get_async(self):
+    async def get_async(self):
         """Gets the specified Tag in async.
 
         Returns:
             :class:`Tag<onedrivesdk.model.tag.Tag>`:
                 The Tag.
         """
-        entity = yield from self.request().get_async()
+        entity = await self.request().get_async()
         return entity
     def update(self, tag):
         """Updates the specified Tag.
@@ -83,8 +81,7 @@ class TagRequestBuilder(RequestBuilderBase):
         """
         return self.request().update(tag)
 
-    @asyncio.coroutine
-    def update_async(self, tag):
+    async def update_async(self, tag):
         """Updates the specified Tag in async
         
         Args:
@@ -95,5 +92,5 @@ class TagRequestBuilder(RequestBuilderBase):
             :class:`Tag<onedrivesdk.model.tag.Tag>`:
                 The updated Tag.
         """
-        entity = yield from self.request().update_async(tag)
+        entity = await self.request().update_async(tag)
         return entity

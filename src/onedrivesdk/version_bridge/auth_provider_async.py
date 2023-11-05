@@ -25,8 +25,7 @@ import asyncio
 from ..auth_provider import AuthProvider
 
 
-@asyncio.coroutine
-def authenticate_async(self, code, redirect_uri, client_secret=None):
+async def authenticate_async(self, code, redirect_uri, client_secret=None):
     """Takes in a code string, gets the access token,
     and creates session property bag in async
 
@@ -43,11 +42,10 @@ def authenticate_async(self, code, redirect_uri, client_secret=None):
                                         code,
                                         redirect_uri,
                                         client_secret)
-    yield from future
+    await future
 
 
-@asyncio.coroutine
-def authenticate_request_async(self, request):
+async def authenticate_request_async(self, request):
     """Authenticate and append the required
     headers to the request in async
 
@@ -58,15 +56,14 @@ def authenticate_request_async(self, request):
     future = self._loop.run_in_executor(None,
                                         self.authenticate_request,
                                         request)
-    yield from future
+    await future
 
 
-@asyncio.coroutine
-def refresh_token_async(self):
+async def refresh_token_async(self):
     """Refresh the token currently used by the session"""
     future = self._loop.run_in_executor(None,
                                         self.refresh_token)
-    yield from future
+    await future
 
 AuthProvider.authenticate_async = authenticate_async
 AuthProvider.authenticate_request_async = authenticate_async

@@ -32,8 +32,7 @@ class ItemSearchRequest(CollectionRequestBase):
         collection_response = ItemsCollectionResponse(json.loads(self.send().content))
         return self._page_from_response(collection_response)
 
-    @asyncio.coroutine
-    def get_async(self):
+    async def get_async(self):
         """Sends the GET request using an asyncio coroutine
         
         Yields:
@@ -42,7 +41,7 @@ class ItemSearchRequest(CollectionRequestBase):
         """
         future = self._client._loop.run_in_executor(None,
                                                     self.get)
-        collection_response = yield from future
+        collection_response = await future
         return collection_response
     
     @staticmethod
@@ -98,15 +97,14 @@ class ItemSearchRequestBuilder(RequestBuilderBase):
         """
         return self.request().get()
 
-    @asyncio.coroutine
-    def get_async(self):
+    async def get_async(self):
         """Sends the GET request using an asyncio coroutine
         
         Yields:
             :class:`ItemsCollectionResponse<onedrivesdk.request.items_collection.ItemsCollectionResponse>`:
                 The resulting ItemsCollectionResponse from the operation
         """
-        collection_page = yield from self.request().get_async()
+        collection_page = await self.request().get_async()
         return collection_page
 
 from ..request.items_collection import ItemsCollectionResponse

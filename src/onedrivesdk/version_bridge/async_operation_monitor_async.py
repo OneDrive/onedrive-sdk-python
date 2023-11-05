@@ -25,8 +25,7 @@ import asyncio
 from ..async_operation_monitor import AsyncOperationMonitor
 
 
-@asyncio.coroutine
-def poll_until_done_async(self):
+async def poll_until_done_async(self):
     """Yielding this method blocks until done polling for
     the result of the async operation is returned
 
@@ -35,7 +34,7 @@ def poll_until_done_async(self):
     """
     future = self._client._loop.run_in_executor(None,
                                                 self.poll_until_done)
-    item = yield from future
+    item = await future
     return item
 
 AsyncOperationMonitor.poll_until_done_async = poll_until_done_async
