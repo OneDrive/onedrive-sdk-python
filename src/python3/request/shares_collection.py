@@ -38,8 +38,7 @@ class SharesCollectionRequest(CollectionRequestBase):
         collection_response = SharesCollectionResponse(json.loads(self.send().content))
         return self._page_from_response(collection_response)
 
-    @asyncio.coroutine
-    def get_async(self):
+    async def get_async(self):
         """Gets the SharesCollectionPage in async
 
         Yields: 
@@ -117,8 +116,7 @@ class SharesCollectionRequestBuilder(RequestBuilderBase):
         """
         return self.request().get()
 
-    @asyncio.coroutine
-    def get_async(self):
+    async def get_async(self):
         """Gets the SharesCollectionPage in async
 
         Yields: 

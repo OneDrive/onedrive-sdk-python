@@ -186,8 +186,7 @@ implements `asyncio.ascompleted`, and execute it with
 ```python
 import asyncio
 
-@asyncio.coroutine
-def run_gets(client):
+async def run_gets(client):
     coroutines = [client.drive('me').request().get_async() for i in range(3)]
     for future in asyncio.as_completed(coroutines):
         drive = yield from future

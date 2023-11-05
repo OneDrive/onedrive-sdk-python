@@ -65,8 +65,7 @@ class ItemCopyRequest(RequestBase):
         entity = AsyncOperationMonitor(response.headers["Location"], self._client, None)
         return entity
 
-    @asyncio.coroutine
-    def post_async(self):
+    async def post_async(self):
         """Sends the POST request using an asyncio coroutine
 
         Yields:
@@ -111,8 +110,7 @@ class ItemCopyRequestBuilder(RequestBuilderBase):
         """
         return self.request().post()
 
-    @asyncio.coroutine
-    def post_async(self):
+    async def post_async(self):
         """Sends the POST request using an asyncio coroutine
         
         Yields:

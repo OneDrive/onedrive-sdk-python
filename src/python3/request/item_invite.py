@@ -50,8 +50,7 @@ class ItemInviteRequest(CollectionRequestBase):
         collection_response = ItemsCollectionResponse(json.loads(self.send(self.body_options).content))
         return self._page_from_response(collection_response)
 
-    @asyncio.coroutine
-    def post_async(self):
+    async def post_async(self):
         """Sends the POST request using an asyncio coroutine
 
         Yields:
@@ -107,8 +106,7 @@ class ItemInviteRequestBuilder(RequestBuilderBase):
         """
         return self.request().post()
 
-    @asyncio.coroutine
-    def post_async(self):
+    async def post_async(self):
         """Sends the POST request using an asyncio coroutine
         
         Yields:

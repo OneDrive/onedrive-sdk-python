@@ -57,8 +57,7 @@ class ItemUploadFragment(RequestBase):
         entity = UploadSession(json.loads(self.send(data=self._file_handle).content))
         return entity
 
-    @asyncio.coroutine
-    def post_async(self):
+    async def post_async(self):
         """Sends the POST request using an asyncio coroutine
 
         Yields:
@@ -120,8 +119,7 @@ class ItemUploadFragmentBuilder(RequestBuilderBase):
         """
         return self.request(begin, length, options).post()
 
-    @asyncio.coroutine
-    def post_async(self, begin, length, options=None):
+    async def post_async(self, begin, length, options=None):
         """Sends the POST request using an asyncio coroutine
 
         Yields:

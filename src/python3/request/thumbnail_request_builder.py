@@ -66,8 +66,7 @@ class ThumbnailRequestBuilder(RequestBuilderBase):
         """Deletes the specified Thumbnail."""
         self.request().delete()
 
-    @asyncio.coroutine
-    def delete_async(self):
+    async def delete_async(self):
         """Deletes the specified Thumbnail."""
         yield from self.request().delete_async()
     def get(self):
@@ -79,8 +78,7 @@ class ThumbnailRequestBuilder(RequestBuilderBase):
         """
         return self.request().get()
 
-    @asyncio.coroutine
-    def get_async(self):
+    async def get_async(self):
         """Gets the specified Thumbnail in async.
 
         Returns:
@@ -102,8 +100,7 @@ class ThumbnailRequestBuilder(RequestBuilderBase):
         """
         return self.request().update(thumbnail)
 
-    @asyncio.coroutine
-    def update_async(self, thumbnail):
+    async def update_async(self, thumbnail):
         """Updates the specified Thumbnail in async
         
         Args:
@@ -126,8 +123,7 @@ class ThumbnailRequestBuilder(RequestBuilderBase):
         """
         return self.content.request().download(local_path)
 
-    @asyncio.coroutine
-    def download_async(self, local_path):
+    async def download_async(self, local_path):
         """Downloads the specified entity in async.
 
         Args:

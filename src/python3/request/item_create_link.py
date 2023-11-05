@@ -60,8 +60,7 @@ class ItemCreateLinkRequest(RequestBase):
         entity = Permission(json.loads(self.send(self.body_options).content))
         return entity
 
-    @asyncio.coroutine
-    def post_async(self):
+    async def post_async(self):
         """Sends the POST request using an asyncio coroutine
 
         Yields:
@@ -105,8 +104,7 @@ class ItemCreateLinkRequestBuilder(RequestBuilderBase):
         """
         return self.request().post()
 
-    @asyncio.coroutine
-    def post_async(self):
+    async def post_async(self):
         """Sends the POST request using an asyncio coroutine
         
         Yields:

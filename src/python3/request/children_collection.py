@@ -44,8 +44,7 @@ class ChildrenCollectionRequest(CollectionRequestBase):
         entity = Item(json.loads(self.send(entity).content))
         return entity
 
-    @asyncio.coroutine
-    def add_async(self, entity):
+    async def add_async(self, entity):
         """Add a Item to the collection in async
         
         Args:
@@ -73,8 +72,7 @@ class ChildrenCollectionRequest(CollectionRequestBase):
         collection_response = ChildrenCollectionResponse(json.loads(self.send().content))
         return self._page_from_response(collection_response)
 
-    @asyncio.coroutine
-    def get_async(self):
+    async def get_async(self):
         """Gets the ChildrenCollectionPage in async
 
         Yields: 
@@ -156,8 +154,7 @@ class ChildrenCollectionRequestBuilder(RequestBuilderBase):
         """
         return self.request().add(entity)
 
-    @asyncio.coroutine
-    def add_async(self, entity):
+    async def add_async(self, entity):
         """Add a Item to the collection in async
         
         Args:
@@ -180,8 +177,7 @@ class ChildrenCollectionRequestBuilder(RequestBuilderBase):
         """
         return self.request().get()
 
-    @asyncio.coroutine
-    def get_async(self):
+    async def get_async(self):
         """Gets the ChildrenCollectionPage in async
 
         Yields: 

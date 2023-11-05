@@ -65,8 +65,7 @@ class PermissionRequestBuilder(RequestBuilderBase):
         """Deletes the specified Permission."""
         self.request().delete()
 
-    @asyncio.coroutine
-    def delete_async(self):
+    async def delete_async(self):
         """Deletes the specified Permission."""
         yield from self.request().delete_async()
     def get(self):
@@ -78,8 +77,7 @@ class PermissionRequestBuilder(RequestBuilderBase):
         """
         return self.request().get()
 
-    @asyncio.coroutine
-    def get_async(self):
+    async def get_async(self):
         """Gets the specified Permission in async.
 
         Returns:
@@ -101,8 +99,7 @@ class PermissionRequestBuilder(RequestBuilderBase):
         """
         return self.request().update(permission)
 
-    @asyncio.coroutine
-    def update_async(self, permission):
+    async def update_async(self, permission):
         """Updates the specified Permission in async
         
         Args:

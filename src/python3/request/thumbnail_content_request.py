@@ -53,8 +53,7 @@ class ThumbnailContentRequest(RequestBase):
         """
         self.download_item(content_local_path)
 
-    @asyncio.coroutine
-    def download_async(self, content_local_path):
+    async def download_async(self, content_local_path):
         """
         Downloads the specified Thumbnail in async.
         

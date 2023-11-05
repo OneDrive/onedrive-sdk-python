@@ -31,8 +31,7 @@ class TagRequest(RequestBase):
         self.method = "DELETE"
         self.send()
 
-    @asyncio.coroutine
-    def delete_async(self):
+    async def delete_async(self):
         """Deletes the specified Tag."""
         future = self._client._loop.run_in_executor(None,
                                                     self.delete)
@@ -50,8 +49,7 @@ class TagRequest(RequestBase):
         self._initialize_collection_properties(entity)
         return entity
 
-    @asyncio.coroutine
-    def get_async(self):
+    async def get_async(self):
         """Gets the specified Tag in async.
 
         Yields:
@@ -80,8 +78,7 @@ class TagRequest(RequestBase):
         self._initialize_collection_properties(entity)
         return entity
 
-    @asyncio.coroutine
-    def update_async(self, tag):
+    async def update_async(self, tag):
         """Updates the specified Tag in async
         
         Args:

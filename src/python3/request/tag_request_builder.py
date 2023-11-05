@@ -47,8 +47,7 @@ class TagRequestBuilder(RequestBuilderBase):
         """Deletes the specified Tag."""
         self.request().delete()
 
-    @asyncio.coroutine
-    def delete_async(self):
+    async def delete_async(self):
         """Deletes the specified Tag."""
         yield from self.request().delete_async()
     def get(self):
@@ -60,8 +59,7 @@ class TagRequestBuilder(RequestBuilderBase):
         """
         return self.request().get()
 
-    @asyncio.coroutine
-    def get_async(self):
+    async def get_async(self):
         """Gets the specified Tag in async.
 
         Returns:
@@ -83,8 +81,7 @@ class TagRequestBuilder(RequestBuilderBase):
         """
         return self.request().update(tag)
 
-    @asyncio.coroutine
-    def update_async(self, tag):
+    async def update_async(self, tag):
         """Updates the specified Tag in async
         
         Args:

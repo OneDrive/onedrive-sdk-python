@@ -38,8 +38,7 @@ class DrivesCollectionRequest(CollectionRequestBase):
         collection_response = DrivesCollectionResponse(json.loads(self.send().content))
         return self._page_from_response(collection_response)
 
-    @asyncio.coroutine
-    def get_async(self):
+    async def get_async(self):
         """Gets the DrivesCollectionPage in async
 
         Yields: 
@@ -117,8 +116,7 @@ class DrivesCollectionRequestBuilder(RequestBuilderBase):
         """
         return self.request().get()
 
-    @asyncio.coroutine
-    def get_async(self):
+    async def get_async(self):
         """Gets the DrivesCollectionPage in async
 
         Yields: 

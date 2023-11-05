@@ -65,8 +65,7 @@ class ShareRequestBuilder(RequestBuilderBase):
         """Deletes the specified Share."""
         self.request().delete()
 
-    @asyncio.coroutine
-    def delete_async(self):
+    async def delete_async(self):
         """Deletes the specified Share."""
         yield from self.request().delete_async()
     def get(self):
@@ -78,8 +77,7 @@ class ShareRequestBuilder(RequestBuilderBase):
         """
         return self.request().get()
 
-    @asyncio.coroutine
-    def get_async(self):
+    async def get_async(self):
         """Gets the specified Share in async.
 
         Returns:
@@ -101,8 +99,7 @@ class ShareRequestBuilder(RequestBuilderBase):
         """
         return self.request().update(share)
 
-    @asyncio.coroutine
-    def update_async(self, share):
+    async def update_async(self, share):
         """Updates the specified Share in async
         
         Args:

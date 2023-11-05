@@ -48,8 +48,7 @@ class DriveRequestBuilder(RequestBuilderBase):
         """Deletes the specified Drive."""
         self.request().delete()
 
-    @asyncio.coroutine
-    def delete_async(self):
+    async def delete_async(self):
         """Deletes the specified Drive."""
         yield from self.request().delete_async()
     def get(self):
@@ -61,8 +60,7 @@ class DriveRequestBuilder(RequestBuilderBase):
         """
         return self.request().get()
 
-    @asyncio.coroutine
-    def get_async(self):
+    async def get_async(self):
         """Gets the specified Drive in async.
 
         Returns:
@@ -84,8 +82,7 @@ class DriveRequestBuilder(RequestBuilderBase):
         """
         return self.request().update(drive)
 
-    @asyncio.coroutine
-    def update_async(self, drive):
+    async def update_async(self, drive):
         """Updates the specified Drive in async
         
         Args:

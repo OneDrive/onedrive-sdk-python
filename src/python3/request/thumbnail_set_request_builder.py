@@ -66,8 +66,7 @@ class ThumbnailSetRequestBuilder(RequestBuilderBase):
         """Deletes the specified ThumbnailSet."""
         self.request().delete()
 
-    @asyncio.coroutine
-    def delete_async(self):
+    async def delete_async(self):
         """Deletes the specified ThumbnailSet."""
         yield from self.request().delete_async()
     def get(self):
@@ -79,8 +78,7 @@ class ThumbnailSetRequestBuilder(RequestBuilderBase):
         """
         return self.request().get()
 
-    @asyncio.coroutine
-    def get_async(self):
+    async def get_async(self):
         """Gets the specified ThumbnailSet in async.
 
         Returns:
@@ -102,8 +100,7 @@ class ThumbnailSetRequestBuilder(RequestBuilderBase):
         """
         return self.request().update(thumbnail_set)
 
-    @asyncio.coroutine
-    def update_async(self, thumbnail_set):
+    async def update_async(self, thumbnail_set):
         """Updates the specified ThumbnailSet in async
         
         Args:

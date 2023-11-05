@@ -60,8 +60,7 @@ class ItemContentRequest(RequestBase):
         entity = Item(json.loads(entity_response.content))
         return entity
 
-    @asyncio.coroutine
-    def upload_async(self, content_local_path):
+    async def upload_async(self, content_local_path):
         """Uploads the file using PUT in async
         
         Args:
@@ -87,8 +86,7 @@ class ItemContentRequest(RequestBase):
         """
         self.download_item(content_local_path)
 
-    @asyncio.coroutine
-    def download_async(self, content_local_path):
+    async def download_async(self, content_local_path):
         """
         Downloads the specified Item in async.
         

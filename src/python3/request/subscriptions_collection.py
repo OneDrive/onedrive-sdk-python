@@ -38,8 +38,7 @@ class SubscriptionsCollectionRequest(CollectionRequestBase):
         collection_response = SubscriptionsCollectionResponse(json.loads(self.send().content))
         return self._page_from_response(collection_response)
 
-    @asyncio.coroutine
-    def get_async(self):
+    async def get_async(self):
         """Gets the SubscriptionsCollectionPage in async
 
         Yields: 
@@ -117,8 +116,7 @@ class SubscriptionsCollectionRequestBuilder(RequestBuilderBase):
         """
         return self.request().get()
 
-    @asyncio.coroutine
-    def get_async(self):
+    async def get_async(self):
         """Gets the SubscriptionsCollectionPage in async
 
         Yields: 
